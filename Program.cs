@@ -10,7 +10,7 @@ namespace indyClient
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var walletConfig = "{\"id\":\"Steward1\"}";
             var walletCredentails = "{\"key\":\"Steward1\"}";
@@ -33,7 +33,7 @@ namespace indyClient
                     var myKeys = await Did.ListMyDidsWithMetaAsync(stewardWallet);
 
                     // Compare the two keys
-                    Console.WriteLine(mykeys);
+                    Console.WriteLine(myKeys);
 
                     await stewardWallet.CloseAsync();
                 }
