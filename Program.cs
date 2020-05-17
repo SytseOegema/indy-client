@@ -22,15 +22,21 @@ namespace indyClient
 
             try
             {
+                Console.WriteLine("1");
                 await Wallet.ImportAsync(walletConfig, walletCredentails, importConfig);
+
+                Console.WriteLine("2");
 
                 // Open the wallet
                 using (var stewardWallet = await Wallet.OpenWalletAsync(walletConfig, walletCredentails))
                 {
 
+                    Console.WriteLine("3");
 
                     // Retrieve stored key
                     var myKeys = await Did.ListMyDidsWithMetaAsync(stewardWallet);
+
+                    Console.WriteLine("4");
 
                     // Compare the two keys
                     Console.WriteLine(myKeys);
