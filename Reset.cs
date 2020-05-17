@@ -14,8 +14,10 @@ namespace indyClient
 
         public async Task reinitialize()
         {
+            Console.WriteLine("reinitialize not implemented yet.");
             try
             {
+                Console.WriteLine("reinitialize not implemented yet.");
                 await Pool.CreatePoolLedgerConfigAsync("reset", "{ \"genesis_txn\": \"/var/lib/indy/sandbox/\" }");
             }
             catch (Exception e)
@@ -23,7 +25,6 @@ namespace indyClient
                 Console.WriteLine($"Error: {e.Message}");
             }
 
-            Console.WriteLine("reinitialize not implemented yet.");
         }
     }
 }
