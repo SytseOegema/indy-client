@@ -23,7 +23,7 @@ namespace indyClient
                         return;
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
-                        if (ensured())
+                        if (ensurer())
                             Reset reset = new Reset();
                             reset.reinitialize();
                         break;

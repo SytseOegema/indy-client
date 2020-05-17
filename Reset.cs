@@ -9,6 +9,9 @@ namespace indyClient
 {
     class Reset
     {
+        public Reset()
+        {}
+
         public void reinitialize()
         {
             Console.WriteLine("reinitialize not implemented yet.");
