@@ -27,7 +27,7 @@ namespace indyClient
                   storage_type,
                   "",
                   "",
-                  "")
+                  "{ \"path\":" + file_path + ", \"key\":" + export_key + "}")
         {}
 
         public WalletImportConfig(string command_handle,
