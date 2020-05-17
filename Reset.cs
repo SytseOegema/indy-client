@@ -11,7 +11,7 @@ namespace indyClient
     {
         public void reinitialize()
         {
-            Console.WriteLine("reinitialize not implemented yet.")
+            Console.WriteLine("reinitialize not implemented yet.");
         }
     }
 }

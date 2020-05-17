@@ -20,6 +20,7 @@ namespace indyClient
             string input = "";
             while (1)
             {
+                Console.Write("> ");
                 Console.ReadLine(input);
                 switch (input)
                 {
@@ -27,7 +28,7 @@ namespace indyClient
                         Console.WriteLine("Exit program!");
                         return;
                     case "reset":
-                        Console.WriteLine("Reinitialize genesis transactions?(y/n)")
+                        Console.WriteLine("Reinitialize genesis transactions?(y/n)");
                         if (ensured())
                             Reset.reinitialize();
                         break;
