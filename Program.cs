@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Newtonsoft.Json;
 
 using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
