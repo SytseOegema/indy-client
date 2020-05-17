@@ -15,7 +15,7 @@ namespace indyClient
             while (true)
             {
                 Console.Write("> ");
-                Console.ReadLine(input);
+                input = Console.ReadLine();
                 switch (input)
                 {
                     case "exit":
@@ -33,12 +33,12 @@ namespace indyClient
             }
         }
 
-        static bool ensurer()
+        public bool ensurer()
         {
             string ensurer = "";
             while(true)
             {
-                Console.ReadLine(ensurer);
+                ensurer = Console.ReadLine();
                 switch (ensurer)
                 {
                     case "y":
