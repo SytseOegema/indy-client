@@ -24,8 +24,10 @@ namespace indyClient
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
                         if (ensurer())
+                        {
                             Reset reset = new Reset();
                             reset.reinitialize();
+                        }
                         break;
                     default:
                         Console.WriteLine("Wrong input");
@@ -34,7 +36,7 @@ namespace indyClient
             }
         }
 
-        public bool ensurer()
+        static bool ensurer()
         {
             string ensurer = "";
             while(true)
