@@ -21,21 +21,14 @@ namespace indyClient
                                   string credential_key,
                                   string file_path,
                                   string export_key)
-        {
-            string command_handle = "i32";
-            string config = "";
-            string credentials = "";
-            string import_config_json = "";
-
-            this(command_handle,
-                               pool_name,
-                               name,
-                               storage_type,
-                               config,
-                               credentials,
-                               import_config_json);
-
-        }
+            :this("i32",
+                  pool_name,
+                  name,
+                  storage_type,
+                  "",
+                  "",
+                  "")
+        {}
 
         public WalletImportConfig(string command_handle,
                                   string pool_name,
