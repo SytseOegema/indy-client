@@ -10,9 +10,9 @@ namespace indyClient
     {
         static void Main(string[] args)
         {
-            walletConfig = "{\"id\":\"Steward1\"}";
-            walletCredentails = "{\"key\":\"Steward1\"}";
-            importConfig = JsonConvert.SerializeObject(new
+            var walletConfig = "{\"id\":\"Steward1\"}";
+            var walletCredentails = "{\"key\":\"Steward1\"}";
+            var importConfig = JsonConvert.SerializeObject(new
                 {
                     path = "/home/hyper/wallets/steward_wallet",
                     key = "Steward1"
