@@ -19,21 +19,36 @@ namespace indyClient
                     key = "Steward1"
                 });
 
-            await Wallet.ImportAsync(walletConfig, walletCredentails, importConfig);
-
-            // Open the wallet
-            using (var stewardWallet = await Wallet.OpenWalletAsync(walletConfig, walletCredentails))
+            try
             {
+                await Wallet.ImportAsync(walletConfig, walletCredentails, importConfig);
+
+                // Open the wallet
+                using (var stewardWallet = await Wallet.OpenWalletAsync(walletConfig, walletCredentails))
+                {
 
 
-                // Retrieve stored key
-                var myKeys = await Did.ListMyDidsWithMetaAsync(stewardWallet);
+                    // Retrieve stored key
+                    var myKeys = await Did.ListMyDidsWithMetaAsync(stewardWallet);
 
-                // Compare the two keys
-                Console.WriteLine(mykeys);
+                    // Compare the two keys
+                    Console.WriteLine(mykeys);
 
-                await stewardWallet.CloseAsync();
+                    await stewardWallet.CloseAsync();
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}", Color.Red);
+            }
+            finally
+            {
+                //10. Delete wallets and Pool ledger config
+                // await WalletUtils.DeleteWalletAsync(walletConfig, walletCredentials);
+                // await WalletUtils.DeleteWalletAsync(theirWalletConfig, theirWalletCredentials);
+                // await PoolUtils.DeletePoolLedgerConfigAsync(PoolUtils.DEFAULT_POOL_NAME);
+            }
+
         }
     }
 }
