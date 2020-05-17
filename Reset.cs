@@ -16,7 +16,7 @@ namespace indyClient
         {
             try
             {
-                await Pool.CreatePoolLedgerConfig("", "");
+                await Pool.CreatePoolLedgerConfigAsync("reset", "{ \"genesis_txn\": \"/var/lib/indy/sandbox/\" }");
             }
             catch (Exception e)
             {

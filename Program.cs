@@ -9,7 +9,7 @@ namespace indyClient
             cliLoop();
         }
 
-        static void cliLoop()
+        static async Task cliLoop()
         {
             string input = "";
             while (true)
