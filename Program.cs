@@ -2,7 +2,6 @@
 
 
 using Hyperledger.Indy.DidApi;
-using Hyperledger.Indy.Samples.Utils;
 using Hyperledger.Indy.WalletApi;
 
 namespace indyClient
