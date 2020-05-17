@@ -24,7 +24,7 @@ namespace indyClient
         {
             string command_handle = "i32";
             string config = "";
-            string credentails = "";
+            string credentials = "";
             string import_config_json = "";
 
             this(command_handle,
@@ -50,7 +50,7 @@ namespace indyClient
             this.name = name;
             this.storage_type = storage_type;
             this.config = config;
-            this.credentials = credentails;
+            this.credentials = credentials;
             this.import_config_json = import_config_json;
         }
 
