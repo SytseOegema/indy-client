@@ -14,7 +14,7 @@ namespace indyClient
 
         public async Task reinitialize()
         {
-            PoolUtils.CreatePoolLedgerConfig();
+            await PoolUtils.CreatePoolLedgerConfig();
 
             Console.WriteLine("reinitialize not implemented yet.");
         }
