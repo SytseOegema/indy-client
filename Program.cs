@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -39,7 +40,7 @@ namespace indyClient
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}", Color.Red);
+                Console.WriteLine($"Error: {e.Message}");
             }
             finally
             {
