@@ -29,6 +29,10 @@ namespace indyClient
                             reset.reinitialize();
                         }
                         break;
+                    case "help":
+                        Console.WriteLine("The following commands are available:");
+                        Console.WriteLine("exit: to exit the program");
+                        Console.WriteLine("reset: to reset the genesis transactions and pool configurations");
                     default:
                         Console.WriteLine("Wrong input");
                         break;
