@@ -16,7 +16,7 @@ namespace indyClient
         {
             try
             {
-                await Pool.CreatePoolLedgerConfig();
+                await Pool.CreatePoolLedgerConfig("", "");
             }
             catch (Exception e)
             {
