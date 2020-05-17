@@ -24,9 +24,10 @@ namespace indyClient
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
                         if (ensured())
-                            Reset.reinitialize();
+                            Reset reset = new Reset();
+                            reset.reinitialize();
                         break;
-                    case default:
+                    default:
                         Console.WriteLine("Wrong input");
                         break;
                 }
@@ -49,7 +50,7 @@ namespace indyClient
                         return false;
                     case "no":
                         return false;
-                    case default:
+                    default:
                         Console.WriteLine("Specify your choice by typing y/n:");
                         break;
                 }
