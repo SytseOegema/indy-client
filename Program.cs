@@ -12,7 +12,7 @@ namespace indyClient
         static void cliLoop()
         {
             string input = "";
-            while (1)
+            while (true)
             {
                 Console.Write("> ");
                 Console.ReadLine(input);
@@ -36,7 +36,7 @@ namespace indyClient
         static bool ensurer()
         {
             string ensurer = "";
-            while(1)
+            while(true)
             {
                 Console.ReadLine(ensurer);
                 switch (ensurer)
