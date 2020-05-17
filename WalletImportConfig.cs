@@ -27,7 +27,7 @@ namespace indyClient
             string credentails = "";
             string import_config_json = "";
 
-            WalletImportConfig(command_handle,
+            this(command_handle,
                                pool_name,
                                name,
                                storage_type,
