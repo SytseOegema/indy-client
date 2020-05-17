@@ -5,9 +5,9 @@ namespace indyClient
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            cliLoop();
+            await cliLoop();
         }
 
         static async Task cliLoop()
