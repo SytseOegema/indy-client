@@ -12,12 +12,12 @@ namespace indyClient
     {
         static async Task Main(string[] args)
         {
-            var walletConfig = "{\"id\":\"Steward1\"}";
-            var walletCredentails = "{\"key\":\"Steward11\"}";
+            var walletConfig = "{\"id\":\"Steward1test\"}";
+            var walletCredentails = "{\"key\":\"Steward1test\"}";
             var importConfig = JsonConvert.SerializeObject(new
                 {
                     path = "/home/hyper/wallets/steward_wallet",
-                    key = "Steward1"
+                    key = "test"
                 });
 
             try
