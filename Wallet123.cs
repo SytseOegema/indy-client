@@ -1,14 +1,13 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 
 namespace indyClient
 {
-    class Wallet
+    class Wallet123
     {
         private WalletImportConfig importConfig;
 
-        public Wallet()
+        public Wallet123()
         {
             importConfig = new WalletImportConfig(
                 "sandbox",
