@@ -30,7 +30,7 @@ namespace indyClient
                 var myKeys = await Did.ListMyDidsWithMetaAsync(stewardWallet);
 
                 // Compare the two keys
-                Console.WriteLine(Mykeys);
+                Console.WriteLine(mykeys);
 
                 await stewardWallet.CloseAsync();
             }
