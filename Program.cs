@@ -27,7 +27,7 @@ namespace indyClient
                         if (ensurer())
                         {
                             Reset reset = new Reset();
-                            reset.reinitialize();
+                            await reset.reinitialize();
                         }
                         break;
                     case "help":
