@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
+using Hyperledger.Indy.PoolApi;
+
 
 namespace indyClient
 {
