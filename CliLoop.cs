@@ -29,7 +29,13 @@ namespace indyClient
                         }
                         break;
                     case "wallet open":
+                        await d_wallet.create();
+                        break;
+                    case "wallet open":
                         await d_wallet.open();
+                        break;
+                    case "wallet close":
+                        await d_wallet.close();
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
