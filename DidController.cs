@@ -21,8 +21,15 @@ namespace indyClient
 
         public async Task create(string seed)
         {
-            Console.Write("seed:" + seed);
-            string didJson = "{\"seed\": \"" + seed + "\"}";
+            string didJson; 
+            if (seed.Length != )
+            {
+                didJson = "{\"seed\": \"" + seed + "\"}";
+            }
+            else
+            {
+                didJson = "{}";
+            }
             try
             {
                 var myDid = await Did.CreateAndStoreMyDidAsync(d_openWallet,
