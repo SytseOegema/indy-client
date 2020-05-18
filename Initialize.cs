@@ -79,7 +79,7 @@ namespace indyClient
             var didListJson = await d_didController.list();
 
             Console.WriteLine(didListJson);
-            var trusteeDid = JArray.parse(didListJson)[0]["did"].ToString();
+            var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
             // var trusteeDid = JObject[0].Parse(didListJson).Children()["did"].ToString();
             Console.WriteLine(trusteeDid);
             //
