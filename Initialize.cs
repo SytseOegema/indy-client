@@ -53,16 +53,16 @@ namespace indyClient
             WalletController wallet = new WalletController();
             DidController did = new DidController();
 
-            await wallet.create("Anne")
-            await wallet.open("Anne")
+            await wallet.create("Anne");
+            await wallet.open("Anne");
             did.setOpenWallet(wallet.getOpenWallet());
             await did.create("");
 
             didList = did.list();
             Console.WriteLine(didList[0].did);
 
-          public async Task sendNymRequest(string trusteeName, string trusteeDid,
-          string did, string verkey ,string alias, string role)
+          // public async Task sendNymRequest(string trusteeName, string trusteeDid,
+          // string did, string verkey ,string alias, string role)
         }
     }
 }
