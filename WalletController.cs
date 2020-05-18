@@ -41,6 +41,7 @@ namespace indyClient
 
         public async Task open(string identifier)
         {
+            close();
             d_identifier = identifier;
             setWalletInfo();
 
