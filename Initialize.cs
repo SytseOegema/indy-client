@@ -11,8 +11,19 @@ namespace indyClient
 {
     class Initialize
     {
-        public Initialize()
-        {}
+        private DidController d_didController;
+        private WalletController d_walletController;
+        private LedgerController d_ledgerController;
+
+        public Initialize(
+        ref DidController didController,
+        ref WalletController walletController,
+        ref LedgerController ledgerController)
+        {
+            d_didController = didController;
+            d_walletController = walletController;
+            d_ledgerController = ledgerController
+        }
 
         public async Task reinitialize()
         {
@@ -51,29 +62,26 @@ namespace indyClient
         }
 
         public async Task setupIdentity(string myWalletName,
-            string trusteeWalletName,
-            ref DidController didController,
-            ref WalletController walletController,
-            ref LedgerController ledgerController)
+            string trusteeWalletName)
         {
-            await walletController.close();
+            await d_walletController.close();
 
-            await walletController.create(myWalletName);
-            await walletController.open(myWalletName);
+            await d_walletController.create(myWalletName);
+            await d_walletController.open(myWalletName);
 
-            didController.setOpenWallet(walletController.getOpenWallet());
-            var didJson = await didController.create("");
+            d_didController.setOpenWallet(walletController.getOpenWallet());
+            var didJson = await d_didController.create("");
 
             var did = JObject.Parse(didJson)["Did"].ToString();
             var verkey = JObject.Parse(didJson)["VerKey"].ToString();
 
-            await walletController.open(trusteeWalletName);
+            await d_walletController.open(trusteeWalletName);
             var didListJson = await didController.list();
 
             var trusteeDid = JObject.Parse(didListJson)[0]["did"].ToString();
             Console.WriteLine(trusteeDid);
 
-            await ledgerController.sendNymRequest(trusteeWalletName,
+            await d_ledgerController.sendNymRequest(trusteeWalletName,
                 trusteeDid, did, verkey, "", "TRUSTEE");
         }
     }
