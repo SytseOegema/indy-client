@@ -18,7 +18,7 @@ namespace indyClient
 
         public async Task open()
         {
-            Console.WriteLine("name of the wallet you would like to open:")
+            Console.WriteLine("name of the wallet you would like to open:");
             string identifier = Console.Readline();
 
             string walletConfig = "{ \"id\": \"" + identifier + "\" }";
