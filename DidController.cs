@@ -21,8 +21,8 @@ namespace indyClient
 
         public async Task create(string seed)
         {
-            string didJson; 
-            if (seed.Length != )
+            string didJson;
+            if (seed.Length != 0)
             {
                 didJson = "{\"seed\": \"" + seed + "\"}";
             }
