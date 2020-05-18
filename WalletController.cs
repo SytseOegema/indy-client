@@ -11,8 +11,8 @@ namespace indyClient
 {
     class WalletController
     {
-        private string d_walletConfig = "{\"id\":\"Steward1\"}";
-        private string d_walletCredentails = "{\"key\":\"Steward1\"}";
+        private string d_walletConfig = "{\"id\":\"Steward1test\"}";
+        private string d_walletCredentails = "{\"key\":\"Steward1test\"}";
 
         public WalletController()
         {}
