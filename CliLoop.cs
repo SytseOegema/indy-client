@@ -6,6 +6,7 @@ namespace indyClient
     public static class CliLoop
     {
         static WalletController d_wallet = new WalletController();
+        static DidController d_did = new DidController();
 
 
         public static async Task run()
@@ -33,9 +34,11 @@ namespace indyClient
                         break;
                     case "wallet open":
                         await d_wallet.open();
+                        d_did.setOpenWallet(d_wallet.getOpenWallet());
                         break;
                     case "wallet close":
                         await d_wallet.close();
+                        d_did.setOpenWallet(null);
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");

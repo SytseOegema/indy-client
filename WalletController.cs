@@ -19,6 +19,11 @@ namespace indyClient
         public WalletController()
         {}
 
+        public Wallet getOpenWallet()
+        {
+            return d_openWallet;
+        }
+
         public async Task create()
         {
             Console.WriteLine("name of the wallet you would like to create:");
