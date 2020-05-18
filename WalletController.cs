@@ -15,11 +15,11 @@ namespace indyClient
         private string d_walletCredentials;
         private string d_identifier = "";
         private Wallet d_openWallet;
-        private DidController d_didController
+        private DidController d_didController;
 
         public WalletController(DidController didController)
         {
-            d_didController = didController
+            d_didController = didController;
         }
 
         public Wallet getOpenWallet()
