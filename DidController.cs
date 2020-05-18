@@ -34,7 +34,8 @@ namespace indyClient
             {
                 var myDid = await Did.CreateAndStoreMyDidAsync(d_openWallet,
                   didJson);
-                Console.WriteLine(myDid);
+                Console.WriteLine("did" + myDid.Did);
+                Console.WriteLine("verkey:" + myDid.VerKey);
             }
             catch (Exception e)
             {
