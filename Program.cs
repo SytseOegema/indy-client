@@ -5,7 +5,12 @@ namespace indyClient
 {
     class Program
     {
-        WalletController d_wallet = new WalletController();
+        WalletController d_wallet;
+
+        public Program()
+        {
+            d_wallet  = new WalletController();
+        }
 
         static async Task Main(string[] args)
         {

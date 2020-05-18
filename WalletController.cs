@@ -11,11 +11,11 @@ namespace indyClient
 {
     class WalletController
     {
-        private var d_walletConfig = "{\"id\":\"Steward1\"}";
-        private var d_walletCredentails = "{\"key\":\"Steward1\"}";
+        private string d_walletConfig = "{\"id\":\"Steward1\"}";
+        private string d_walletCredentails = "{\"key\":\"Steward1\"}";
 
         public WalletController()
-        {};
+        {}
 
         public async Task open()
         {
