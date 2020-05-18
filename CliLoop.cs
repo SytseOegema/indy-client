@@ -28,7 +28,7 @@ namespace indyClient
                             await reset.reinitialize();
                         }
                         break;
-                    case "wallet open":
+                    case "wallet create":
                         await d_wallet.create();
                         break;
                     case "wallet open":
