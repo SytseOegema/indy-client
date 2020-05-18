@@ -19,7 +19,7 @@ namespace indyClient
             try
             {
                 Console.WriteLine("reinitialize not implemented yet.");
-                await Pool.CreatePoolLedgerConfigAsync("reset", "{}");
+                await Pool.CreatePoolLedgerConfigAsync("reset", "{\"genesis_txn\":\"\"}");
             }
             catch (Exception e)
             {
