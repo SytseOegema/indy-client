@@ -10,7 +10,8 @@ namespace indyClient
         static WalletController d_wallet = new WalletController(ref d_did);
         static LedgerController d_ledger = new LedgerController(
             ref d_pool, ref d_wallet);
-        static Initialize d_initialize = new Initialize();
+        static Initialize d_initialize = new Initialize(
+            ref d_did, ref d_wallet, ref d_ledger);
 
 
         public static async Task run()
@@ -28,12 +29,7 @@ namespace indyClient
                     case "test":
                         Console.WriteLine("Name of the new wallet:");
                         await d_initialize.setupIdentity(
-                            Console.ReadLine(),
-                            "Trustee1",
-                            ref d_did,
-                            ref d_wallet,
-                            ref d_ledger
-                        );
+                            Console.ReadLine(), "Trustee1");
                         break;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
