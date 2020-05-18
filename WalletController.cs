@@ -74,13 +74,13 @@ namespace indyClient
             }
         }
 
-        private setWalletInfo()
+        private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
             d_walletCredentails = "{ \"key\": \"" + d_identifier + "\" }";
         }
 
-        privaet resetWalletInfo()
+        private void resetWalletInfo()
         {
           d_walletConfig = "";
           d_walletCredentails = "";
