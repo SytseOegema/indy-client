@@ -5,7 +5,7 @@ namespace indyClient
 {
     class Program
     {
-        private WalletController d_wallet;
+        static WalletController d_wallet;
 
         public Program()
         {
