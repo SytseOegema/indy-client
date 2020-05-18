@@ -21,12 +21,16 @@ namespace indyClient
 
         public async Task create(string seed)
         {
-            string didJson = "{\"seed\": \"" + seed + "\"}"
+            string didJson = "{\"seed\": \"" + seed + "\"}";
             try
             {
                 var myDid = await Did.CreateAndStoreMyDidAsync(d_openWallet,
                   didJson);
                 Console.WriteLine(myDid);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
             }
         }
 
