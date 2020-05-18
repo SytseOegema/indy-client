@@ -36,7 +36,7 @@ namespace indyClient
                   didJson);
                 Console.WriteLine("did: " + myDid.Did);
                 Console.WriteLine("verkey: " + myDid.VerKey);
-                return myDid.Did;
+                return myDid;
             }
             catch (Exception e)
             {
