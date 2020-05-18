@@ -17,8 +17,7 @@ namespace indyClient
             d_poolController = poolController;
         }
 
-        public async Task sendNymRequest(string trusteeName, string trusteeDid,
-            string did, string verkey ,string alias, string role)
+
         {
             try
             {

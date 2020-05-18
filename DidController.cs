@@ -47,16 +47,18 @@ namespace indyClient
             }
         }
 
-        public async Task list()
+        public async Task<string> list()
         {
             try
             {
                 var keys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
                 Console.WriteLine(keys);
+                return JsonConvert.SerializeObject(keys);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");
+                return e.Message;
             }
         }
     }

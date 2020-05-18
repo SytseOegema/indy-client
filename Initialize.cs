@@ -47,22 +47,32 @@ namespace indyClient
             await wallet.open("Steward2");
             did.setOpenWallet(wallet.getOpenWallet());
             await did.create("000000000000000000000000Steward2");
+            await wallet.close();
         }
 
         public async Task setupIdentities()
         {
-            WalletController wallet = new WalletController();
-            DidController did = new DidController();
+            WalletController walletController = new WalletController();
+            DidController didController = new DidController();
+            LedgerController ledgerController = new LedgerController();
 
-            await wallet.create("Anne");
-            await wallet.open("Anne");
-            did.setOpenWallet(wallet.getOpenWallet());
+            await walletController.create("Hospital");
+            await walletController.open("Hospital");
+            didController.setOpenWallet(wallet.getOpenWallet());
             var didJson = await did.create("");
 
-            Console.WriteLine(JObject.Parse(didJson)["Did"]);
+            var did = JObject.Parse(didJson)["Did"];
+            var verkey = JObject.Parse(didJson)["VerKey"];
 
-          // public async Task sendNymRequest(string trusteeName, string trusteeDid,
-          // string did, string verkey ,string alias, string role)
+            await walletController.open("Trustee1");
+            var didListJson = await didController.list();
+
+            var trusteeDid = JObject.Parse(didListJson)[0]["did"];
+            Console.WriteLine(trusteeDid);
+
+            await ledgerController.sendNymRequest("Trustee1", trusteeDid,
+                did, verkey, "", "TRUSTEE");
+
         }
     }
 }
