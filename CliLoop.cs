@@ -40,6 +40,9 @@ namespace indyClient
                         await d_wallet.close();
                         d_did.setOpenWallet(null);
                         break;
+                    case "did list":
+                        await d_did.list();
+                        break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
                         Console.WriteLine("exit: to exit the program");
