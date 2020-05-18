@@ -8,7 +8,7 @@ namespace indyClient
 {
     class DidController
     {
-        private string d_activeDid;
+        // private string d_activeDid;
         private Wallet d_openWallet;
 
         public DidController()

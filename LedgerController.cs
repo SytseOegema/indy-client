@@ -23,15 +23,15 @@ namespace indyClient
             try
             {
                 // build nym request for owner of did
-                var nymJson = Ledger.BuildNymRequestAsync(trusteeDid, did,
+                var nymJson = await Ledger.BuildNymRequestAsync(trusteeDid, did,
                     verkey ,alias, role);
 
                 // open trustee wallet
                 WalletController wCon = new WalletController();
-                wCon.open(trusteeName);
+                await wCon.open(trusteeName);
 
                 // Trustee sends nym request
-                var nymResponseJson = Ledger.SignAndSubmitRequestAsync(
+                var nymResponseJson = await Ledger.SignAndSubmitRequestAsync(
                     d_poolController.getOpenPool(),
                     wCon.getOpenWallet(),
                     trusteeDid,
