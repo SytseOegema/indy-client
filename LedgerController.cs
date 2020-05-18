@@ -10,14 +10,18 @@ namespace indyClient
 {
     class LedgerController
     {
-        private PoolController d_poolController;
+        private ref PoolController d_poolController;
+        private ref WalletController d_walletController;
 
-        public LedgerController(PoolController poolController)
+        public LedgerController(ref PoolController poolController,
+            ref WalletController walletController)
         {
             d_poolController = poolController;
+            d_walletController = walletController;
         }
 
-
+        public async Task sendNymRequest(string trusteeName, string trusteeDid,
+            string did, string verkey ,string alias, string role)
         {
             try
             {
@@ -26,15 +30,18 @@ namespace indyClient
                     verkey ,alias, role);
 
                 // open trustee wallet
-                WalletController wCon = new WalletController();
-                await wCon.open(trusteeName);
+                string originalIdentifier =
+                    d_walletController.originalIdentifier();
+                await d_walletController.open(trusteeName);
 
                 // Trustee sends nym request
                 var nymResponseJson = await Ledger.SignAndSubmitRequestAsync(
                     d_poolController.getOpenPool(),
-                    wCon.getOpenWallet(),
+                    d_walletController.getOpenWallet(),
                     trusteeDid,
                     nymJson);
+
+                d_walletController.open(originalIdentifier);
             }
             catch (Exception e)
             {

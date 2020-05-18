@@ -5,9 +5,11 @@ namespace indyClient
 {
     public static class CliLoop
     {
-        static WalletController d_wallet = new WalletController();
-        static DidController d_did = new DidController();
         static PoolController d_pool = new PoolController();
+        static DidController d_did = new DidController();
+        static WalletController d_wallet = new WalletController(ref d_did);
+        static LedgerController d_ledger = new LedgerController(
+            ref d_pool, ref d_wallet);
         static Initialize d_initialize = new Initialize();
 
 
@@ -44,7 +46,6 @@ namespace indyClient
                     case "wallet open":
                         Console.WriteLine("name of the wallet you would like to open:");
                         await d_wallet.open(Console.ReadLine());
-                        d_did.setOpenWallet(d_wallet.getOpenWallet());
                         break;
                     case "wallet close":
                         await d_wallet.close();
