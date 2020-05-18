@@ -30,8 +30,8 @@ namespace indyClient
 
         public async Task createGenesisWallets()
         {
-            WalletController wallet = new WalletController();
             DidController did = new DidController();
+            WalletController wallet = new WalletController(ref did);
 
             await wallet.create("Trustee1");
             await wallet.open("Trustee1");
@@ -58,11 +58,11 @@ namespace indyClient
         {
             await walletController.close();
 
-            await walletController.create(walletName);
-            await walletController.open(walletName);
+            await walletController.create(myWalletName);
+            await walletController.open(myWalletName);
 
             didController.setOpenWallet(wallet.getOpenWallet());
-            var didJson = await did.create("");
+            var didJson = await didController.create("");
 
             var did = JObject.Parse(didJson)["Did"];
             var verkey = JObject.Parse(didJson)["VerKey"];

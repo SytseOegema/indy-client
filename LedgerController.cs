@@ -13,7 +13,7 @@ namespace indyClient
         private PoolController d_poolController;
         private WalletController d_walletController;
 
-        public LedgerController(PoolController poolController,
+        public LedgerController(ref PoolController poolController,
             ref WalletController walletController)
         {
             d_poolController = poolController;
@@ -31,7 +31,7 @@ namespace indyClient
 
                 // open trustee wallet
                 string originalIdentifier =
-                    d_walletController.originalIdentifier();
+                    d_walletController.getIdentifier();
                 await d_walletController.open(trusteeName);
 
                 // Trustee sends nym request

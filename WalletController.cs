@@ -17,7 +17,7 @@ namespace indyClient
         private Wallet d_openWallet;
         private DidController d_didController;
 
-        public WalletController(DidController didController)
+        public WalletController(ref DidController didController)
         {
             d_didController = didController;
         }
@@ -97,7 +97,7 @@ namespace indyClient
           d_identifier = "";
         }
 
-        private void isOpen()
+        private bool isOpen()
         {
             return d_identifier != "";
         }
