@@ -11,29 +11,34 @@ namespace indyClient
 {
     class WalletController
     {
-        private string d_walletConfig = "{\"id\":\"Steward1test\"}";
-        private string d_walletCredentails = "{\"key\":\"Steward1test\"}";
+        private Wallet d_openWallet;
 
         public WalletController()
         {}
 
         public async Task open()
         {
-          using (var openWallet = await Wallet.OpenWalletAsync(d_walletConfig, d_walletCredentails))
-          {
+            Console.WriteLine("name of the wallet you would like to open:")
+            string identifier = Console.Readline();
 
-              Console.WriteLine("3");
+            string walletConfig = "{ \"id\": \"" + identifier + "\" }";
+            string walletCredentails = "{ \"key\": \"" + identifier + "\" }";
 
-              // Retrieve stored key
-              var myKeys = await Did.ListMyDidsWithMetaAsync(openWallet);
+            using (d_openWallet = await Wallet.OpenWalletAsync(walletConfig, walletCredentails))
+            {
 
-              Console.WriteLine("4");
+                Console.WriteLine("3");
 
-              // Compare the two keys
-              Console.WriteLine(myKeys);
+                // Retrieve stored key
+                var myKeys = await Did.ListMyDidsWithMetaAsync(openWallet);
 
-              await openWallet.CloseAsync();
-          }
+                Console.WriteLine("4");
+
+                // Compare the two keys
+                Console.WriteLine(myKeys);
+
+                await openWallet.CloseAsync();
+            }
         }
 
         public async Task import()
