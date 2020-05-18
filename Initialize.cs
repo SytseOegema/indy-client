@@ -58,7 +58,7 @@ namespace indyClient
             did.setOpenWallet(wallet.getOpenWallet());
             var didJson = await did.create("");
 
-            Console.WriteLine(didJson);
+            Console.WriteLine(JObject.parse(didJson).did);
 
           // public async Task sendNymRequest(string trusteeName, string trusteeDid,
           // string did, string verkey ,string alias, string role)
