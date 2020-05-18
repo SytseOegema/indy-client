@@ -14,7 +14,7 @@ namespace indyClient
         public DidController()
         {}
 
-        public setOpenWallet(Wallet openWallet)
+        public void setOpenWallet(Wallet openWallet)
         {
             d_openWallet = openWallet;
         }
