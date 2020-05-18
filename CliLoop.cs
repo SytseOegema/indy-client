@@ -24,7 +24,7 @@ namespace indyClient
                         return;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
-                        await d_pool.connect(Console.ReadLine);
+                        await d_pool.connect(Console.ReadLine());
                         break;
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
