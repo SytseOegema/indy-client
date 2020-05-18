@@ -83,6 +83,7 @@ namespace indyClient
           d_walletConfig = "";
           d_walletCredentials = "";
           d_identifier = "";
+          d_openWallet = null;
         }
     }
 }
