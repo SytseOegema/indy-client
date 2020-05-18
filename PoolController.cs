@@ -28,8 +28,10 @@ namespace indyClient
         public async Task close()
         {
             if (d_openPool == null)
+            {
                 return;
-                
+            }
+
             try
             {
                 await Pool.CloseAsync();
