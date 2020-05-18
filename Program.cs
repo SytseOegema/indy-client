@@ -7,8 +7,7 @@ namespace indyClient
     {
         static async Task Main(string[] args)
         {
-            CliLoop cli;
-            await cli.run();
+            await CliLoop.run();
         }
     }
 }
