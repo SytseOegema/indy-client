@@ -24,10 +24,9 @@ namespace indyClient
             return d_openWallet;
         }
 
-        public async Task create()
+        public async Task create(string identifier)
         {
-            Console.WriteLine("name of the wallet you would like to create:");
-            d_identifier = Console.ReadLine();
+            d_identifier = identifier;
             setWalletInfo();
 
             try
@@ -40,10 +39,9 @@ namespace indyClient
             }
         }
 
-        public async Task open()
+        public async Task open(string identifier)
         {
-            Console.WriteLine("name of the wallet you would like to open:");
-            d_identifier = Console.ReadLine();
+            d_identifier = identifier;
             setWalletInfo();
 
             try

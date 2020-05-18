@@ -30,10 +30,12 @@ namespace indyClient
                         }
                         break;
                     case "wallet create":
-                        await d_wallet.create();
+                        Console.WriteLine("name of the wallet you would like to create:");
+                        await d_wallet.create(Console.ReadLine());
                         break;
                     case "wallet open":
-                        await d_wallet.open();
+                        Console.WriteLine("name of the wallet you would like to open:");
+                        await d_wallet.open(Console.ReadLine);
                         d_did.setOpenWallet(d_wallet.getOpenWallet());
                         break;
                     case "wallet close":

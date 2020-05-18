@@ -19,6 +19,14 @@ namespace indyClient
             d_openWallet = openWallet;
         }
 
+        public async Task create(string seed)
+        {
+            // try
+            // {
+            //
+            // }
+        }
+
         public async Task list()
         {
             try
