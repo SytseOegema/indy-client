@@ -78,11 +78,12 @@ namespace indyClient
             await d_walletController.open(trusteeWalletName);
             var didListJson = await d_didController.list();
 
-            var trusteeDid = JObject.Parse(didListJson)[0]["did"].ToString();
-            Console.WriteLine(trusteeDid);
-
-            await d_ledgerController.sendNymRequest(trusteeWalletName,
-                trusteeDid, did, verkey, "", "TRUSTEE");
+            Console.WriteLine(didListJson);
+            // var trusteeDid = JObject.Parse(didListJson)[0]["did"].ToString();
+            // Console.WriteLine(trusteeDid);
+            //
+            // await d_ledgerController.sendNymRequest(trusteeWalletName,
+            //     trusteeDid, did, verkey, "", "TRUSTEE");
         }
     }
 }
