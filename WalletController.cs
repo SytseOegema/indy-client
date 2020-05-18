@@ -64,6 +64,7 @@ namespace indyClient
                 await d_openWallet.CloseAsync();
                 Console.WriteLine("wallet " + d_identifier + " closed");
                 resetWalletInfo();
+                Console.WriteLine("test: " + d_openWallet == null);
             }
             catch (Exception e)
             {
