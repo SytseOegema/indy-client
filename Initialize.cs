@@ -74,7 +74,7 @@ namespace indyClient
             Console.WriteLine(trusteeDid);
 
             await ledgerController.sendNymRequest(trusteeWalletName,
-                trusteeDid, did, verkey, "", "TRUSTEE");
+                trusteeDid, did, verkey, "", "TRUSTEE");  
         }
     }
 }
