@@ -61,16 +61,16 @@ namespace indyClient
             await walletController.create(myWalletName);
             await walletController.open(myWalletName);
 
-            didController.setOpenWallet(wallet.getOpenWallet());
+            didController.setOpenWallet(walletController.getOpenWallet());
             var didJson = await didController.create("");
 
-            var did = JObject.Parse(didJson)["Did"];
-            var verkey = JObject.Parse(didJson)["VerKey"];
+            var did = JObject.Parse(didJson)["Did"].toString();
+            var verkey = JObject.Parse(didJson)["VerKey"].toString();
 
             await walletController.open(trusteeWalletName);
             var didListJson = await didController.list();
 
-            var trusteeDid = JObject.Parse(didListJson)[0]["did"];
+            var trusteeDid = JObject.Parse(didListJson)[0]["did"].toString();
             Console.WriteLine(trusteeDid);
 
             await ledgerController.sendNymRequest(trusteeWalletName,
