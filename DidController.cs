@@ -21,7 +21,7 @@ namespace indyClient
 
         public async Task create(string seed)
         {
-            Console.Write(seed);
+            Console.Write("seed:" + seed);
             string didJson = "{\"seed\": \"" + seed + "\"}";
             try
             {
