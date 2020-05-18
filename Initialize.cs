@@ -79,7 +79,8 @@ namespace indyClient
             var didListJson = await d_didController.list();
 
             Console.WriteLine(didListJson);
-            var trusteeDid = JArray[0].Parse(didListJson)["did"].ToString();
+            var trusteeDid = Jarray.parse(didListJson)[0]["did"].ToString();
+            // var trusteeDid = JObject[0].Parse(didListJson).Children()["did"].ToString();
             Console.WriteLine(trusteeDid);
             //
             // await d_ledgerController.sendNymRequest(trusteeWalletName,
