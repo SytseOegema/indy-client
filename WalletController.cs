@@ -50,8 +50,7 @@ namespace indyClient
 
         public async Task open(string identifier)
         {
-            if (isOpen())
-                await close();
+            await close();
 
             d_identifier = identifier;
             setWalletInfo();
@@ -74,7 +73,8 @@ namespace indyClient
         {
             try
             {
-                if (!isOpen())
+                // Check if there is an wallet open
+                if (isOpen())
                 {
                     await d_openWallet.CloseAsync();
                     Console.WriteLine("wallet " + d_identifier + " closed");
