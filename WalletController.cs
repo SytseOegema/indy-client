@@ -32,7 +32,7 @@ namespace indyClient
 
             try
             {
-                await Wallet.CreateWalletAsync(firstWalletConfig, firstWalletCredentials);
+                await Wallet.CreateWalletAsync(d_walletConfig, d_walletCredentials);
             }
             catch (Exception e)
             {
