@@ -11,6 +11,7 @@ namespace indyClient
 {
     class WalletController
     {
+        private bool d_isOpen = false;
         private string d_walletConfig;
         private string d_walletCredentials;
         private string d_identifier;
@@ -41,9 +42,12 @@ namespace indyClient
 
         public async Task open(string identifier)
         {
-            await close();
+            if (d_isOpen)
+                await close();
+
             d_identifier = identifier;
             setWalletInfo();
+            d_isOpen = true
 
             try
             {
@@ -64,7 +68,6 @@ namespace indyClient
                 await d_openWallet.CloseAsync();
                 Console.WriteLine("wallet " + d_identifier + " closed");
                 resetWalletInfo();
-                Console.WriteLine("test: " + d_openWallet == null);
             }
             catch (Exception e)
             {
@@ -83,7 +86,7 @@ namespace indyClient
           d_walletConfig = "";
           d_walletCredentials = "";
           d_identifier = "";
-          d_openWallet = null;
+          d_isOpen = false;
         }
     }
 }
