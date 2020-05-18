@@ -50,11 +50,11 @@ namespace indyClient
             await wallet.close();
         }
 
-        public async Task setupIdentities(string myWalletName,
+        public async Task setupIdentity(string myWalletName,
             string trusteeWalletName,
-            DidController didController,
-            WalletController walletController,
-            LedgerController ledgerController)
+            ref DidController didController,
+            ref WalletController walletController,
+            ref LedgerController ledgerController)
         {
             await walletController.close();
 

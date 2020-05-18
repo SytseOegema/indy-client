@@ -41,7 +41,7 @@ namespace indyClient
                     trusteeDid,
                     nymJson);
 
-                d_walletController.open(originalIdentifier);
+                await d_walletController.open(originalIdentifier);
             }
             catch (Exception e)
             {

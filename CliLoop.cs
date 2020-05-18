@@ -26,7 +26,14 @@ namespace indyClient
                         Console.WriteLine("Exit program!");
                         return;
                     case "test":
-                        // await d_initialize.setupIdentities();
+                        Console.WriteLine("Name of the new wallet:")
+                        await d_initialize.setupIdentity(
+                            Console.ReadLine(),
+                            "Trustee1",
+                            ref d_did,
+                            ref d_wallet,
+                            ref d_ledger
+                        );
                         break;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
