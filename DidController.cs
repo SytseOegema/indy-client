@@ -19,7 +19,7 @@ namespace indyClient
             d_openWallet = openWallet;
         }
 
-        public async Task create(string seed)
+        public async Task<string> create(string seed)
         {
             string didJson;
             if (seed.Length != 0)
@@ -36,6 +36,7 @@ namespace indyClient
                   didJson);
                 Console.WriteLine("did: " + myDid.Did);
                 Console.WriteLine("verkey: " + myDid.VerKey);
+                return myDid.Did;
             }
             catch (Exception e)
             {
