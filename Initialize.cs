@@ -52,9 +52,9 @@ namespace indyClient
 
         public async Task setupIdentities(string myWalletName,
             string trusteeWalletName,
-            ref DidController didController,
-            ref WalletController walletController,
-            ref LedgerController ledgerController)
+            DidController didController,
+            WalletController walletController,
+            LedgerController ledgerController)
         {
             await walletController.close();
 
@@ -74,7 +74,7 @@ namespace indyClient
             Console.WriteLine(trusteeDid);
 
             await ledgerController.sendNymRequest(trusteeWalletName,
-                trusteeDid, did, verkey, "", "TRUSTEE");  
+                trusteeDid, did, verkey, "", "TRUSTEE");
         }
     }
 }
