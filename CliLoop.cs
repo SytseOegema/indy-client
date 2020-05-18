@@ -26,7 +26,7 @@ namespace indyClient
                         Console.WriteLine("Exit program!");
                         return;
                     case "test":
-                        Console.WriteLine("Name of the new wallet:")
+                        Console.WriteLine("Name of the new wallet:");
                         await d_initialize.setupIdentity(
                             Console.ReadLine(),
                             "Trustee1",
