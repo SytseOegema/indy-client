@@ -10,10 +10,10 @@ namespace indyClient
 {
     class LedgerController
     {
-        private ref PoolController d_poolController;
-        private ref WalletController d_walletController;
+        private PoolController d_poolController;
+        private WalletController d_walletController;
 
-        public LedgerController(ref PoolController poolController,
+        public LedgerController(PoolController poolController,
             ref WalletController walletController)
         {
             d_poolController = poolController;
