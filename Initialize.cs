@@ -47,5 +47,10 @@ namespace indyClient
             did.setOpenWallet(wallet.getOpenWallet());
             await did.create("000000000000000000000000Steward2");
         }
+
+        public async Task setupIdentities()
+        {
+            
+        }
     }
 }

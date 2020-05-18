@@ -13,6 +13,11 @@ namespace indyClient
         public PoolController()
         {}
 
+        public Pool getOpenPool()
+        {
+            return d_openPool;
+        }
+
         public async Task connect(string poolname)
         {
             try
