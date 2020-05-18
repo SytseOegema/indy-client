@@ -32,7 +32,7 @@ namespace indyClient
 
             try
             {
-                await WalletUtils.CreateWalletAsync(firstWalletConfig, firstWalletCredentials);
+                await Wallet.CreateWalletAsync(firstWalletConfig, firstWalletCredentials);
             }
             catch (Exception e)
             {
@@ -44,7 +44,7 @@ namespace indyClient
         {
             Console.WriteLine("name of the wallet you would like to open:");
             d_identifier = Console.ReadLine();
-            setWalletInfo(d_identifier);
+            setWalletInfo();
 
             try
             {
