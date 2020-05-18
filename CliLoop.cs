@@ -46,8 +46,8 @@ namespace indyClient
                         await d_did.list();
                         break;
                     case "did create":
-                        Console.WriteLine("Do you want to use a seed to create the did?")
-                        await d_did.create(Console.ReadLine);
+                        Console.WriteLine("Do you want to use a seed to create the did?");
+                        await d_did.create(Console.ReadLine());
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
