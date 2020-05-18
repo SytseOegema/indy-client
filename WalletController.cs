@@ -52,7 +52,7 @@ namespace indyClient
 
               // Retrieve stored key
               var myKeys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
-              Console.WriteLine("wallet " + d_identifier " opened");
+              Console.WriteLine("wallet " + d_identifier + " opened");
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ namespace indyClient
             try
             {
                 await d_openWallet.CloseAsync();
-                Console.WriteLine("wallet " + d_identifier " closed");
+                Console.WriteLine("wallet " + d_identifier + " closed");
                 resetWalletInfo();
             }
             catch (Exception e)
