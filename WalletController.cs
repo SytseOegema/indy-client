@@ -48,8 +48,6 @@ namespace indyClient
             {
               d_openWallet = await Wallet.OpenWalletAsync(d_walletConfig, d_walletCredentials);
 
-              // Retrieve stored key
-              var myKeys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
               Console.WriteLine("wallet " + d_identifier + " opened");
             }
             catch (Exception e)

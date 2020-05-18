@@ -46,7 +46,8 @@ namespace indyClient
         {
             try
             {
-                await Did.ListMyDidsWithMetaAsync(d_openWallet);
+                var keys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
+                Console.WriteLine(keys);
             }
             catch (Exception e)
             {
