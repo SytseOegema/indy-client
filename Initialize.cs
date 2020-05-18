@@ -48,9 +48,9 @@ namespace indyClient
             await did.create("000000000000000000000000Steward2");
         }
 
-        public async Task setupIdentities()
-        {
-            
-        }
+        // public async Task setupIdentities()
+        // {
+        //
+        // }
     }
 }
