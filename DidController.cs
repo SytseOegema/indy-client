@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
 
@@ -36,7 +38,7 @@ namespace indyClient
                   didJson);
                 Console.WriteLine("did: " + myDid.Did);
                 Console.WriteLine("verkey: " + myDid.VerKey);
-                return myDid;
+                return  JsonConvert.SerializeObject(myDid);
             }
             catch (Exception e)
             {
