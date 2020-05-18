@@ -13,9 +13,9 @@ namespace indyClient
         private PoolController d_poolController;
 
         public LedgerController(PoolController poolController)
-            :
-            d_poolController(poolController)
-        {}
+        {
+            d_poolController = poolController;
+        }
 
         public async Task sendNymRequest(string trusteeName, string trusteeDid,
             string did, string verkey ,string alias, string role)
@@ -36,6 +36,10 @@ namespace indyClient
                     wCon.getOpenWallet(),
                     trusteeDid,
                     nymJson);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
             }
         }
     }
