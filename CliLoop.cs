@@ -5,12 +5,8 @@ namespace indyClient
 {
     public static class CliLoop
     {
-        private WalletController d_wallet;
+        static WalletController d_wallet = new WalletController();
 
-        public CliLoop()
-        {
-            d_wallet = new WalletController();
-        }
 
         static async Task run()
         {
