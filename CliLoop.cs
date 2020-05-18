@@ -5,9 +5,9 @@ namespace indyClient
 {
     public static class CliLoop
     {
-        public static WalletController d_wallet;
+        private WalletController d_wallet;
 
-        public static CliLoop()
+        public CliLoop()
         {
             d_wallet = new WalletController();
         }
