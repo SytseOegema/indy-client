@@ -47,7 +47,7 @@ namespace indyClient
 
             d_identifier = identifier;
             setWalletInfo();
-            d_isOpen = true
+            d_isOpen = true;
 
             try
             {
