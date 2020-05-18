@@ -22,7 +22,7 @@ namespace indyClient
         {
             d_didController = didController;
             d_walletController = walletController;
-            d_ledgerController = ledgerController
+            d_ledgerController = ledgerController;
         }
 
         public async Task reinitialize()
