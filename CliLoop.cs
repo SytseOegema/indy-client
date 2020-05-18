@@ -8,7 +8,7 @@ namespace indyClient
         static WalletController d_wallet = new WalletController();
 
 
-        static async Task run()
+        public static async Task run()
         {
             string input = "";
             while (true)
