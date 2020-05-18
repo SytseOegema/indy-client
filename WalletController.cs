@@ -12,7 +12,7 @@ namespace indyClient
     class WalletController
     {
         private string d_walletConfig;
-        private string d_walletCredentails;
+        private string d_walletCredentials;
         private string d_identifier;
         private Wallet d_openWallet;
 
@@ -48,7 +48,7 @@ namespace indyClient
 
             try
             {
-              d_openWallet = await Wallet.OpenWalletAsync(d_walletConfig, d_walletCredentails);
+              d_openWallet = await Wallet.OpenWalletAsync(d_walletConfig, d_walletCredentials);
 
               // Retrieve stored key
               var myKeys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
@@ -77,13 +77,13 @@ namespace indyClient
         private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
-            d_walletCredentails = "{ \"key\": \"" + d_identifier + "\" }";
+            d_walletCredentials = "{ \"key\": \"" + d_identifier + "\" }";
         }
 
         private void resetWalletInfo()
         {
           d_walletConfig = "";
-          d_walletCredentails = "";
+          d_walletCredentials = "";
           d_identifier = "";
         }
     }
