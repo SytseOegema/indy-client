@@ -8,6 +8,7 @@ namespace indyClient
         static WalletController d_wallet = new WalletController();
         static DidController d_did = new DidController();
         static PoolController d_pool = new PoolController();
+        static Initialize d_initialize = new Initialize();
 
 
         public static async Task run()
@@ -22,6 +23,9 @@ namespace indyClient
                     case "exit":
                         Console.WriteLine("Exit program!");
                         return;
+                    case "test":
+                        await d_initialize.setupIdentities();
+                        break;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
                         await d_pool.connect(Console.ReadLine());
@@ -30,8 +34,7 @@ namespace indyClient
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
                         if (ensurer())
                         {
-                            Initialize reset = new Initialize();
-                            await reset.reinitialize();
+                            await d_initialize.reinitialize();
                         }
                         break;
                     case "wallet create":
