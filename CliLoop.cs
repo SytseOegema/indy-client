@@ -22,7 +22,7 @@ namespace indyClient
                     case "exit":
                         Console.WriteLine("Exit program!");
                         return;
-                    case "pool connect"
+                    case "pool connect":
                         Console.WriteLine("Name of the pool:");
                         await d_pool.connect(Console.ReadLine);
                         break;
