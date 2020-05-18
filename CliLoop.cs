@@ -61,7 +61,7 @@ namespace indyClient
                         Console.WriteLine("wallet open");
                         break;
                     default:
-                        Console.WriteLine("Wrong input");
+                        Console.WriteLine("Input is not recognized try 'help' for more info.");
                         break;
                 }
             }
