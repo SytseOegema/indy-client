@@ -35,7 +35,7 @@ namespace indyClient
                         break;
                     case "wallet open":
                         Console.WriteLine("name of the wallet you would like to open:");
-                        await d_wallet.open(Console.ReadLine);
+                        await d_wallet.open(Console.ReadLine());
                         d_did.setOpenWallet(d_wallet.getOpenWallet());
                         break;
                     case "wallet close":
