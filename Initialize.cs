@@ -25,7 +25,7 @@ namespace indyClient
             }
         }
 
-        public asynce Task createGenesisWallets()
+        public async Task createGenesisWallets()
         {
             WalletController wallet = new WalletController();
             DidController did = new DidController();
