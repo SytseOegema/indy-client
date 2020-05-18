@@ -25,5 +25,19 @@ namespace indyClient
             }
         }
 
+        public async Task close()
+        {
+            if (d_openPool == null)
+                return;
+
+            try
+            {
+                await d_openPool.CloseAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
     }
 }
