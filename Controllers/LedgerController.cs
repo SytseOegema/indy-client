@@ -47,6 +47,8 @@ namespace indyClient
                     trusteeDid,
                     nymJson);
 
+                Console.WriteLine("ID created: " + nymResponseJson);
+
                 await d_walletController.open(originalIdentifier);
             }
             catch (Exception e)
