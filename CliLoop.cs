@@ -13,15 +13,14 @@ namespace indyClient
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
 
-
-        private static async Task Initialize()
+        public static async Task start()
         {
-            await d_pool.connect(d_pool.getIdentifier());
+                await d_pool.connect(d_pool.getIdentifier());
+                await run();
         }
 
         public static async Task run()
         {
-            await Initialize();
             while (true)
             {
                 setInputLine();
@@ -29,7 +28,7 @@ namespace indyClient
                 switch (input)
                 {
                     case "exit":
-                        Console.WriteLine("Exit program!");
+                        Console.WriteLine("Bye Bye!");
                         return;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
@@ -37,16 +36,6 @@ namespace indyClient
                         break;
                     case "wallet setup":
                         await d_initialize.WalletSetupCLI();
-                        break;
-                    case "reset":
-                        Console.WriteLine("Reinitialize genesis transactions?(y/n)");
-                        if (ensurer())
-                        {
-                            await d_initialize.reinitialize();
-                        }
-                        break;
-                    case "wallet create genesis":
-                        await d_initialize.createGenesisWallets();
                         break;
                     case "wallet create":
                         Console.WriteLine("name of the wallet you would like to create:");
@@ -72,10 +61,17 @@ namespace indyClient
                         await d_ledger.createSchemaCLI();
                         break;
                     case "help":
-                        Console.WriteLine("The following commands are available:");
-                        Console.WriteLine("exit: to exit the program");
-                        Console.WriteLine("reset: to reset the genesis transactions and pool configurations");
-                        Console.WriteLine("wallet open");
+                        helpOptions();
+                        break;
+                    case "reset genesis":
+                        Console.WriteLine("Reinitialize genesis transactions?(y/n)");
+                        if (ensurer())
+                        {
+                            await d_initialize.reinitialize();
+                        }
+                        break;
+                    case "create genesis wallets":
+                        await d_initialize.createGenesisWallets();
                         break;
                     default:
                         Console.WriteLine("Input is not recognized try 'help' for more info.");
@@ -117,6 +113,21 @@ namespace indyClient
                         break;
                 }
             }
+        }
+
+        static void helpOptions()
+        {
+            string options;
+            options = "pool connect: connect to an identity pool.\n";
+            options += "wallet setup: ";
+            options += "wallet create: ";
+            options += "wallet open: ";
+            options += "wallet close: ";
+            options += "did list: ";
+            options += "did create: ";
+            options += "create genesis wallets: ";
+            options += "reset genesis: ";
+            Console.WriteLine(options);
         }
     }
 }
