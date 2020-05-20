@@ -81,5 +81,19 @@ namespace indyClient
             await d_ledgerController.sendNymRequest(trusteeWalletName,
                 did, verkey, "", role);
         }
+
+
+        public async Task WalletSetupCLI()
+        {
+            Console.WriteLine("Setup a new wallet with a first did.");
+            Console.WriteLine("Name of the new wallet:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Name of the Trustee that signs the NYM request:");
+            string trusteeName = Console.ReadLine();
+            Console.WriteLine("The Role of the ID of the new wallet(TRUSTEE, STEWARD, ENDORSER, IDENTITY_OWNER):");
+            await setupIdentity(name, trusteeName,
+                Console.ReadLine());
+        }
+
     }
 }

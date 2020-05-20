@@ -32,6 +32,17 @@ namespace indyClient
             }
         }
 
+        private async Task createSchemaCLI()
+        {
+            Console.WriteLine("Name of the schema:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Version of the schema: (x.x.x)");
+            string version = Console.ReadLine();
+            Console.WriteLine("Attributes of the schema: [\\\"name\\\", \\\"age\\\"]");
+            string attributes = Console.ReadLine();
+            Console.WriteLine(name + version + attributes);
+        }
+
 
     }
 }

@@ -12,6 +12,7 @@ namespace indyClient
             ref d_pool, ref d_did, ref d_wallet);
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
+        static AnoncredsController d_anoncreds = new AnoncredsController();
 
 
         public static async Task run()
@@ -31,7 +32,7 @@ namespace indyClient
                         await d_pool.connect(Console.ReadLine());
                         break;
                     case "wallet setup":
-                            WalletSetupCLI();
+                            d_initialize.WalletSetupCLI();
                         break;
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
@@ -60,7 +61,7 @@ namespace indyClient
                         await d_did.create(Console.ReadLine());
                         break;
                     case "schema create":
-                        SchemaCreateCLI();
+                        d_anoncreds.createSchemaCLI();
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
@@ -96,29 +97,6 @@ namespace indyClient
                         break;
                 }
             }
-        }
-
-        private void WalletSetupCLI()
-        {
-          Console.WriteLine("Setup a new wallet with a first did.");
-          Console.WriteLine("Name of the new wallet:");
-          string name = Console.ReadLine();
-          Console.WriteLine("Name of the Trustee that signs the NYM request:");
-          string trusteeName = Console.ReadLine();
-          Console.WriteLine("The Role of the ID of the new wallet(TRUSTEE, STEWARD, ENDORSER, IDENTITY_OWNER):");
-          await d_initialize.setupIdentity(name, trusteeName,
-              Console.ReadLine());
-        }
-
-        private void SchemaCreateCLI()
-        {
-            Console.WriteLine("Name of the schema:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Version of the schema: (x.x.x)");
-            string version = Console.ReadLine();
-            Console.WriteLine("Attributes of the schema: [\\\"name\\\", \\\"age\\\"]");
-            string attributes = Console.ReadLine();
-            Console.WriteLine(name + version + attributes);
         }
     }
 }
