@@ -9,7 +9,7 @@ using Hyperledger.Indy.PoolApi;
 
 namespace indyClient
 {
-    class Initialize
+    class CliPrompt
     {
         public string issuerWalletName()
         {
