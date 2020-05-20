@@ -17,7 +17,7 @@ namespace indyClient
         private WalletController d_walletController;
 
         public LedgerController(ref PoolController poolController,
-            ref DidController didController
+            ref DidController didController,
             ref WalletController walletController)
         {
             d_poolController = poolController;
