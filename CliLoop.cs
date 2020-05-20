@@ -13,12 +13,10 @@ namespace indyClient
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
 
+
         private static async Task Initialize()
         {
             await d_pool.connect(d_pool.getIdentifier());
-            var exists = await d_wallet.exists("Trustee1");
-            if (exists)
-                Console.WriteLine("jaja");
         }
 
         public static async Task run()
@@ -46,6 +44,9 @@ namespace indyClient
                         {
                             await d_initialize.reinitialize();
                         }
+                        break;
+                    case "wallet create genesis":
+                        d_initialize.createGenesisWallets();
                         break;
                     case "wallet create":
                         Console.WriteLine("name of the wallet you would like to create:");
