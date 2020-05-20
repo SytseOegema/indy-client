@@ -20,7 +20,7 @@ namespace indyClient
         {
             try
             {
-                var schema = Anoncreds.IssuerCreateSchemaAsync(name, version,
+                var schema = AnonCreds.IssuerCreateSchemaAsync(name, version,
                     schemaJson, issuerDid);
 
                 return  JsonConvert.SerializeObject(schema);
@@ -32,7 +32,7 @@ namespace indyClient
             }
         }
 
-        private async Task createSchemaCLI()
+        public async Task createSchemaCLI()
         {
             Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
