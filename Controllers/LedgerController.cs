@@ -73,7 +73,7 @@ namespace indyClient
                     issuerDid, schema.SchemaJson
                 );
 
-                WalletController issuerWal = new WalletController(new DidController());
+                WalletController issuerWal = new WalletController(ref new DidController());
                 await issuerWal.open(issuerName);
 
                 // publish schema to ledger
