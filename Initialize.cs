@@ -41,7 +41,7 @@ namespace indyClient
 
         public async Task createGenesisWallets()
         {
-            var exists = await d_wallet.exists("Trustee1");
+            var exists = await d_walletController.exists("Trustee1");
             if (exists)
                 return;
 
