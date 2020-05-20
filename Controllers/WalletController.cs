@@ -112,7 +112,7 @@ namespace indyClient
 
         public async Task<string> createDid(string seed)
         {
-            return d_didController.create(string seed);
+            return d_didController.create(seed);
         }
 
         private void setWalletInfo()
