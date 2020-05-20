@@ -5,6 +5,7 @@ namespace indyClient
 {
     public static class CliLoop
     {
+        static CliPrompt d_prompt = new CliPrompt();
         static PoolController d_pool = new PoolController("sandbox");
         static DidController d_did = new DidController();
         static WalletController d_wallet = new WalletController(ref d_did);
@@ -39,9 +40,9 @@ namespace indyClient
                         break;
                     case "wallet setup":
                         await d_ledger.initializeWallet(
-                            CliPrompt.issuerWalletName(),
-                            CliPrompt.signerWalletName(),
-                            CliPrompt.issuerRole()
+                            d_prompt.issuerWalletName(),
+                            d_prompt.signerWalletName(),
+                            d_prompt.issuerRole()
                         );
                         break;
                     case "wallet create":
