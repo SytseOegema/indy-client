@@ -88,8 +88,37 @@ namespace indyClient
             }
         }
 
+        public async Task createCredDef(string name, string version,
+            string attributes, string issuerDid, string issuerName,
+            string trusteeDid, string trusteeName)
+        {
+            var schemaJson = await createSchema(name, version, attributes,
+            trusteeDid, trusteeName);
+
+            d_wallet.open(issuerName);
+
+            string credDefConfigJson = "{\"support_revocation\":false}";
+
+            var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+                d_wallet.getOpenWallet(),
+                issuerDid,
+                schemaJson,
+                "Tag1",
+                "CL",
+                credDefConfigJson);
+
+            // var credDefId = createCredDefResult.CredDefId;
+            // var credDefJson = createCredDefResult.CredDefJson;
+            Console.WriteLine(res);
+        }
+
         public async Task createSchemaCLI()
         {
+            if (!(await d_wallet.isOpen()))
+            {
+                Console.WriteLine("A wallet must be open to create a schema cred def.");
+                return;
+            }
             Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
             Console.WriteLine("Version of the schema: (x.x.x)");
@@ -106,6 +135,7 @@ namespace indyClient
             }
             Console.WriteLine("name of the issuer: ");
             string issuerName = Console.ReadLine();
+
 
             var res = await createSchema(name, version, attributes,
                 issuerDid, issuerName);
