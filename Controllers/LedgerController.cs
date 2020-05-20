@@ -92,14 +92,16 @@ namespace indyClient
             string attributes, string issuerDid, string issuerName,
             string trusteeDid, string trusteeName)
         {
-            var schemaJson = await createSchema(name, version, attributes,
-            trusteeDid, trusteeName);
+            try
+            {
+                var schemaJson = await createSchema(name, version, attributes,
+                trusteeDid, trusteeName);
 
-            await d_walletController.open(issuerName);
+                await d_walletController.open(issuerName);
 
-            string credDefConfigJson = "{\"support_revocation\":false}";
+                string credDefConfigJson = "{\"support_revocation\":false}";
 
-            var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+                var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
                 d_walletController.getOpenWallet(),
                 issuerDid,
                 schemaJson,
@@ -107,9 +109,14 @@ namespace indyClient
                 "CL",
                 credDefConfigJson);
 
-            // var credDefId = createCredDefResult.CredDefId;
-            // var credDefJson = createCredDefResult.CredDefJson;
-            Console.WriteLine(res);
+                // var credDefId = createCredDefResult.CredDefId;
+                // var credDefJson = createCredDefResult.CredDefJson;
+                Console.WriteLine(res);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
         }
 
         public async Task createSchemaCLI()
