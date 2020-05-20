@@ -20,19 +20,20 @@ namespace indyClient
             d_walletController = walletController;
         }
 
-        public async Task sendNymRequest(string trusteeName, string trusteeDid,
-            string did, string verkey ,string alias, string role)
+        public async Task sendNymRequest(string trusteeName, string did,
+            string verkey ,string alias, string role)
         {
             try
             {
+                // open trustee wallet
+                string originalIdentifier =
+                d_walletController.getIdentifier();
+                await d_walletController.open(trusteeName);
+                var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
+
                 // build nym request for owner of did
                 var nymJson = await Ledger.BuildNymRequestAsync(trusteeDid, did,
                     verkey ,alias, role);
-
-                // open trustee wallet
-                string originalIdentifier =
-                    d_walletController.getIdentifier();
-                await d_walletController.open(trusteeName);
 
                 // Trustee sends nym request
                 var nymResponseJson = await Ledger.SignAndSubmitRequestAsync(

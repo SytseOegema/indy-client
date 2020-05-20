@@ -78,13 +78,8 @@ namespace indyClient
             await d_walletController.open(trusteeWalletName);
             var didListJson = await d_didController.list();
 
-            Console.WriteLine(didListJson);
-            var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
-            // var trusteeDid = JObject[0].Parse(didListJson).Children()["did"].ToString();
-            Console.WriteLine(trusteeDid);
-            //
             await d_ledgerController.sendNymRequest(trusteeWalletName,
-                trusteeDid, did, verkey, "", "TRUSTEE");
+                did, verkey, "", "TRUSTEE");
         }
     }
 }

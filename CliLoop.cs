@@ -26,10 +26,13 @@ namespace indyClient
                     case "exit":
                         Console.WriteLine("Exit program!");
                         return;
-                    case "test":
+                    case "wallet setup":
+                        Console.WriteLine("Setup a new wallet with a first did.")
                         Console.WriteLine("Name of the new wallet:");
-                        await d_initialize.setupIdentity(
-                            Console.ReadLine(), "Trustee1");
+                        string name = Console.ReadLine();
+                        Console.WriteLine("Name of the Trustee that signs the NYM request:");
+                        await d_initialize.setupIdentity(name,
+                            Console.ReadLine());
                         break;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
