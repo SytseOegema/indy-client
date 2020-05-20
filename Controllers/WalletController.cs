@@ -17,9 +17,9 @@ namespace indyClient
         private Wallet d_openWallet;
         private DidController d_didController;
 
-        public WalletController(ref DidController didController)
+        public WalletController()
         {
-            d_didController = didController;
+            d_didController = new DidController();
         }
 
         public Wallet getOpenWallet()
@@ -103,6 +103,16 @@ namespace indyClient
             res.ToString();
 
             return !res.Contains("Error: The wallet does not exists.");
+        }
+
+        public async Task<string> listDids()
+        {
+            return d_didController.list();
+        }
+
+        public async Task<string> createDid(string seed)
+        {
+            return d_didController.create(string seed);
         }
 
         private void setWalletInfo()

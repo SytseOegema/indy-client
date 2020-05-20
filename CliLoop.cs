@@ -7,12 +7,11 @@ namespace indyClient
     {
         static CliPrompt d_prompt = new CliPrompt();
         static PoolController d_pool = new PoolController("sandbox");
-        static DidController d_did = new DidController();
-        static WalletController d_wallet = new WalletController(ref d_did);
+        static WalletController d_wallet = new WalletController();
         static LedgerController d_ledger = new LedgerController(
-            ref d_pool, ref d_did, ref d_wallet);
+            ref d_pool, ref d_wallet);
         static Initialize d_initialize = new Initialize(
-            ref d_did, ref d_wallet, ref d_ledger);
+            ref d_wallet, ref d_ledger);
 
         public static async Task start()
         {
@@ -57,10 +56,10 @@ namespace indyClient
                         Console.WriteLine(res);
                         break;
                     case "did list":
-                        await d_did.list();
+                        await d_wallet.listDids();
                         break;
                     case "did create":
-                        await d_did.create(d_prompt.didSeed());
+                        await d_wallet.createDid(d_prompt.didSeed());
                         break;
                     case "schema create":
                         await d_ledger.createSchemaCLI();

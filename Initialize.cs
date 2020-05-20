@@ -11,16 +11,13 @@ namespace indyClient
 {
     class Initialize
     {
-        private DidController d_didController;
         private WalletController d_walletController;
         private LedgerController d_ledgerController;
 
         public Initialize(
-        ref DidController didController,
         ref WalletController walletController,
         ref LedgerController ledgerController)
         {
-            d_didController = didController;
             d_walletController = walletController;
             d_ledgerController = ledgerController;
         }
@@ -42,29 +39,23 @@ namespace indyClient
         public async Task createGenesisWallets()
         {
             var exists = await d_walletController.exists("Trustee1");
-            if (!exists)
+            if (exists)
             {
                 Console.WriteLine("Genesis wallets already exists.");
                 return;
             }
 
-            DidController did = new DidController();
-            WalletController wallet = new WalletController(ref did);
+            await d_walletController.create("Trustee1");
+            await d_walletController.open("Trustee1");
+            await d_walletController.createDid("000000000000000000000000Trustee1");
 
-            await wallet.create("Trustee1");
-            await wallet.open("Trustee1");
-            did.setOpenWallet(wallet.getOpenWallet());
-            await did.create("000000000000000000000000Trustee1");
+            await d_walletController.create("Steward1");
+            await d_walletController.open("Steward1");
+            await d_walletController.createDid("000000000000000000000000Steward1");
 
-            await wallet.create("Steward1");
-            await wallet.open("Steward1");
-            did.setOpenWallet(wallet.getOpenWallet());
-            await did.create("000000000000000000000000Steward1");
-
-            await wallet.create("Steward2");
-            await wallet.open("Steward2");
-            did.setOpenWallet(wallet.getOpenWallet());
-            await did.create("000000000000000000000000Steward2");
+            await d_walletController.create("Steward2");
+            await d_walletController.open("Steward2");
+            await d_walletController.createDid("000000000000000000000000Steward2");
             await wallet.close();
         }
 
