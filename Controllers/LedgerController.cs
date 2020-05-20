@@ -106,7 +106,7 @@ namespace indyClient
                 issuerDid,
                 schemaJson,
                 "Tag1",
-                "CL",
+                null,
                 credDefConfigJson);
 
                 // var credDefId = createCredDefResult.CredDefId;
