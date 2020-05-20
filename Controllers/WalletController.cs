@@ -86,6 +86,7 @@ namespace indyClient
 
                     return "wallet " + identifier + " closed";
                 }
+                return "There is no open wallet to close.";
             }
             catch (Exception e)
             {
@@ -95,7 +96,7 @@ namespace indyClient
 
         public async Task<bool> exists(string identifier)
         {
-            string res = open(identifier);
+            string res = await open(identifier).ToString();
 
             return res.Contains("Error: The wallet does not exists.");
         }
