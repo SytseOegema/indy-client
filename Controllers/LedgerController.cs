@@ -139,7 +139,7 @@ namespace indyClient
 
             await createCredDef(name, version, attributes,
                 issuerDid, issuerName, trusteeDid, trusteeName);
-            Console.WriteLine(res);
+            // Console.WriteLine(res);
         }
 
     }
