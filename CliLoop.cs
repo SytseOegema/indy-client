@@ -20,7 +20,7 @@ namespace indyClient
 
         public static async Task run()
         {
-            Initialize()
+            Initialize();
             while (true)
             {
                 setInputLine();
