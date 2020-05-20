@@ -17,7 +17,7 @@ namespace indyClient
         {
             await d_pool.connect(d_pool.getIdentifier());
             var exists = await d_wallet.exists("Trustee1");
-            if (exists.Result)
+            if (exists)
                 Console.WriteLine("jaja");
         }
 
