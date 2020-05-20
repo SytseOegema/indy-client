@@ -83,7 +83,7 @@ namespace indyClient
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                Console.WriteLine($"Error create schema: {e.Message}");
                 return e.Message;
             }
         }
@@ -115,7 +115,7 @@ namespace indyClient
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                Console.WriteLine($"Error make cred def: {e.Message}");
             }
         }
 
