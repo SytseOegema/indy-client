@@ -32,7 +32,18 @@ namespace indyClient
           Console.WriteLine("Bye bye!");
         }
 
+        public void inputUnrecognized()
+        {
+            Console.WriteLine("The command is not recognized.");
+            Console.WriteLine("Try 'help' for a list of available commands.");
+        }
 
+
+
+        public string didSeed()
+        {
+            return consoleInteraction("Specify did seed(may be empty):")
+        }
 
         public string poolName()
         {

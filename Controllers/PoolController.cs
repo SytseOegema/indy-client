@@ -41,6 +41,7 @@ namespace indyClient
             catch (Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");
+                d_identifier = "";
             }
         }
 

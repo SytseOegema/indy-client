@@ -42,16 +42,14 @@ namespace indyClient
                         await d_ledger.initializeWallet(
                             d_prompt.issuerWalletName(),
                             d_prompt.signerWalletName(),
-                            d_prompt.issuerRole()
-                        );
+                            d_prompt.issuerRole());
                         break;
                     case "wallet create":
-                        Console.WriteLine("name of the wallet you would like to create:");
-                        await d_wallet.create(Console.ReadLine());
+                        await d_wallet.create(d_prompt.issuerWalletName());
                         break;
                     case "wallet open":
-                        Console.WriteLine("name of the wallet you would like to open:");
-                        var res = await d_wallet.open(Console.ReadLine());
+                        var res = await d_wallet.open(
+                            d_prompt.issuerWalletName());
                         Console.WriteLine(res);
                         break;
                     case "wallet close":
@@ -62,8 +60,7 @@ namespace indyClient
                         await d_did.list();
                         break;
                     case "did create":
-                        Console.WriteLine("Seed for did(press ENTER if you dont require a seed):");
-                        await d_did.create(Console.ReadLine());
+                        await d_did.create(d_prompt.didSeed());
                         break;
                     case "schema create":
                         await d_ledger.createSchemaCLI();
@@ -82,7 +79,7 @@ namespace indyClient
                         await d_initialize.createGenesisWallets();
                         break;
                     default:
-                        Console.WriteLine("Input is not recognized try 'help' for more info.");
+                        d_prompt.inputUnrecognized();
                         break;
                 }
             }
