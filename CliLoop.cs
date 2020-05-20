@@ -27,7 +27,7 @@ namespace indyClient
                         Console.WriteLine("Exit program!");
                         return;
                     case "wallet setup":
-                        Console.WriteLine("Setup a new wallet with a first did.")
+                        Console.WriteLine("Setup a new wallet with a first did.");
                         Console.WriteLine("Name of the new wallet:");
                         string name = Console.ReadLine();
                         Console.WriteLine("Name of the Trustee that signs the NYM request:");
