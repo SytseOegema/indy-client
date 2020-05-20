@@ -137,7 +137,7 @@ namespace indyClient
             var didListJson = await d_didController.list();
             var issuerDid = JArray.Parse(didListJson)[0]["did"].ToString();
 
-            var res = await createCredDef(name, version, attributes,
+            await createCredDef(name, version, attributes,
                 issuerDid, issuerName, trusteeDid, trusteeName);
             Console.WriteLine(res);
         }
