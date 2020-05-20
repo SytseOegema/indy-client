@@ -95,12 +95,12 @@ namespace indyClient
             var schemaJson = await createSchema(name, version, attributes,
             trusteeDid, trusteeName);
 
-            d_wallet.open(issuerName);
+            d_walletController.open(issuerName);
 
             string credDefConfigJson = "{\"support_revocation\":false}";
 
             var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
-                d_wallet.getOpenWallet(),
+                d_walletController.getOpenWallet(),
                 issuerDid,
                 schemaJson,
                 "Tag1",
@@ -114,11 +114,8 @@ namespace indyClient
 
         public async Task createSchemaCLI()
         {
-            if (!(await d_wallet.isOpen()))
-            {
-                Console.WriteLine("A wallet must be open to create a schema cred def.");
-                return;
-            }
+            Console.WriteLine("Name of credential owner:");
+            string issuerName = Console.ReadLine();
             Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
             Console.WriteLine("Version of the schema: (x.x.x)");
@@ -126,19 +123,24 @@ namespace indyClient
             Console.WriteLine("Attributes of the schema: [\"name\", \"age\"]");
             string attributes = Console.ReadLine();
             Console.WriteLine("did of the issuer: ");
-            string issuerDid = Console.ReadLine();
-            if (issuerDid == "")
+            string trusteeDid = Console.ReadLine();
+            if (trusteeDid == "")
             {
               Console.WriteLine("no did of the issuer specified.");
               Console.WriteLine("Did of Steward1 will be used.");
-              issuerDid = "Th7MpTaRZVRYnPiabds81Y";
+              trusteeDid = "Th7MpTaRZVRYnPiabds81Y";
             }
+            Console.WriteLine("name of the controller(steward): ");
+            string trusteeName = Console.ReadLine();
             Console.WriteLine("name of the issuer: ");
             string issuerName = Console.ReadLine();
 
+            d_walletController.open(issuerName);
+            var didListJson = await d_didController.list();
+            var issuerDid = JArray.Parse(didListJson)[0]["did"].ToString();
 
             var res = await createSchema(name, version, attributes,
-                issuerDid, issuerName);
+                issuerDid, issuerName, trusteeDid, trusteeName);
             Console.WriteLine(res);
         }
 
