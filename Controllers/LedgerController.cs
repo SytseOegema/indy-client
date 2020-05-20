@@ -101,6 +101,10 @@ namespace indyClient
 
                 string credDefConfigJson = "{\"support_revocation\":false}";
 
+                Console.WriteLine(issuerDid);
+                Console.WriteLine(schemaJson);
+                Console.WriteLine(credDefConfigJson);
+
                 var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
                 d_walletController.getOpenWallet(),
                 issuerDid,
