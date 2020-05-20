@@ -38,9 +38,18 @@ namespace indyClient
             string name = Console.ReadLine();
             Console.WriteLine("Version of the schema: (x.x.x)");
             string version = Console.ReadLine();
-            Console.WriteLine("Attributes of the schema: [\\\"name\\\", \\\"age\\\"]");
+            Console.WriteLine("Attributes of the schema: [\"name\", \"age\"]");
             string attributes = Console.ReadLine();
-            Console.WriteLine(name + version + attributes);
+            Console.WriteLine("did of the issuer: ");
+            string issuerDid = Console.ReadLine();
+            if (issuerDid = "")
+            {
+              Console.WriteLine("no did of the issuer specified.")
+              Console.WriteLine("Did of Steward1 will be used.")
+              issuerDid = "";
+            }
+            var res = await createSchema(name, version, attributes, issuerDid);
+            Console.WriteLine(res);
         }
 
 
