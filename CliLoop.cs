@@ -46,7 +46,7 @@ namespace indyClient
                         }
                         break;
                     case "wallet create genesis":
-                        d_initialize.createGenesisWallets();
+                        await d_initialize.createGenesisWallets();
                         break;
                     case "wallet create":
                         Console.WriteLine("name of the wallet you would like to create:");
