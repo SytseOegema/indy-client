@@ -52,7 +52,8 @@ namespace indyClient
             {
                 var keys = await Did.ListMyDidsWithMetaAsync(d_openWallet);
                 Console.WriteLine(keys);
-                return JsonConvert.SerializeObject(keys);
+                return keys;
+                // return JsonConvert.SerializeObject(keys);
             }
             catch (Exception e)
             {
