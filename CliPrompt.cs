@@ -14,16 +14,16 @@ namespace indyClient
         public void helpOptions()
         {
             string options;
-            options = "pool connect: connect to an identity pool.\n";
-            options += "wallet setup: publish new wallet with certified did.\n";
-            options += "wallet create: create new wallet\n";
-            options += "wallet open: open existing wallet\n";
-            options += "wallet close: close opened wallet\n";
-            options += "did list: list dids in opened wallet\n";
-            options += "did create: create new did in opened wallet\n";
-            options += "create genesis wallets: creates wallets for Trustee1, Steward1, Steward2\n";
-            options += "reset genesis: does not work :)\n";
-            options += "exit: quit program\n";
+            options = "pool connect:: connect to an identity pool.\n";
+            options += "wallet setup:: publish new wallet with certified did.\n";
+            options += "wallet create:: create new wallet\n";
+            options += "wallet open:: open existing wallet\n";
+            options += "wallet close:: close opened wallet\n";
+            options += "did list:: list dids in opened wallet\n";
+            options += "did create:: create new did in opened wallet\n";
+            options += "create genesis wallets:: creates wallets for Trustee1, Steward1, Steward2\n";
+            options += "reset genesis:: does not work :)\n";
+            options += "exit:: quit program\n";
             Console.WriteLine(options);
         }
 
@@ -32,7 +32,7 @@ namespace indyClient
           Console.WriteLine("Bye bye!");
         }
 
-        
+
 
         public string poolName()
         {
