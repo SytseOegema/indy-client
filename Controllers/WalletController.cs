@@ -48,7 +48,7 @@ namespace indyClient
             }
         }
 
-        public async Task open(string identifier)
+        public async Task<string> open(string identifier)
         {
             await close();
 
@@ -59,17 +59,18 @@ namespace indyClient
             {
               d_openWallet = await Wallet.OpenWalletAsync(d_walletConfig, d_walletCredentials);
 
-              Console.WriteLine("wallet " + d_identifier + " opened");
-
               d_didController.setOpenWallet(d_openWallet);
+
+              return "wallet " + d_identifier + " opened";
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                d_identifier = "";
+                return $"Error: {e.Message}";
             }
         }
 
-        public async Task close()
+        public async Task<string> close()
         {
             try
             {
@@ -77,21 +78,26 @@ namespace indyClient
                 if (isOpen())
                 {
                     await d_openWallet.CloseAsync();
-                    Console.WriteLine("wallet " + d_identifier + " closed");
+
+                    string identifier = d_identifier;
                     resetWalletInfo();
+
+                    d_didController.setOpenWallet(null);
+
+                    return "wallet " + identifier + " closed";
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                return $"Error: {e.Message}";
             }
         }
 
         public async Task<bool> exists(string identifier)
         {
-            var res = open(identifier);
+            string res = open(identifier);
 
-            return res.Contains("Error: The wallet does not exists."); 
+            return res.Contains("Error: The wallet does not exists.");
         }
 
         private void setWalletInfo()

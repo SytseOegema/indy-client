@@ -51,11 +51,12 @@ namespace indyClient
                         break;
                     case "wallet open":
                         Console.WriteLine("name of the wallet you would like to open:");
-                        await d_wallet.open(Console.ReadLine());
+                        var res = await d_wallet.open(Console.ReadLine());
+                        Console.WriteLine(res);
                         break;
                     case "wallet close":
-                        await d_wallet.close();
-                        d_did.setOpenWallet(null);
+                        res = await d_wallet.close();
+                        Console.WriteLine(res);
                         break;
                     case "did list":
                         await d_did.list();
