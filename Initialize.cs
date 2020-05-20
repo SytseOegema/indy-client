@@ -42,7 +42,7 @@ namespace indyClient
         public async Task createGenesisWallets()
         {
             var exists = await d_walletController.exists("Trustee1");
-            if (exists)
+            if (!exists)
             {
                 Console.WriteLine("Genesis wallets already exists.");
                 return;
