@@ -32,18 +32,6 @@ namespace indyClient
             }
         }
 
-        public async Task<string> createCredDef()
-        {
-
-            var res = AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
-                issuerWallet,
-                issuerDid,
-                schemaJson,
-                credDefTag,
-                null,
-                credDefConfigJson);
-        }
-
         public async Task createSchemaCLI()
         {
             Console.WriteLine("Name of the schema:");

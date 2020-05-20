@@ -31,7 +31,7 @@ namespace indyClient
                         await d_pool.connect(Console.ReadLine());
                         break;
                     case "wallet setup":
-                            d_initialize.WalletSetupCLI();
+                        await d_initialize.WalletSetupCLI();
                         break;
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
@@ -60,7 +60,7 @@ namespace indyClient
                         await d_did.create(Console.ReadLine());
                         break;
                     case "schema create":
-                        d_ledger.createSchemaCLI();
+                        await d_ledger.createSchemaCLI();
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
