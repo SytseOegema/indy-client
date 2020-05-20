@@ -98,6 +98,8 @@ namespace indyClient
         {
             var res = await open(identifier);
 
+            await close();
+
             res.ToString();
 
             return !res.Contains("Error: The wallet does not exists.");
