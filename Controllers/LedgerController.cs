@@ -95,7 +95,7 @@ namespace indyClient
             var schemaJson = await createSchema(name, version, attributes,
             trusteeDid, trusteeName);
 
-            d_walletController.open(issuerName);
+            await d_walletController.open(issuerName);
 
             string credDefConfigJson = "{\"support_revocation\":false}";
 
@@ -114,8 +114,6 @@ namespace indyClient
 
         public async Task createSchemaCLI()
         {
-            Console.WriteLine("Name of credential owner:");
-            string issuerName = Console.ReadLine();
             Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
             Console.WriteLine("Version of the schema: (x.x.x)");
@@ -135,11 +133,11 @@ namespace indyClient
             Console.WriteLine("name of the issuer: ");
             string issuerName = Console.ReadLine();
 
-            d_walletController.open(issuerName);
+            await d_walletController.open(issuerName);
             var didListJson = await d_didController.list();
             var issuerDid = JArray.Parse(didListJson)[0]["did"].ToString();
 
-            var res = await createSchema(name, version, attributes,
+            var res = await createCredDef(name, version, attributes,
                 issuerDid, issuerName, trusteeDid, trusteeName);
             Console.WriteLine(res);
         }
