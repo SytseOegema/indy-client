@@ -16,7 +16,8 @@ namespace indyClient
         private static async Task Initialize()
         {
             await d_pool.connect(d_pool.getIdentifier());
-            Console.WriteLine(d_wallet.exists("Trustee1"));
+            if (d_wallet.exists("Trustee1"))
+            Console.WriteLine("jaja");
         }
 
         public static async Task run()
