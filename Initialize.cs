@@ -83,8 +83,8 @@ namespace indyClient
             // var trusteeDid = JObject[0].Parse(didListJson).Children()["did"].ToString();
             Console.WriteLine(trusteeDid);
             //
-            // await d_ledgerController.sendNymRequest(trusteeWalletName,
-            //     trusteeDid, did, verkey, "", "TRUSTEE");
+            await d_ledgerController.sendNymRequest(trusteeWalletName,
+                trusteeDid, did, verkey, "", "TRUSTEE");
         }
     }
 }
