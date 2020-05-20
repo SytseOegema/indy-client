@@ -96,7 +96,9 @@ namespace indyClient
 
         public async Task<bool> exists(string identifier)
         {
-            string res = await open(identifier).ToString();
+            var res = await open(identifier);
+
+            res.ToString();
 
             return res.Contains("Error: The wallet does not exists.");
         }
