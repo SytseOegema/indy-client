@@ -13,19 +13,19 @@ namespace indyClient
     {
         public string issuerWalletName()
         {
-            Console.WriteLine("Wallet name of the issuer:")
+            Console.WriteLine("Wallet name of the issuer:");
             return Console.ReadLine();
         }
 
         public string signerWalletName()
         {
-            Console.WriteLine("Wallet name of the signer:")
+            Console.WriteLine("Wallet name of the signer:");
             return Console.ReadLine();
         }
 
         public string issuerRole()
         {
-            Console.WriteLine("What role has the issuer:")
+            Console.WriteLine("What role has the issuer:");
             return Console.ReadLine();
         }
     }

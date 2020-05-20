@@ -17,7 +17,8 @@ namespace indyClient
         {
             Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
                 + ".");
-            await d_pool.connect(d_pool.getIdentifier());
+            Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
+            // await d_pool.connect(d_pool.getIdentifier());
             await run();
         }
 
