@@ -32,7 +32,7 @@ namespace indyClient
                 switch (input)
                 {
                     case "exit":
-                        Console.WriteLine("Bye Bye!");
+                        d_prompt.exitMessage();
                         return;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
@@ -123,19 +123,6 @@ namespace indyClient
             }
         }
 
-        static void helpOptions()
-        {
-            string options;
-            options = "pool connect: connect to an identity pool.\n";
-            options += "wallet setup: publish new wallet with certified did.\n";
-            options += "wallet create: ";
-            options += "wallet open: ";
-            options += "wallet close: ";
-            options += "did list: ";
-            options += "did create: ";
-            options += "create genesis wallets: ";
-            options += "reset genesis: ";
-            Console.WriteLine(options);
-        }
+
     }
 }
