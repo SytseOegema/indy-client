@@ -20,8 +20,8 @@ namespace indyClient
         {
             try
             {
-                var schema = await AnonCreds.IssuerCreateSchemaAsync(name, version,
-                    schemaJson, issuerDid);
+                var schema = await AnonCreds.IssuerCreateSchemaAsync(issuerDid, name, version,
+                    schemaJson);
 
                 return  JsonConvert.SerializeObject(schema);
             }
@@ -32,7 +32,7 @@ namespace indyClient
             }
         }
 
-        public void createSchemaCLI()
+        public async Task createSchemaCLI()
         {
             Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
@@ -42,12 +42,13 @@ namespace indyClient
             string attributes = Console.ReadLine();
             Console.WriteLine("did of the issuer: ");
             string issuerDid = Console.ReadLine();
-            if (issuerDid = "")
+            if (issuerDid == "")
             {
-              Console.WriteLine("no did of the issuer specified.")
-              Console.WriteLine("Did of Steward1 will be used.")
-              issuerDid = "";
+              Console.WriteLine("no did of the issuer specified.");
+              Console.WriteLine("Did of Steward1 will be used.");
+              issuerDid = "Th7MpTaRZVRYnPiabds81Y";
             }
+	    Console.WriteLine(name + version + attributes + issuerDid);
             var res = await createSchema(name, version, attributes, issuerDid);
             Console.WriteLine(res);
         }
