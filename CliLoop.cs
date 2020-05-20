@@ -77,10 +77,10 @@ namespace indyClient
         static void setInputLine()
         {
             if (d_pool.isOpen())
-                Console.Write(d_pool.getIdentifier + "|")
+                Console.Write(d_pool.getIdentifier + "|");
 
             if (d_wallet.isOpen())
-                Console.Write(d_wallet.getIdentifier)
+                Console.Write(d_wallet.getIdentifier);
 
           Console.Write("> ");
 
