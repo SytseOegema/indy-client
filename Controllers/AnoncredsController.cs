@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-using Hyperledger.Indy.AnoncredsApi;
+using Hyperledger.Indy.AnonCredsApi;
 
 
 namespace indyClient
