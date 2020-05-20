@@ -15,8 +15,10 @@ namespace indyClient
 
         public static async Task start()
         {
-                await d_pool.connect(d_pool.getIdentifier());
-                await run();
+            Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
+                + ".");
+            await d_pool.connect(d_pool.getIdentifier());
+            await run();
         }
 
         public static async Task run()
@@ -35,7 +37,11 @@ namespace indyClient
                         await d_pool.connect(Console.ReadLine());
                         break;
                     case "wallet setup":
-                        await d_initialize.WalletSetupCLI();
+                        await d_ledger.initializeWallet(
+                            CliPrompt.issuerWalletName(),
+                            CliPrompt.signerWalletName(),
+                            CliPrompt.issuerRole()
+                        );
                         break;
                     case "wallet create":
                         Console.WriteLine("name of the wallet you would like to create:");
@@ -119,7 +125,7 @@ namespace indyClient
         {
             string options;
             options = "pool connect: connect to an identity pool.\n";
-            options += "wallet setup: ";
+            options += "wallet setup: publish new wallet with certified did.\n";
             options += "wallet create: ";
             options += "wallet open: ";
             options += "wallet close: ";

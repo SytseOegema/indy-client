@@ -125,6 +125,29 @@ namespace indyClient
             }
         }
 
+
+        public async Task initializeWallet(string myWalletName,
+            string trusteeWalletName, string role)
+        {
+            await d_walletController.close();
+
+            await d_walletController.create(myWalletName);
+            await d_walletController.open(myWalletName);
+
+            d_didController.setOpenWallet(d_walletController.getOpenWallet());
+            var didJson = await d_didController.create("");
+
+            var did = JObject.Parse(didJson)["Did"].ToString();
+            var verkey = JObject.Parse(didJson)["VerKey"].ToString();
+
+            await d_walletController.open(trusteeWalletName);
+            var didListJson = await d_didController.list();
+
+            await sendNymRequest(trusteeWalletName,
+                did, verkey, "", role);
+            Console.WriteLine("Identity published to ledger");
+        }
+
         public async Task createSchemaCLI()
         {
             Console.WriteLine("Name of the schema:");
