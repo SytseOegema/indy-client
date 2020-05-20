@@ -43,7 +43,10 @@ namespace indyClient
         {
             var exists = await d_walletController.exists("Trustee1");
             if (exists)
+            {
+                Console.WriteLine("Genesis wallets already exists.");
                 return;
+            }
 
             DidController did = new DidController();
             WalletController wallet = new WalletController(ref did);
