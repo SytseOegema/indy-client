@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 
 
 using Hyperledger.Indy.LedgerApi;
+using Hyperledger.Indy.AnonCredsApi;
 
 
 namespace indyClient
@@ -15,6 +16,7 @@ namespace indyClient
         private PoolController d_poolController;
         private DidController d_didController;
         private WalletController d_walletController;
+
 
         public LedgerController(ref PoolController poolController,
             ref DidController didController,
@@ -56,5 +58,63 @@ namespace indyClient
                 Console.WriteLine($"Error: {e.Message}");
             }
         }
+
+        public async Task<string> createSchema(string name, string version,
+            string attributes, string issuerDid, string issuerName)
+        {
+            try
+            {
+                // issuer schema
+                var schema = await AnonCreds.IssuerCreateSchemaAsync(
+                    issuerDid, name, version, attributes);
+
+                // build schema
+                var buildschema = await Ledger.BuildSchemaRequestAsync(
+                    issuerDid, schema.schemaJson
+                )
+
+                WalletController issuerWal = new WalletController();
+                await issuerWal.open(issuerName);
+
+                // publish schema to ledger
+                var ledgerJSON = await Ledger.SignAndSubmitRequestAsync(
+                    d_poolController.getOpenPool(),
+                    issuerWal.getOpenWallet(),
+                    issuerDid,
+                    buildschema);
+
+                return  JsonConvert.SerializeObject(ledgerJSON);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+                return e.Message;
+            }
+        }
+
+        public async Task createSchemaCLI()
+        {
+            Console.WriteLine("Name of the schema:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Version of the schema: (x.x.x)");
+            string version = Console.ReadLine();
+            Console.WriteLine("Attributes of the schema: [\"name\", \"age\"]");
+            string attributes = Console.ReadLine();
+            Console.WriteLine("did of the issuer: ");
+            string issuerDid = Console.ReadLine();
+            if (issuerDid == "")
+            {
+              Console.WriteLine("no did of the issuer specified.");
+              Console.WriteLine("Did of Steward1 will be used.");
+              issuerDid = "Th7MpTaRZVRYnPiabds81Y";
+            }
+            Console.WriteLine("name of the issuer: ");
+            string issuerName = Console.ReadLine();
+
+            var res = await createSchema(name, version, attributes,
+                issuerDid, issuerName);
+            Console.WriteLine(res);
+        }
+
     }
 }

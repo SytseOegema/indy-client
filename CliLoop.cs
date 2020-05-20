@@ -12,7 +12,6 @@ namespace indyClient
             ref d_pool, ref d_did, ref d_wallet);
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
-        static AnoncredsController d_anoncreds = new AnoncredsController();
 
 
         public static async Task run()
@@ -61,7 +60,7 @@ namespace indyClient
                         await d_did.create(Console.ReadLine());
                         break;
                     case "schema create":
-                        d_anoncreds.createSchemaCLI();
+                        d_ledger.createSchemaCLI();
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");

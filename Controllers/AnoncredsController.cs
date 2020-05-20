@@ -20,8 +20,8 @@ namespace indyClient
         {
             try
             {
-                var schema = await AnonCreds.IssuerCreateSchemaAsync(issuerDid, name, version,
-                    schemaJson);
+                var schema = await AnonCreds.IssuerCreateSchemaAsync(
+                    issuerDid, name, version, schemaJson);
 
                 return  JsonConvert.SerializeObject(schema);
             }
@@ -30,6 +30,18 @@ namespace indyClient
                 Console.WriteLine($"Error: {e.Message}");
                 return e.Message;
             }
+        }
+
+        public async Task<string> createCredDef()
+        {
+
+            var res = AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+                issuerWallet,
+                issuerDid,
+                schemaJson,
+                credDefTag,
+                null,
+                credDefConfigJson);
         }
 
         public async Task createSchemaCLI()
@@ -48,10 +60,11 @@ namespace indyClient
               Console.WriteLine("Did of Steward1 will be used.");
               issuerDid = "Th7MpTaRZVRYnPiabds81Y";
             }
-	    Console.WriteLine(name + version + attributes + issuerDid);
             var res = await createSchema(name, version, attributes, issuerDid);
             Console.WriteLine(res);
         }
+
+
 
 
     }
