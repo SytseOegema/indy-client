@@ -16,7 +16,7 @@ namespace indyClient
 
         public static async Task run()
         {
-            string input = "";
+            string input = "pool connect";
             while (true)
             {
                 Console.Write("> ");
@@ -26,17 +26,12 @@ namespace indyClient
                     case "exit":
                         Console.WriteLine("Exit program!");
                         return;
-                    case "wallet setup":
-                        Console.WriteLine("Setup a new wallet with a first did.");
-                        Console.WriteLine("Name of the new wallet:");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("Name of the Trustee that signs the NYM request:");
-                        await d_initialize.setupIdentity(name,
-                            Console.ReadLine());
-                        break;
                     case "pool connect":
                         Console.WriteLine("Name of the pool:");
                         await d_pool.connect(Console.ReadLine());
+                        break;
+                    case "wallet setup":
+                            WalletSetupCLI();
                         break;
                     case "reset":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
@@ -61,8 +56,11 @@ namespace indyClient
                         await d_did.list();
                         break;
                     case "did create":
-                        Console.WriteLine("Do you want to use a seed to create the did?");
+                        Console.WriteLine("Seed for did(press ENTER if you dont require a seed):");
                         await d_did.create(Console.ReadLine());
+                        break;
+                    case "schema create":
+                        SchemaCreateCLI();
                         break;
                     case "help":
                         Console.WriteLine("The following commands are available:");
@@ -98,6 +96,29 @@ namespace indyClient
                         break;
                 }
             }
+        }
+
+        private void WalletSetupCLI()
+        {
+          Console.WriteLine("Setup a new wallet with a first did.");
+          Console.WriteLine("Name of the new wallet:");
+          string name = Console.ReadLine();
+          Console.WriteLine("Name of the Trustee that signs the NYM request:");
+          string trusteeName = Console.ReadLine();
+          Console.WriteLine("The Role of the ID of the new wallet(TRUSTEE, STEWARD, ENDORSER, IDENTITY_OWNER):")
+          await d_initialize.setupIdentity(name, trusteeName,
+              Console.ReadLine());
+        }
+
+        private void SchemaCreateCLI()
+        {
+            Console.WriteLine("Name of the schema:")
+            string name = Console.ReadLine();
+            Console.WriteLine("Version of the schema: (x.x.x)")
+            string version = Console.ReadLine();
+            Console.WriteLine("Attributes of the schema: ["/name/", /"age/"]")
+            string attributes = Console.ReadLine();
+            Console.WriteLine(name + version + attributes)
         }
     }
 }

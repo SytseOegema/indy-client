@@ -62,7 +62,7 @@ namespace indyClient
         }
 
         public async Task setupIdentity(string myWalletName,
-            string trusteeWalletName)
+            string trusteeWalletName, string role)
         {
             await d_walletController.close();
 
@@ -79,7 +79,7 @@ namespace indyClient
             var didListJson = await d_didController.list();
 
             await d_ledgerController.sendNymRequest(trusteeWalletName,
-                did, verkey, "", "TRUSTEE");
+                did, verkey, "", role);
         }
     }
 }
