@@ -105,20 +105,20 @@ namespace indyClient
           string name = Console.ReadLine();
           Console.WriteLine("Name of the Trustee that signs the NYM request:");
           string trusteeName = Console.ReadLine();
-          Console.WriteLine("The Role of the ID of the new wallet(TRUSTEE, STEWARD, ENDORSER, IDENTITY_OWNER):")
+          Console.WriteLine("The Role of the ID of the new wallet(TRUSTEE, STEWARD, ENDORSER, IDENTITY_OWNER):");
           await d_initialize.setupIdentity(name, trusteeName,
               Console.ReadLine());
         }
 
         private void SchemaCreateCLI()
         {
-            Console.WriteLine("Name of the schema:")
+            Console.WriteLine("Name of the schema:");
             string name = Console.ReadLine();
-            Console.WriteLine("Version of the schema: (x.x.x)")
+            Console.WriteLine("Version of the schema: (x.x.x)");
             string version = Console.ReadLine();
-            Console.WriteLine("Attributes of the schema: ["/name/", /"age/"]")
+            Console.WriteLine("Attributes of the schema: [\\\"name\\\", \\\"age\\\"]");
             string attributes = Console.ReadLine();
-            Console.WriteLine(name + version + attributes)
+            Console.WriteLine(name + version + attributes);
         }
     }
 }
