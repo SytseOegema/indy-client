@@ -13,13 +13,18 @@ namespace indyClient
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
 
+        private static async Task Initialize()
+        {
+            await d_pool.connect(d_pool.getIdentifier());
+        }
+
         public static async Task run()
         {
-            await Initialize();
+            Initialize()
             while (true)
             {
                 setInputLine();
-                input = Console.ReadLine();
+                var input = Console.ReadLine();
                 switch (input)
                 {
                     case "exit":
@@ -77,10 +82,10 @@ namespace indyClient
         static void setInputLine()
         {
             if (d_pool.isOpen())
-                Console.Write(d_pool.getIdentifier + "|");
+                Console.Write(d_pool.getIdentifier() + "|");
 
             if (d_wallet.isOpen())
-                Console.Write(d_wallet.getIdentifier);
+                Console.Write(d_wallet.getIdentifier());
 
           Console.Write("> ");
 
