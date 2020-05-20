@@ -100,7 +100,7 @@ namespace indyClient
           d_identifier = "";
         }
 
-        private bool isOpen()
+        public bool isOpen()
         {
             return d_identifier != "";
         }

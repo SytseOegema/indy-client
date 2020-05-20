@@ -9,9 +9,24 @@ namespace indyClient
 {
     class PoolController
     {
+        private string d_identifier;
         private Pool d_openPool;
-        public PoolController()
-        {}
+
+        public PoolController(string identifier)
+        {
+            d_identifier = identifier;
+            connect(identifier);
+        }
+
+        public string getIdentifier()
+        {
+            return d_identifier;
+        }
+
+        public bool isOpen()
+        {
+            return d_identifier != "";
+        }
 
         public Pool getOpenPool()
         {
@@ -32,12 +47,13 @@ namespace indyClient
 
         public async Task close()
         {
-            if (d_openPool == null)
+            if (!isOpen())
                 return;
 
             try
             {
                 await d_openPool.CloseAsync();
+                d_identifier = "";
             }
             catch (Exception e)
             {

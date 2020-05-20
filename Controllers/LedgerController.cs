@@ -33,7 +33,6 @@ namespace indyClient
             try
             {
                 // open trustee wallet
-                string originalIdentifier =
                 d_walletController.getIdentifier();
                 await d_walletController.open(trusteeName);
 
@@ -50,8 +49,6 @@ namespace indyClient
                     d_walletController.getOpenWallet(),
                     trusteeDid,
                     nymJson);
-
-                await d_walletController.open(originalIdentifier);
             }
             catch (Exception e)
             {

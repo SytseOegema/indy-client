@@ -5,7 +5,7 @@ namespace indyClient
 {
     public static class CliLoop
     {
-        static PoolController d_pool = new PoolController();
+        static PoolController d_pool = new PoolController("sandbox");
         static DidController d_did = new DidController();
         static WalletController d_wallet = new WalletController(ref d_did);
         static LedgerController d_ledger = new LedgerController(
@@ -13,13 +13,12 @@ namespace indyClient
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
 
-
         public static async Task run()
         {
-            string input = "pool connect";
+            await Initialize();
             while (true)
             {
-                Console.Write("> ");
+                setInputLine();
                 input = Console.ReadLine();
                 switch (input)
                 {
@@ -73,6 +72,18 @@ namespace indyClient
                         break;
                 }
             }
+        }
+
+        static void setInputLine()
+        {
+            if (d_pool.isOpen())
+                Console.Write(d_pool.getIdentifier + "|")
+
+            if (d_wallet.isOpen())
+                Console.Write(d_wallet.getIdentifier)
+
+          Console.Write("> ");
+
         }
 
         static bool ensurer()
