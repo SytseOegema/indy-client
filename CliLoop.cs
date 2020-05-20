@@ -16,11 +16,12 @@ namespace indyClient
         private static async Task Initialize()
         {
             await d_pool.connect(d_pool.getIdentifier());
+            Console.WriteLine(d_wallet.exists("Trustee1"));
         }
 
         public static async Task run()
         {
-            Initialize();
+            await Initialize();
             while (true)
             {
                 setInputLine();

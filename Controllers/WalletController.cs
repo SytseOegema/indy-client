@@ -87,6 +87,13 @@ namespace indyClient
             }
         }
 
+        public async Task<bool> exists(string identifier)
+        {
+            var res = open(identifier);
+
+            return res.Contains("Error: The wallet does not exists."); 
+        }
+
         private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
