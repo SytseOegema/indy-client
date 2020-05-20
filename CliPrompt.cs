@@ -42,7 +42,7 @@ namespace indyClient
 
         public string didSeed()
         {
-            return consoleInteraction("Specify did seed(may be empty):")
+            return consoleInteraction("Specify did seed(may be empty):");
         }
 
         public string poolName()
