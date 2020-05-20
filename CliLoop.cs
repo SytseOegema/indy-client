@@ -9,7 +9,7 @@ namespace indyClient
         static DidController d_did = new DidController();
         static WalletController d_wallet = new WalletController(ref d_did);
         static LedgerController d_ledger = new LedgerController(
-            ref d_pool, ref d_wallet);
+            ref d_pool, ref d_did, ref d_wallet);
         static Initialize d_initialize = new Initialize(
             ref d_did, ref d_wallet, ref d_ledger);
 

@@ -13,12 +13,15 @@ namespace indyClient
     class LedgerController
     {
         private PoolController d_poolController;
+        private DidController d_didController;
         private WalletController d_walletController;
 
         public LedgerController(ref PoolController poolController,
+            ref DidController didController
             ref WalletController walletController)
         {
             d_poolController = poolController;
+            d_didController = didController;
             d_walletController = walletController;
         }
 
@@ -32,8 +35,7 @@ namespace indyClient
                 d_walletController.getIdentifier();
                 await d_walletController.open(trusteeName);
 
-                DidController didController = new DidController();
-                var didListJson = await didController.list();
+                var didListJson = await d_didController.list();
                 var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
 
                 // build nym request for owner of did
@@ -46,8 +48,6 @@ namespace indyClient
                     d_walletController.getOpenWallet(),
                     trusteeDid,
                     nymJson);
-
-                Console.WriteLine("ID created: " + nymResponseJson);
 
                 await d_walletController.open(originalIdentifier);
             }
