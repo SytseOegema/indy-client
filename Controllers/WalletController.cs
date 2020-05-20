@@ -107,12 +107,12 @@ namespace indyClient
 
         public async Task<string> listDids()
         {
-            return d_didController.list();
+            return await d_didController.list();
         }
 
         public async Task<string> createDid(string seed)
         {
-            return d_didController.create(seed);
+            return await d_didController.create(seed);
         }
 
         private void setWalletInfo()

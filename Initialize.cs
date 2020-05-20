@@ -56,7 +56,7 @@ namespace indyClient
             await d_walletController.create("Steward2");
             await d_walletController.open("Steward2");
             await d_walletController.createDid("000000000000000000000000Steward2");
-            await wallet.close();
+            await d_walletController.close();
         }
 
 
