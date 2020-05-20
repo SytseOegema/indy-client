@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 using Hyperledger.Indy.LedgerApi;
 
@@ -29,6 +31,9 @@ namespace indyClient
                 string originalIdentifier =
                 d_walletController.getIdentifier();
                 await d_walletController.open(trusteeName);
+
+                DidController didController = new DidController();
+                var didListJson = await didController.list();
                 var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
 
                 // build nym request for owner of did
