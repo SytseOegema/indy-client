@@ -69,7 +69,7 @@ namespace indyClient
                         await d_ledger.createSchemaCLI();
                         break;
                     case "help":
-                        helpOptions();
+                        d_prompt.helpOptions();
                         break;
                     case "reset genesis":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");

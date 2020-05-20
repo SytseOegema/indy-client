@@ -11,7 +11,7 @@ namespace indyClient
 {
     class CliPrompt
     {
-        public string helpOptions()
+        public void helpOptions()
         {
             string options;
             options = "pool connect: connect to an identity pool.\n";
@@ -31,6 +31,8 @@ namespace indyClient
         {
           Console.WriteLine("Bye bye!");
         }
+
+        
 
         public string poolName()
         {
