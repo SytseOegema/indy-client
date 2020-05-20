@@ -116,7 +116,8 @@ namespace indyClient
 
                 // var credDefId = createCredDefResult.CredDefId;
                 // var credDefJson = createCredDefResult.CredDefJson;
-                Console.WriteLine(res);
+                Console.WriteLine(res.CredDefId);
+                Console.WriteLine(res.CredDefJson);
             }
             catch (Exception e)
             {
