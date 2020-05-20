@@ -71,7 +71,7 @@ namespace indyClient
                 // build schema
                 var buildschema = await Ledger.BuildSchemaRequestAsync(
                     issuerDid, schema.schemaJson
-                )
+                );
 
                 WalletController issuerWal = new WalletController();
                 await issuerWal.open(issuerName);
