@@ -137,7 +137,7 @@ namespace indyClient
             }
             catch (Exception e)
             {
-                return $"Error: {e.Message}";
+                Console.WriteLine($"Error: {e.Message}");
             }
         }
 
