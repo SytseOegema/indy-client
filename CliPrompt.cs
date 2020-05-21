@@ -40,6 +40,21 @@ namespace indyClient
 
 
 
+        public string recordType()
+        {
+            return consoleInteraction("Record Type:");
+        }
+
+        public string walletQuery()
+        {
+            return consoleInteraction("Wallet Query in JSON");
+        }
+
+        public string walletOptions()
+        {
+            return consoleInteraction("Wallet query options in JSON");
+        }
+
         public string didSeed()
         {
             return consoleInteraction("Specify did seed(may be empty):");

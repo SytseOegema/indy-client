@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
+using Hyperledger.Indy.NonSecretsApi;
 
 
 
@@ -113,6 +114,24 @@ namespace indyClient
         public async Task<string> createDid(string seed)
         {
             return await d_didController.create(seed);
+        }
+
+        public async Task<string> getRecord(string type,
+            string queryJson, string optionsJson)
+        {
+            try
+            {
+                var list = await NonSecrets.OpenSearchAsync(
+                    d_wallet, type, queryJson, optionsJson);
+
+                var res = await NonSecrets.FetchNextRecordsAsync(
+                    d_wallet, list, 1);
+                return res;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
         }
 
         private void setWalletInfo()
