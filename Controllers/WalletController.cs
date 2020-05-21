@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
 using Hyperledger.Indy.NonSecretsApi;
+using Hyperledger.Indy.AnonCredsApi;
 
 
 
@@ -114,6 +115,26 @@ namespace indyClient
         public async Task<string> createDid(string seed)
         {
             return await d_didController.create(seed);
+        }
+
+        public async Task getCredentials(string filterJson)
+        {
+            if (!isOpen())
+            {
+                Console.WriteLine("There must be a open wallet.")
+                return ;
+            }
+
+            try
+            {
+                var creds = await AnonCreds.ProverGetCredentialsAsync(
+                    d_openWallet, filterJson);
+                    Console.WriteLine(creds);
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
         }
 
         public async Task<string> addRecord(string type,

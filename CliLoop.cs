@@ -47,6 +47,10 @@ namespace indyClient
                             )
                         );
                         break;
+                    case "wallet credential get":
+                        await d_wallet.getCredentials(
+                            d_prompt.walletCredentialsJson());
+                        break;
                     case "wallet get record":
                         var record = await d_wallet.getRecord(
                             d_prompt.recordType(),

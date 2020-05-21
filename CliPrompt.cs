@@ -95,6 +95,25 @@ namespace indyClient
             return consoleInteraction("What role has the issuer:");
         }
 
+        public string walletCredentialsJson()
+        {
+            var input = "{";
+            Console.WriteLine("Schema id (optional):")
+            input += "\"schema_id\": \"" + Console.ReadLine() + "\",";
+            Console.WriteLine("Issuer did (optional):")
+            input += "\"schema_issuer_did\": \"" + Console.ReadLine() + "\",";
+            Console.WriteLine("Schema name (optional):")
+            input += "\"schema_name\": \"" + Console.ReadLine() + "\",";
+            Console.WriteLine("Schema version (optional):")
+            input += "\"schema_version\": \"" + Console.ReadLine() + "\",";
+            Console.WriteLine("Issuer did (optional):")
+            input += "\"issuer_did\": \"" + Console.ReadLine() + "\",";
+            Console.WriteLine("Credential definition id (optional):")
+            input += "\"cred_def_id\": \"" + Console.ReadLine() + "\"";
+            input += "}";
+            return input;
+        }
+
         private string consoleInteraction(string definition)
         {
             Console.WriteLine(definition);
