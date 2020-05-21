@@ -131,8 +131,9 @@ namespace indyClient
                     d_openWallet, walletQuery);
                     Console.WriteLine(creds);
 
-                    Console.WriteLine(await NonSecrets.FetchNextRecordsAsync(
-                    d_openWallet, creds, 1));
+                var res = await NonSecrets.FetchNextRecordsAsync(
+                d_openWallet, creds, 1);
+                Console.WriteLine(res);
             }
             catch (Exception e)
             {
