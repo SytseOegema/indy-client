@@ -117,7 +117,7 @@ namespace indyClient
             return await d_didController.create(seed);
         }
 
-        public async Task getCredentials(string filterJson)
+        public async Task getCredentials(string walletQuery)
         {
             if (!isOpen())
             {
@@ -127,9 +127,12 @@ namespace indyClient
 
             try
             {
-                var creds = await AnonCreds.ProverGetCredentialsAsync(
-                    d_openWallet, filterJson);
+                var creds = await AnonCreds.ProverSearchCredentialsAsync(
+                    d_openWallet, walletQuery);
                     Console.WriteLine(creds);
+
+                    Console.WriteLine(await NonSecrets.FetchNextRecordsAsync(
+                    d_openWallet, creds, 1));
             }
             catch (Exception e)
             {

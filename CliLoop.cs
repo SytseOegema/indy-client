@@ -49,7 +49,7 @@ namespace indyClient
                         break;
                     case "wallet credential get":
                         await d_wallet.getCredentials(
-                            d_prompt.walletCredentialsJson());
+                            d_prompt.walletQuery());
                         break;
                     case "wallet get record":
                         var record = await d_wallet.getRecord(
