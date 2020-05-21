@@ -117,7 +117,7 @@ namespace indyClient
         }
 
         public async Task<string> addRecord(string type,
-            string type, string id, string value, string tagsJson)
+            string id, string value, string tagsJson)
         {
             try
             {
