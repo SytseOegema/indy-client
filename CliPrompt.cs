@@ -40,6 +40,21 @@ namespace indyClient
 
 
 
+        public string recordTagsJson()
+        {
+            return consoleInteraction("Records Tags in JSON:");
+        }
+
+        public string recordValue()
+        {
+            return consoleInteraction("Record Value:");
+        }
+
+        public string recordId()
+        {
+            return consoleInteraction("Record ID:");
+        }
+
         public string recordType()
         {
             return consoleInteraction("Record Type:");

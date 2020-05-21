@@ -116,16 +116,13 @@ namespace indyClient
             return await d_didController.create(seed);
         }
 
-        public async Task<string> getRecord(string type,
-            string queryJson, string optionsJson)
+        public async Task<string> addRecord(string type,
+            string type, string id, string value, string tagsJson)
         {
             try
             {
-                var list = await NonSecrets.OpenSearchAsync(
-                    d_openWallet, type, queryJson, optionsJson);
-
-                var res = await NonSecrets.FetchNextRecordsAsync(
-                    d_openWallet, list, 1);
+                var res = await NonSecrets.AddRecordAsync(
+                    d_openWallet, type, id, value, tagsJson);
                 return res;
             }
             catch (Exception e)
@@ -133,6 +130,25 @@ namespace indyClient
                 return $"Error: {e.Message}";
             }
         }
+
+        public async Task<string> getRecord(string type,
+        string queryJson, string optionsJson)
+        {
+          try
+          {
+            var list = await NonSecrets.OpenSearchAsync(
+            d_openWallet, type, queryJson, optionsJson);
+
+            var res = await NonSecrets.FetchNextRecordsAsync(
+            d_openWallet, list, 1);
+            return res;
+          }
+          catch (Exception e)
+          {
+            return $"Error: {e.Message}";
+          }
+        }
+
 
         private void setWalletInfo()
         {

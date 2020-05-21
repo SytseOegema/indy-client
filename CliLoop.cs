@@ -37,6 +37,16 @@ namespace indyClient
                         Console.WriteLine("Name of the pool:");
                         await d_pool.connect(Console.ReadLine());
                         break;
+                    case "wallet record add":
+                        Console.WriteLine(
+                            await d_wallet.addRecord(
+                                d_prompt.recordType(),
+                                d_prompt.recordId(),
+                                d_prompt.recordValue(),
+                                d_prompt.recordTagsJson()
+                            )
+                        );
+                        break;
                     case "wallet get record":
                         var record = await d_wallet.getRecord(
                             d_prompt.recordType(),
