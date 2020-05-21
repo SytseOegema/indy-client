@@ -121,7 +121,7 @@ namespace indyClient
         {
             if (!isOpen())
             {
-                Console.WriteLine("There must be a open wallet.")
+                Console.WriteLine("There must be a open wallet.");
                 return ;
             }
 
