@@ -38,12 +38,13 @@ namespace indyClient
                         await d_pool.connect(Console.ReadLine());
                         break;
                     case "wallet get record":
-                        await d_wallet.getRecord(
+                        res = await d_wallet.getRecord(
                             d_prompt.recordType(),
                             d_prompt.walletQuery(),
                             d_prompt.walletOptions()
-                        )
-
+                        );
+                        Console.WriteLine(res);
+                        break;
                     case "wallet setup":
                         await d_ledger.initializeWallet(
                             d_prompt.issuerWalletName(),
