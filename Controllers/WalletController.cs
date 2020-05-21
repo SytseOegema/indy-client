@@ -121,9 +121,9 @@ namespace indyClient
         {
             try
             {
-                var res = await NonSecrets.AddRecordAsync(
+                await NonSecrets.AddRecordAsync(
                     d_openWallet, type, id, value, tagsJson);
-                return res;
+                return "succes!";
             }
             catch (Exception e)
             {
