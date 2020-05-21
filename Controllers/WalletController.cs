@@ -122,10 +122,10 @@ namespace indyClient
             try
             {
                 var list = await NonSecrets.OpenSearchAsync(
-                    d_wallet, type, queryJson, optionsJson);
+                    d_openWallet, type, queryJson, optionsJson);
 
                 var res = await NonSecrets.FetchNextRecordsAsync(
-                    d_wallet, list, 1);
+                    d_openWallet, list, 1);
                 return res;
             }
             catch (Exception e)
