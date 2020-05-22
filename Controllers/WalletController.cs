@@ -181,7 +181,7 @@ namespace indyClient
             var res = await NonSecrets.FetchNextRecordsAsync(
             d_openWallet, list, 0);
             JObject o = JObject.Parse(res);
-            string count = o["totalCount"];
+            string count = o["totalCount"].ToString();
             Console.WriteLine(count);
 
             res = await NonSecrets.FetchNextRecordsAsync(
