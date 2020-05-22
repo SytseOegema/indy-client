@@ -74,7 +74,7 @@ namespace indyClient
 
                 string recordJson = "{";
                 recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
-                recordJson += "\"schema_id\": \"" + schema.Id + "\",";
+                recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
                 recordJson += "\"schema_json\": " + schema.SchemaJson + ",";
 
                 // add record to wallet that saves the schema information.
