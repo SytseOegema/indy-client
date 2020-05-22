@@ -48,7 +48,7 @@ namespace indyClient
         }
 
         public async Task<string> createSchema(string name, string version,
-            string attributes, string issuerDid, string issuerName)
+            string attributes, string issuerDid)
         {
             try
             {
@@ -60,8 +60,6 @@ namespace indyClient
                 var buildschema = await Ledger.BuildSchemaRequestAsync(
                     issuerDid, schema.SchemaJson
                 );
-
-                await d_walletController.open(issuerName);
 
                 // publish schema to ledger
                 var ledgerJSON = await Ledger.SignAndSubmitRequestAsync(

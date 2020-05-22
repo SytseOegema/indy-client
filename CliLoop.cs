@@ -102,7 +102,11 @@ namespace indyClient
                         await d_wallet.create(d_prompt.issuerWalletName());
                         break;
                     case "schema create":
-                        await d_ledger.createSchemaCLI();
+                        await d_ledger.createSchema(
+                            d_prompt.schemaName(),
+                            d_prompt.schemaVersion(),
+                            d_prompt.schemaAttributes(),
+                            d_prompt.myDid());
                         break;
                     case "help":
                         d_prompt.helpOptions();

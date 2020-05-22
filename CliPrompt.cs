@@ -40,6 +40,21 @@ namespace indyClient
         }
 
 
+        public string schemaAttributes()
+        {
+            return consoleInteraction("The attributes of the schema: [\"name\", \"age\"]");
+        }
+
+        public string schemaVersion()
+        {
+            return consoleInteraction("The version of the schema(x.x.x):");
+        }
+
+        public string schemaName()
+        {
+            return consoleInteraction("The name of the schema:");
+        }
+
         public string nymRole()
         {
             return consoleInteraction("Specify role(TRUSTEE, STEWARD, ENDORER) for the NYM request:");
