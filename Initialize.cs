@@ -47,15 +47,18 @@ namespace indyClient
 
             await d_walletController.create("Trustee1");
             await d_walletController.open("Trustee1");
-            await d_walletController.createDid("000000000000000000000000Trustee1");
+            await d_walletController.createDid("000000000000000000000000Trustee1",
+                "{\"purpose\": \"Verinym\"}");
 
             await d_walletController.create("Steward1");
             await d_walletController.open("Steward1");
-            await d_walletController.createDid("000000000000000000000000Steward1");
+            await d_walletController.createDid("000000000000000000000000Steward1",
+                "{\"purpose\": \"Verinym\"}");
 
             await d_walletController.create("Steward2");
             await d_walletController.open("Steward2");
-            await d_walletController.createDid("000000000000000000000000Steward2");
+            await d_walletController.createDid("000000000000000000000000Steward2",
+                "{\"purpose\": \"Verinym\"}");
             await d_walletController.close();
         }
 

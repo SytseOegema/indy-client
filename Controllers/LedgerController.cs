@@ -131,7 +131,7 @@ namespace indyClient
             await d_walletController.create(myWalletName);
             await d_walletController.open(myWalletName);
 
-            var didJson = await d_walletController.createDid("");
+            var didJson = await d_walletController.createDid("", "{\"purpose\": \"Verinym\"}");
 
             var did = JObject.Parse(didJson)["Did"].ToString();
             var verkey = JObject.Parse(didJson)["VerKey"].ToString();
