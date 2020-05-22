@@ -46,13 +46,12 @@ namespace indyClient
             }
         }
 
-        public async Task<string> addMetaData(string did, string metaData)
+        public async Task addMetaData(string did, string metaData)
         {
             try
             {
-                var myDid = await Did.SetDidMetadataAsync(d_openWallet,
+                await Did.SetDidMetadataAsync(d_openWallet,
                     did, metaData);
-                return  JsonConvert.SerializeObject(myDid);
             }
             catch (Exception e)
             {

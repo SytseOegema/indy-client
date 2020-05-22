@@ -116,7 +116,8 @@ namespace indyClient
         {
             var didJson = await d_didController.create(seed);
             var did = JObject.Parse(didJson)["Did"].ToString();
-            return d_didController.addMetaData(did, metaData);
+            await d_didController.addMetaData(did, metaData);
+            return didJson;
         }
 
         public async Task getCredentials(string walletQuery)
