@@ -25,8 +25,7 @@ namespace indyClient
             string [] files = Directory.GetDirectories(path);
             foreach(string file in files)
             {
-                var out = file.Replace(fullPath + "/", "");
-                Console.WriteLine(out);
+                Console.WriteLine(file.Replace(fullPath + "/", ""));
             }
         }
 
