@@ -93,7 +93,7 @@ namespace indyClient
                     d_walletController.getActiveDid(),
                     build);
 
-                var output = await ParseGetSchemaResponseAsync(schema);
+                var output = await Ledger.ParseGetSchemaResponseAsync(schema);
                 Console.WriteLine(output.Id);
                 return output.ObjectJson;
             }
