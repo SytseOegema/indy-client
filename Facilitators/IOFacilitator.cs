@@ -8,12 +8,11 @@ namespace indyClient
 {
     class IOFacilitator
     {
-        private string d_env;
         private string d_homePath;
 
         public IOFacilitator()
         {
-            d_env = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
+            var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
             d_homePath = Environment.GetEnvironmentVariable(envHome);
 
             Console.WriteLine(d_homePath);
