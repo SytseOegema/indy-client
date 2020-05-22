@@ -202,7 +202,7 @@ namespace indyClient
         public async Task<string> getSchemas()
         {
             return await getRecord("schema", "{}",
-            "{\"retrievetotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+            "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
         }
 
         private void setWalletInfo()
