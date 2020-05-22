@@ -80,7 +80,7 @@ namespace indyClient
                             break;
                     case "wallet list":
                         IOFacilitator temp = new IOFacilitator();
-                        temp.listDirectories("/home/hyper/.indy_client/wallet");
+                        temp.listDirectories("/wallet");
                         break;
 
 
@@ -131,7 +131,10 @@ namespace indyClient
                         d_prompt.inputUnrecognized();
                         break;
                 }
-                Console.WriteLine(res);
+                if (res != "")
+                    Console.WriteLine(res);
+
+                res = "";
             }
         }
 

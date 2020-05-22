@@ -13,7 +13,7 @@ namespace indyClient
         public IOFacilitator()
         {
             var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
-            d_homePath = Environment.GetEnvironmentVariable(envHome);
+            d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client";
 
             Console.WriteLine(d_homePath);
         }
@@ -21,10 +21,12 @@ namespace indyClient
 
         public void listDirectories(string path)
         {
+            string fullPath = d_homePath + path;
             string [] files = Directory.GetDirectories(path);
             foreach(string file in files)
             {
-                Console.WriteLine(file);
+                var out = file.Replace(fullPath + "/", "");
+                Console.WriteLine(out);
             }
         }
 
