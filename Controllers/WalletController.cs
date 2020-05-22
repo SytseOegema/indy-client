@@ -185,7 +185,7 @@ namespace indyClient
             Console.WriteLine(count);
 
             res = await NonSecrets.FetchNextRecordsAsync(
-            d_openWallet, list, Int32.Parse(count);
+            d_openWallet, list, Int32.Parse(count));
             return res;
           }
           catch (Exception e)
