@@ -43,6 +43,33 @@ namespace indyClient
                         Console.WriteLine("Name of the pool:");
                         await d_pool.connect(Console.ReadLine());
                         break;
+                    case "wallet open":
+                        var res = await d_wallet.open(
+                            d_prompt.issuerWalletName());
+                        Console.WriteLine(res);
+                        break;
+                    case "wallet close":
+                        res = await d_wallet.close();
+                        Console.WriteLine(res);
+                        break;
+                    case "did list":
+                        await d_wallet.listDids();
+                        break;
+                    case "did create":
+                        await d_wallet.createDid(d_prompt.didSeed(),
+                            d_prompt.didMetaDataJson());
+                        break;
+                    case "ledger send nym":
+                        d_ledger.sendNymRequest(
+                            d_prompt.myDid(),
+                            d_prompt.nymDid(),
+                            d_prompt.nymVerkey(),
+                            d_prompt.nymAlias(),
+                            d_prompt.nymRole());
+                        break;
+
+
+
                     case "wallet record add":
                         Console.WriteLine(
                             await d_wallet.addRecord(
@@ -65,30 +92,14 @@ namespace indyClient
                         );
                         Console.WriteLine(record);
                         break;
-                    case "wallet setup":
-                        await d_ledger.initializeWallet(
-                            d_prompt.issuerWalletName(),
-                            d_prompt.signerWalletName(),
-                            d_prompt.issuerRole());
-                        break;
+                    // case "wallet setup":
+                    //     await d_ledger.initializeWallet(
+                    //         d_prompt.issuerWalletName(),
+                    //         d_prompt.signerWalletName(),
+                    //         d_prompt.issuerRole());
+                    //     break;
                     case "wallet create":
                         await d_wallet.create(d_prompt.issuerWalletName());
-                        break;
-                    case "wallet open":
-                        var res = await d_wallet.open(
-                            d_prompt.issuerWalletName());
-                        Console.WriteLine(res);
-                        break;
-                    case "wallet close":
-                        res = await d_wallet.close();
-                        Console.WriteLine(res);
-                        break;
-                    case "did list":
-                        await d_wallet.listDids();
-                        break;
-                    case "did create":
-                        await d_wallet.createDid(d_prompt.didSeed(),
-                            d_prompt.didMetaDataJson());
                         break;
                     case "schema create":
                         await d_ledger.createSchemaCLI();

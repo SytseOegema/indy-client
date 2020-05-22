@@ -24,28 +24,22 @@ namespace indyClient
             d_walletController = walletController;
         }
 
-        public async Task sendNymRequest(string trusteeName, string did,
+        public async Task sendNymRequest(string myDid, string did,
             string verkey ,string alias, string role)
         {
             try
             {
-                // open trustee wallet
-                d_walletController.getIdentifier();
-                await d_walletController.open(trusteeName);
-
-                var didListJson = await d_walletController.listDids();
-                var trusteeDid = JArray.Parse(didListJson)[0]["did"].ToString();
-
                 // build nym request for owner of did
-                var nymJson = await Ledger.BuildNymRequestAsync(trusteeDid, did,
+                var nymJson = await Ledger.BuildNymRequestAsync(myDid, did,
                     verkey ,alias, role);
 
                 // Trustee sends nym request
                 var nymResponseJson = await Ledger.SignAndSubmitRequestAsync(
                     d_poolController.getOpenPool(),
                     d_walletController.getOpenWallet(),
-                    trusteeDid,
+                    myDid,
                     nymJson);
+                Console.WriteLine("Identity published to ledger.");
             }
             catch (Exception e)
             {
@@ -123,26 +117,26 @@ namespace indyClient
         }
 
 
-        public async Task initializeWallet(string myWalletName,
-            string trusteeWalletName, string role)
-        {
-            await d_walletController.close();
-
-            await d_walletController.create(myWalletName);
-            await d_walletController.open(myWalletName);
-
-            var didJson = await d_walletController.createDid("", "{\"purpose\": \"Verinym\"}");
-
-            var did = JObject.Parse(didJson)["Did"].ToString();
-            var verkey = JObject.Parse(didJson)["VerKey"].ToString();
-
-            await d_walletController.open(trusteeWalletName);
-            var didListJson = await d_walletController.listDids();
-
-            await sendNymRequest(trusteeWalletName,
-                did, verkey, "", role);
-            Console.WriteLine("Identity published to ledger");
-        }
+        // public async Task initializeWallet(string myWalletName,
+        //     string trusteeWalletName, string role)
+        // {
+        //     await d_walletController.close();
+        //
+        //     await d_walletController.create(myWalletName);
+        //     await d_walletController.open(myWalletName);
+        //
+        //     var didJson = await d_walletController.createDid("", "{\"purpose\": \"Verinym\"}");
+        //
+        //     var did = JObject.Parse(didJson)["Did"].ToString();
+        //     var verkey = JObject.Parse(didJson)["VerKey"].ToString();
+        //
+        //     await d_walletController.open(trusteeWalletName);
+        //     var didListJson = await d_walletController.listDids();
+        //
+        //     await sendNymRequest(trusteeWalletName,
+        //         did, verkey, "", role);
+        //     Console.WriteLine("Identity published to ledger");
+        // }
 
         public async Task createSchemaCLI()
         {
