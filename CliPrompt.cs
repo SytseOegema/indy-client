@@ -39,6 +39,21 @@ namespace indyClient
         }
 
 
+        public string nymRole()
+        {
+            return consoleInteraction("Specify role(TRUSTEE, STEWARD, ENDORER) for the NYM request:");
+        }
+
+        public string nymAlias()
+        {
+            return consoleInteraction("Specify alias for the NYM request:");
+        }
+
+        public string nymDid()
+        {
+            return consoleInteraction("Specify did for the NYM request:");
+        }
+
         public string didMetaDataJson()
         {
             return consoleInteraction("Specify did in metaData JSON:");
