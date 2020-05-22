@@ -78,41 +78,41 @@ namespace indyClient
             }
         }
 
-        public async Task createCredDef(string name, string version,
-            string attributes, string issuerDid, string issuerName,
-            string trusteeDid, string trusteeName)
-        {
-            try
-            {
-                var schemaJson = await createSchema(name, version, attributes,
-                trusteeDid, trusteeName);
-
-                await d_walletController.open(issuerName);
-
-                string credDefConfigJson = "{\"support_revocation\":false}";
-
-                Console.WriteLine(issuerDid);
-                Console.WriteLine(schemaJson);
-                Console.WriteLine(credDefConfigJson);
-
-                var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
-                d_walletController.getOpenWallet(),
-                issuerDid,
-                schemaJson,
-                "Tag1",
-                null,
-                credDefConfigJson);
-
-                // var credDefId = createCredDefResult.CredDefId;
-                // var credDefJson = createCredDefResult.CredDefJson;
-                Console.WriteLine(res.CredDefId);
-                Console.WriteLine(res.CredDefJson);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error make cred def: {e.Message}");
-            }
-        }
+        // public async Task createCredDef(string name, string version,
+        //     string attributes, string issuerDid, string issuerName,
+        //     string trusteeDid, string trusteeName)
+        // {
+        //     try
+        //     {
+        //         var schemaJson = await createSchema(name, version, attributes,
+        //         trusteeDid, trusteeName);
+        //
+        //         await d_walletController.open(issuerName);
+        //
+        //         string credDefConfigJson = "{\"support_revocation\":false}";
+        //
+        //         Console.WriteLine(issuerDid);
+        //         Console.WriteLine(schemaJson);
+        //         Console.WriteLine(credDefConfigJson);
+        //
+        //         var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+        //         d_walletController.getOpenWallet(),
+        //         issuerDid,
+        //         schemaJson,
+        //         "Tag1",
+        //         null,
+        //         credDefConfigJson);
+        //
+        //         // var credDefId = createCredDefResult.CredDefId;
+        //         // var credDefJson = createCredDefResult.CredDefJson;
+        //         Console.WriteLine(res.CredDefId);
+        //         Console.WriteLine(res.CredDefJson);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Console.WriteLine($"Error make cred def: {e.Message}");
+        //     }
+        // }
 
 
         // public async Task initializeWallet(string myWalletName,
