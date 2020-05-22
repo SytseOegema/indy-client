@@ -30,6 +30,7 @@ namespace indyClient
 
         public static async Task run()
         {
+            var res = "";
             while (true)
             {
                 setInputLine();
@@ -40,17 +41,14 @@ namespace indyClient
                         d_prompt.exitMessage();
                         return;
                     case "pool connect":
-                        Console.WriteLine("Name of the pool:");
-                        await d_pool.connect(Console.ReadLine());
+                        await d_pool.connect(d_prompt.poolName());
                         break;
                     case "wallet open":
-                        var res = await d_wallet.open(
+                        res = await d_wallet.open(
                             d_prompt.issuerWalletName());
-                        Console.WriteLine(res);
                         break;
                     case "wallet close":
                         res = await d_wallet.close();
-                        Console.WriteLine(res);
                         break;
                     case "did list":
                         await d_wallet.listDids();
@@ -70,20 +68,18 @@ namespace indyClient
                             d_prompt.nymRole());
                         break;
                     case "schema create":
-                        var  schemaJson = await d_ledger.createSchema(
+                        res = await d_ledger.createSchema(
                             d_prompt.schemaName(),
                             d_prompt.schemaVersion(),
                             d_prompt.schemaAttributes());
-                        Console.WriteLine("schema Json:" + schemaJson);
                         break;
                     case "schema get":
-                        var schemaJson = await d_ledger.getSchema(
+                        res = await d_ledger.getSchema(
                             d_prompt.submitterDid(),
                             d_prompt.schemaId());
-                            Console.WriteLine(schemaJson);
                             break;
 
-                            
+
                     case "wallet record add":
                         Console.WriteLine(
                             await d_wallet.addRecord(
@@ -99,12 +95,11 @@ namespace indyClient
                             d_prompt.walletQuery());
                         break;
                     case "wallet get record":
-                        var record = await d_wallet.getRecord(
+                        res = await d_wallet.getRecord(
                             d_prompt.recordType(),
                             d_prompt.walletQuery(),
                             d_prompt.walletOptions()
                         );
-                        Console.WriteLine(record);
                         break;
                     // case "wallet setup":
                     //     await d_ledger.initializeWallet(
@@ -132,6 +127,7 @@ namespace indyClient
                         d_prompt.inputUnrecognized();
                         break;
                 }
+                Console.WriteLine(res);
             }
         }
 
