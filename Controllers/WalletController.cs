@@ -179,9 +179,9 @@ namespace indyClient
             d_openWallet, type, queryJson, optionsJson);
 
             var res = await NonSecrets.FetchNextRecordsAsync(
-            d_openWallet, list, 1);
+            d_openWallet, list, 0);
             JObject o = JObject.Parse(res);
-            Console.WriteLine(o["records"]);
+            Console.WriteLine(o["totalCount"]);
             return res;
           }
           catch (Exception e)
