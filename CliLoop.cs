@@ -20,7 +20,7 @@ namespace indyClient
             Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
             // await d_pool.connect(d_pool.getIdentifier());
 
-            Console.WriteLine("Open wallet");
+            Console.WriteLine("wallet open");
             var res = await d_wallet.open(
                 d_prompt.issuerWalletName());
             Console.WriteLine(res);
@@ -59,7 +59,7 @@ namespace indyClient
                         await d_wallet.createDid(d_prompt.didSeed(),
                             d_prompt.didMetaDataJson());
                         break;
-                    case "ledger send nym":
+                    case "ledger send initial nym":
                         await d_ledger.sendNymRequest(
                             d_prompt.myDid(),
                             d_prompt.nymDid(),
