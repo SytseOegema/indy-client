@@ -175,19 +175,23 @@ namespace indyClient
         {
           try
           {
-            var list = await NonSecrets.OpenSearchAsync(
-            d_openWallet, type, queryJson, optionsJson);
+              var list = await NonSecrets.OpenSearchAsync(
+              d_openWallet, type, queryJson, optionsJson);
 
-            var res = await NonSecrets.FetchNextRecordsAsync(
-            d_openWallet, list, 0);
-            JObject o = JObject.Parse(res);
-            string count = o["totalCount"].ToString();
-            Console.WriteLine(count);
+              // get 0 schema's
+              var res = await NonSecrets.FetchNextRecordsAsync(
+              d_openWallet, list, 0);
+              // parse result to see the count of schema's
+              JObject o = JObject.Parse(res);
+              string count = o["totalCount"].ToString();
+              Console.WriteLine(count);
 
-            res = await NonSecrets.FetchNextRecordsAsync(
-            d_openWallet, list, Int32.Parse(count));
-            o = JObject.Parse(res);
-            return o["records"];
+              // get count schema's
+              res = await NonSecrets.FetchNextRecordsAsync(
+              d_openWallet, list, Int32.Parse(count));
+              // make response human readable
+              o = JObject.Parse(res);
+              return o["records"].ToString();
           }
           catch (Exception e)
           {
