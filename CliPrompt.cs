@@ -40,6 +40,16 @@ namespace indyClient
         }
 
 
+        public string submitterDid()
+        {
+            return consoleInteraction("The did of the submitter:");
+        }
+
+        public string schemaId()
+        {
+            return consoleInteraction("The schema id:");
+        }
+
         public string schemaAttributes()
         {
             return consoleInteraction("The attributes of the schema: [\"name\", \"age\"]");

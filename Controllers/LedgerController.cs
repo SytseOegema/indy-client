@@ -80,7 +80,7 @@ namespace indyClient
             }
         }
 
-        public async Task<string> createSchema(string submitterDid,
+        public async Task<string> getSchema(string submitterDid,
             string schemaId)
         {
             try

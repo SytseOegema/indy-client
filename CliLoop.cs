@@ -76,9 +76,14 @@ namespace indyClient
                             d_prompt.schemaAttributes());
                         Console.WriteLine("schema Json:" + schemaJson);
                         break;
+                    case "schema get":
+                        var schemaJson = await d_ledger.getSchema(
+                            d_prompt.submitterDid(),
+                            d_prompt.schemaId());
+                            Console.WriteLine(schemaJson);
+                            break;
 
-
-
+                            
                     case "wallet record add":
                         Console.WriteLine(
                             await d_wallet.addRecord(
