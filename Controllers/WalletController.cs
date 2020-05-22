@@ -105,7 +105,7 @@ namespace indyClient
 
             res.ToString();
 
-            return !res.Contains("Error: The wallet does not exists.");
+            return !res.Contains("Error: The wallet does not exist.");
         }
 
         public async Task<string> listDids()
