@@ -22,7 +22,7 @@ namespace indyClient
         public void listDirectories(string path)
         {
             string fullPath = d_homePath + path;
-            string [] files = Directory.GetDirectories(path);
+            string [] files = Directory.GetDirectories(fullPath);
             foreach(string file in files)
             {
                 Console.WriteLine(file.Replace(fullPath + "/", ""));
