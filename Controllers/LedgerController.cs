@@ -69,7 +69,6 @@ namespace indyClient
                     buildschema);
 
                 return schema.SchemaJson;
-                // return  JsonConvert.SerializeObject(ledgerJSON);
             }
             catch (Exception e)
             {
