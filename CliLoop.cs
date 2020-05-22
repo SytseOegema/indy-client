@@ -78,7 +78,11 @@ namespace indyClient
                             d_prompt.submitterDid(),
                             d_prompt.schemaId());
                             break;
-
+                    case "wallet list":
+                        IOFacilitator temp = new IOFacilitator();
+                        temp.listFiles("/home/hyper/.indy_client/wallet");
+                        break;
+                        
 
                     case "wallet record add":
                         Console.WriteLine(
