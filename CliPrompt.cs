@@ -49,9 +49,19 @@ namespace indyClient
             return consoleInteraction("Specify alias for the NYM request:");
         }
 
+        public string nymVerkey()
+        {
+            return consoleInteraction("Specify verkey for the NYM request:");
+        }
+
         public string nymDid()
         {
             return consoleInteraction("Specify did for the NYM request:");
+        }
+
+        public string myDid()
+        {
+            return consoleInteraction("Specify the did you want to use for this request:");
         }
 
         public string didMetaDataJson()

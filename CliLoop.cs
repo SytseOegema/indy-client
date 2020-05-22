@@ -60,7 +60,7 @@ namespace indyClient
                             d_prompt.didMetaDataJson());
                         break;
                     case "ledger send nym":
-                        d_ledger.sendNymRequest(
+                        await d_ledger.sendNymRequest(
                             d_prompt.myDid(),
                             d_prompt.nymDid(),
                             d_prompt.nymVerkey(),
