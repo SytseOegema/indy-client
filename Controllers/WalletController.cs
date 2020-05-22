@@ -27,7 +27,7 @@ namespace indyClient
 
         public string getActiveDid()
         {
-            d_didController.getActiveDid();
+            return d_didController.getActiveDid();
         }
 
         public void setActiveDid(string did)

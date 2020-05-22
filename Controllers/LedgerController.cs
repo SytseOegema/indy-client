@@ -85,13 +85,17 @@ namespace indyClient
         {
             try
             {
-                var build = await BuildGetSchemaRequestAsync(
+                var build = await Ledger.BuildGetSchemaRequestAsync(
                     submitterDid, schemaId);
                 var schema = await Ledger.SignAndSubmitRequestAsync(
                     d_poolController.getOpenPool(),
                     d_walletController.getOpenWallet(),
                     d_walletController.getActiveDid(),
-                    buildschema);
+                    build);
+
+                var output = await ParseGetSchemaResponseAsync(schema);
+                Console.WriteLine(output.Id);
+                return output.ObjectJson;
             }
             catch (Exception e)
             {
