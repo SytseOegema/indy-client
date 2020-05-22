@@ -14,8 +14,7 @@ namespace indyClient
         {
             var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
             d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client";
-
-            Console.WriteLine(d_homePath);
+            // /home/hyper/.indy_client
         }
 
 
