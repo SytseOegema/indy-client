@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
