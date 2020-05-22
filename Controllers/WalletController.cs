@@ -158,10 +158,13 @@ namespace indyClient
         public async Task<string> addRecord(string type,
             string id, string value, string tagsJson)
         {
+            Console.WriteLine("mis4");
             try
             {
+              Console.WriteLine("mis5");
                 await NonSecrets.AddRecordAsync(
                     d_openWallet, type, id, value, tagsJson);
+                    Console.WriteLine("mis6");
                 return "succes!";
             }
             catch (Exception e)
