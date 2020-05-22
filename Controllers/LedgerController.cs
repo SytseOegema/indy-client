@@ -71,6 +71,16 @@ namespace indyClient
                     issuerDid,
                     buildschema);
 
+
+                string recordJson = "{";
+                recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
+                recordJson += "\"schema_id\": \"" + schema.Id + "\",";
+                recordJson += "\"schema_json\": " + schema.SchemaJson + ",";
+
+                // add record to wallet that saves the schema information.
+                d_walletController.addRecord("schema", version,
+                "schema: " + name, )
+
                 return schema.SchemaJson;
             }
             catch (Exception e)
