@@ -19,6 +19,12 @@ namespace indyClient
                 + ".");
             Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
             // await d_pool.connect(d_pool.getIdentifier());
+
+            Console.WriteLine("Open wallet");
+            var res = await d_wallet.open(
+                d_prompt.issuerWalletName());
+            Console.WriteLine(res);
+
             await run();
         }
 
@@ -81,7 +87,8 @@ namespace indyClient
                         await d_wallet.listDids();
                         break;
                     case "did create":
-                        await d_wallet.createDid(d_prompt.didSeed());
+                        await d_wallet.createDid(d_prompt.didSeed(),
+                            d_prompt.didMetaDataJson());
                         break;
                     case "schema create":
                         await d_ledger.createSchemaCLI();

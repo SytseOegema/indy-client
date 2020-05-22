@@ -46,6 +46,20 @@ namespace indyClient
             }
         }
 
+        public async Task<string> addMetaData(string did, string metaData)
+        {
+            try
+            {
+                return await Did.SetDidMetadataAsync(d_openWallet,
+                    did, metaData);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+                return e.Message;
+            }
+        }
+
         public async Task<string> list()
         {
             try

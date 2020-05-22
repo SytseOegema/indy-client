@@ -39,6 +39,10 @@ namespace indyClient
         }
 
 
+        public string didMetaDataJson()
+        {
+            return consoleInteraction("Specify did in metaData JSON:")
+        }
 
         public string recordTagsJson()
         {
