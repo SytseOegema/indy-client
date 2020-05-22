@@ -181,10 +181,11 @@ namespace indyClient
             var res = await NonSecrets.FetchNextRecordsAsync(
             d_openWallet, list, 0);
             JObject o = JObject.Parse(res);
-            Console.WriteLine(o["totalCount"]);
+            string count = o["totalCount"];
+            Console.WriteLine(count);
 
             res = await NonSecrets.FetchNextRecordsAsync(
-            d_openWallet, list, Int32.Parse(o["totalCount"]));
+            d_openWallet, list, Int32.Parse(count);
             return res;
           }
           catch (Exception e)
