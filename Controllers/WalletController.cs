@@ -114,7 +114,7 @@ namespace indyClient
 
         public async Task<string> createDid(string seed, string metaData)
         {
-            didJson = await d_didController.create(seed);
+            var didJson = await d_didController.create(seed);
             var did = JObject.Parse(didJson)["Did"].ToString();
             return d_didController.addMetaData(did, metaData);
         }

@@ -50,8 +50,9 @@ namespace indyClient
         {
             try
             {
-                return await Did.SetDidMetadataAsync(d_openWallet,
+                var myDid = await Did.SetDidMetadataAsync(d_openWallet,
                     did, metaData);
+                return  JsonConvert.SerializeObject(myDid);
             }
             catch (Exception e)
             {
