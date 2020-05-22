@@ -136,35 +136,35 @@ namespace indyClient
         //     Console.WriteLine("Identity published to ledger");
         // }
 
-        public async Task createSchemaCLI()
-        {
-            Console.WriteLine("Name of the schema:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Version of the schema: (x.x.x)");
-            string version = Console.ReadLine();
-            Console.WriteLine("Attributes of the schema: [\"name\", \"age\"]");
-            string attributes = Console.ReadLine();
-            Console.WriteLine("did of the issuer: ");
-            string trusteeDid = Console.ReadLine();
-            if (trusteeDid == "")
-            {
-              Console.WriteLine("no did of the issuer specified.");
-              Console.WriteLine("Did of Steward1 will be used.");
-              trusteeDid = "Th7MpTaRZVRYnPiabds81Y";
-            }
-            Console.WriteLine("name of the controller(steward): ");
-            string trusteeName = Console.ReadLine();
-            Console.WriteLine("name of the issuer: ");
-            string issuerName = Console.ReadLine();
-
-            await d_walletController.open(issuerName);
-            var didListJson = await d_walletController.listDids();
-            var issuerDid = JArray.Parse(didListJson)[0]["did"].ToString();
-
-            await createCredDef(name, version, attributes,
-                issuerDid, issuerName, trusteeDid, trusteeName);
-            // Console.WriteLine(res);
-        }
+        // public async Task createSchemaCLI()
+        // {
+        //     Console.WriteLine("Name of the schema:");
+        //     string name = Console.ReadLine();
+        //     Console.WriteLine("Version of the schema: (x.x.x)");
+        //     string version = Console.ReadLine();
+        //     Console.WriteLine("Attributes of the schema: [\"name\", \"age\"]");
+        //     string attributes = Console.ReadLine();
+        //     Console.WriteLine("did of the issuer: ");
+        //     string trusteeDid = Console.ReadLine();
+        //     if (trusteeDid == "")
+        //     {
+        //       Console.WriteLine("no did of the issuer specified.");
+        //       Console.WriteLine("Did of Steward1 will be used.");
+        //       trusteeDid = "Th7MpTaRZVRYnPiabds81Y";
+        //     }
+        //     Console.WriteLine("name of the controller(steward): ");
+        //     string trusteeName = Console.ReadLine();
+        //     Console.WriteLine("name of the issuer: ");
+        //     string issuerName = Console.ReadLine();
+        //
+        //     await d_walletController.open(issuerName);
+        //     var didListJson = await d_walletController.listDids();
+        //     var issuerDid = JArray.Parse(didListJson)[0]["did"].ToString();
+        //
+        //     await createCredDef(name, version, attributes,
+        //         issuerDid, issuerName, trusteeDid, trusteeName);
+        //     // Console.WriteLine(res);
+        // }
 
     }
 }
