@@ -182,8 +182,9 @@ namespace indyClient
             do {
               res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, 1);
-              Console.WriteLine(res);
-            } while (res != "");
+              JObject o = JObject.parse(res);
+              Console.WriteLine(o.records);
+            } while (o.records == null);
             return res;
           }
           catch (Exception e)
