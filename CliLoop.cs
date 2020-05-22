@@ -78,6 +78,9 @@ namespace indyClient
                             d_prompt.submitterDid(),
                             d_prompt.schemaId());
                             break;
+                    case "schema list":
+                        res = await d_wallet.getSchemas();
+                        break;
                     case "wallet list":
                         IOFacilitator temp = new IOFacilitator();
                         temp.listDirectories("/wallet");
