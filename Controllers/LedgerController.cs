@@ -72,15 +72,15 @@ namespace indyClient
                     buildschema);
 
 
-                string recordJson = "{";
-                recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
-                recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
-                recordJson += "\"schema_json\": " + schema.SchemaJson;
-                recordJson += "}";
-
-                // add record to wallet that saves the schema information.
-                await d_walletController.addRecord("schema", version,
-                "schema: " + name, recordJson);
+                // string recordJson = "{";
+                // recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
+                // recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
+                // recordJson += "\"schema_json\": " + schema.SchemaJson;
+                // recordJson += "}";
+                //
+                // // add record to wallet that saves the schema information.
+                // await d_walletController.addRecord("schema", version,
+                // "schema: " + name, recordJson);
 
                 return schema.SchemaJson;
             }
