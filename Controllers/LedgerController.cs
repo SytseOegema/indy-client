@@ -79,7 +79,7 @@ namespace indyClient
 
                 // add record to wallet that saves the schema information.
                 d_walletController.addRecord("schema", version,
-                "schema: " + name, )
+                "schema: " + name, );
 
                 return schema.SchemaJson;
             }
