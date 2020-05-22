@@ -102,7 +102,7 @@ namespace indyClient
                         await d_wallet.create(d_prompt.issuerWalletName());
                         break;
                     case "schema create":
-                        var = schemaJson = await d_ledger.createSchema(
+                        var  schemaJson = await d_ledger.createSchema(
                             d_prompt.schemaName(),
                             d_prompt.schemaVersion(),
                             d_prompt.schemaAttributes(),
