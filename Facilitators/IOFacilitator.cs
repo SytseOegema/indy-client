@@ -6,8 +6,17 @@ namespace indyClient
 {
     class IOFacilitator
     {
-var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
-var home = Environment.GetEnvironmentVariable(envHome);`
+        private string d_env;
+        private string d_homePath;
+
+        public IOFacilitator()
+        {
+            d_env = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
+            d_homePath = Environment.GetEnvironmentVariable(envHome);
+
+            Console.WriteLine(d_homePath);
+        }
+
 
         public void listDirectories(string path)
         {
