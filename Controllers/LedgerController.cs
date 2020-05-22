@@ -74,7 +74,7 @@ namespace indyClient
                 string recordJson = "{";
                 recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
                 recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
-                recordJson += "\"schema_name\": \"" + name + "\"";
+                recordJson += "\"schema_name\": \"" + name + "\",";
                 recordJson += "\"schema_version\": \"" + version + "\"";
                 recordJson += "}";
 
