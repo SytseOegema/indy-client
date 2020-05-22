@@ -25,6 +25,16 @@ namespace indyClient
             d_didController = new DidController();
         }
 
+        public string getActiveDid()
+        {
+            d_didController.getActiveDid();
+        }
+
+        public void setActiveDid(string did)
+        {
+            d_didController.setActiveDid(did);
+        }
+
         public Wallet getOpenWallet()
         {
             return d_openWallet;

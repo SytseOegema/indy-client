@@ -24,9 +24,11 @@ namespace indyClient
             d_walletController = walletController;
         }
 
-        public async Task sendNymRequest(string myDid, string did,
-            string verkey ,string alias, string role)
+        public async Task sendNymRequest(string did, string verkey,
+            string alias, string role)
         {
+
+            var myDid = d_walletController.getActiveDid();
             try
             {
                 // build nym request for owner of did
@@ -48,8 +50,9 @@ namespace indyClient
         }
 
         public async Task<string> createSchema(string name, string version,
-            string attributes, string issuerDid)
+            string attributes)
         {
+            var issuerDid = d_walletController.getActiveDid();
             try
             {
                 // issuer schema
@@ -76,6 +79,29 @@ namespace indyClient
                 return e.Message;
             }
         }
+
+        public async Task<string> createSchema(string submitterDid,
+            string schemaId)
+        {
+            try
+            {
+                var build = await BuildGetSchemaRequestAsync(
+                    submitterDid, schemaId);
+                var schema = await Ledger.SignAndSubmitRequestAsync(
+                    d_poolController.getOpenPool(),
+                    d_walletController.getOpenWallet(),
+                    d_walletController.getActiveDid(),
+                    buildschema);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error create schema: {e.Message}");
+                return e.Message;
+            }
+
+        }
+
+
 
         // public async Task createCredDef(string name, string version,
         //     string attributes, string issuerDid, string issuerName,

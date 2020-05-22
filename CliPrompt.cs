@@ -77,7 +77,7 @@ namespace indyClient
 
         public string myDid()
         {
-            return consoleInteraction("Specify the did you want to use for this request:");
+            return consoleInteraction("Specify the did you want to use:");
         }
 
         public string didMetaDataJson()

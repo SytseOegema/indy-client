@@ -59,13 +59,22 @@ namespace indyClient
                         await d_wallet.createDid(d_prompt.didSeed(),
                             d_prompt.didMetaDataJson());
                         break;
+                    case "did activate":
+                        d_wallet.setActiveDid(d_prompt.myDid());
+                        break;
                     case "ledger send initial nym":
                         await d_ledger.sendNymRequest(
-                            d_prompt.myDid(),
                             d_prompt.nymDid(),
                             d_prompt.nymVerkey(),
                             d_prompt.nymAlias(),
                             d_prompt.nymRole());
+                        break;
+                    case "schema create":
+                        var  schemaJson = await d_ledger.createSchema(
+                            d_prompt.schemaName(),
+                            d_prompt.schemaVersion(),
+                            d_prompt.schemaAttributes());
+                        Console.WriteLine("schema Json:" + schemaJson);
                         break;
 
 
@@ -101,14 +110,6 @@ namespace indyClient
                     case "wallet create":
                         await d_wallet.create(d_prompt.issuerWalletName());
                         break;
-                    case "schema create":
-                        var  schemaJson = await d_ledger.createSchema(
-                            d_prompt.schemaName(),
-                            d_prompt.schemaVersion(),
-                            d_prompt.schemaAttributes(),
-                            d_prompt.myDid());
-                        Console.WriteLine("schema Json:" + schemaJson);
-                        break;
                     case "help":
                         d_prompt.helpOptions();
                         break;
@@ -135,7 +136,9 @@ namespace indyClient
                 Console.Write(d_pool.getIdentifier() + "|");
 
             if (d_wallet.isOpen())
-                Console.Write(d_wallet.getIdentifier());
+                Console.Write(d_wallet.getIdentifier() + "|");
+
+          Console.Write(d_wallet.getActiveDid());
 
           Console.Write("> ");
 
