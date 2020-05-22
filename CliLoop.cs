@@ -80,9 +80,9 @@ namespace indyClient
                             break;
                     case "wallet list":
                         IOFacilitator temp = new IOFacilitator();
-                        temp.listFiles("/home/hyper/.indy_client/wallet");
+                        temp.listDirectories("/home/hyper/.indy_client/wallet");
                         break;
-                        
+
 
                     case "wallet record add":
                         Console.WriteLine(

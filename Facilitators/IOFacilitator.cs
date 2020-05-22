@@ -6,9 +6,9 @@ namespace indyClient
 {
     class IOFacilitator
     {
-        public void listFiles(string path)
+        public void listDirectories(string path)
         {
-            string [] files = Directory.GetFiles(path);
+            string [] files = Directory.GetDirectories(path);
             foreach(string file in files)
             {
                 Console.WriteLine(file);
