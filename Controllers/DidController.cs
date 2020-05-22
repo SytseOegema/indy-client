@@ -56,7 +56,6 @@ namespace indyClient
             catch (Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");
-                return e.Message;
             }
         }
 
