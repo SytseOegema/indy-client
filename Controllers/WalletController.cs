@@ -236,8 +236,10 @@ namespace indyClient
 
           public async Task<string> getSchemas()
         {
-            return await getRecord("schema", "{}",
+            string res = await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+            PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
+            return pretty.dePrettyJsonMember(res, "value");
         }
 
         private void setWalletInfo()

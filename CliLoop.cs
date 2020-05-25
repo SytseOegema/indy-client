@@ -53,6 +53,10 @@ namespace indyClient
                     case "wallet close":
                         res = await d_wallet.close();
                         break;
+                    case "wallet list":
+                        IOFacilitator temp = new IOFacilitator();
+                        temp.listDirectories("/wallet");
+                        break;
                     case "did list":
                         await d_wallet.listDids();
                         break;
@@ -84,11 +88,7 @@ namespace indyClient
                     case "schema list":
                         res = await d_wallet.getSchemas();
                         break;
-                    case "wallet list":
-                        IOFacilitator temp = new IOFacilitator();
-                        temp.listDirectories("/wallet");
-                        break;
-                    case "credential definition get":
+                    case "credential definition list":
                         res = await d_wallet.getCredDef();
                         break;
                     case "credential definition create":
@@ -96,6 +96,9 @@ namespace indyClient
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
+
+
+
 
 
                     case "wallet record add":
