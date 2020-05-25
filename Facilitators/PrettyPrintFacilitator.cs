@@ -16,11 +16,9 @@ namespace indyClient
                 while (true)
                 {
                   closeIdx = json.IndexOf('}', closeIdx);
-                  // check if there is an object within the object
                   openIdx2 = json.IndexOf('{', openIdx2);
 
-                  Console.WriteLine("close: " + closeIdx);
-                  Console.WriteLine("open: " + openIdx2);
+                  // check if there is an object within the object
                   if (openIdx2 == -1 ^ openIdx2 > closeIdx)
                   break;
 
