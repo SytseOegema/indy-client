@@ -77,7 +77,7 @@ namespace indyClient
                 recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
                 recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
                 recordJson += "\"schema_name\": \"" + name + "\",";
-                recordJson += "\"schema_version\": \"" + version + "\",";
+                recordJson += "\"schema_version\": \"" + version + "\"";
                 recordJson += "}";
 
                 // add record to wallet that saves the schema information.
