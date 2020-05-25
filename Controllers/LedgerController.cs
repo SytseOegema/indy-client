@@ -80,9 +80,8 @@ namespace indyClient
 
                 // add record to wallet that saves the schema information.
 
-                JObject o = JObject.Parse(schema.SchemaJson);
                 await d_walletController.addRecord("schema", version,
-                o.ToString(), recordJson);
+                schema.SchemaJson, recordJson);
 
                 return schema.SchemaJson;
             }
