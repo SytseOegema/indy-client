@@ -145,7 +145,7 @@ namespace indyClient
                 null,
                 credDefConfigJson);
 
-                addRecord("creddef", res.CredDefId, res.CredDefJson, "{}");
+                await addRecord("creddef", res.CredDefId, res.CredDefJson, "{}");
 
                 return res.CredDefJson;
             }
