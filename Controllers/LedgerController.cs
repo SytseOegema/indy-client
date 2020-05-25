@@ -79,6 +79,8 @@ namespace indyClient
                 recordJson += "}";
 
                 // add record to wallet that saves the schema information.
+                Console.WriteLine(schema.SchemaJson);
+                Console.WriteLine(recordJson);
 
                 await d_walletController.addRecord("schema", version,
                 schema.SchemaJson, recordJson);
