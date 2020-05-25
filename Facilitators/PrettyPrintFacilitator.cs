@@ -28,15 +28,20 @@ namespace indyClient
                   openIdx2++;
                 }
 
+                // split the json in begin, sub, end
+                int originalLength = closeIdx - openIdx + 1
                 string begin = json.Substring(0, openIdx);
-                string sub = json.Substring(openIdx, closeIdx - openIdx + 1);
+                string sub = json.Substring(openIdx, originalLength);
                 string end = json.Substring(closeIdx + 1);
 
+
+                // remove newlines and spaces
                 sub = sub.Replace(" ", "");
                 sub = sub.Replace("\n", "");
-
                 json = begin + sub + end;
 
+                // correct the closeIdx
+                closeIdx -= originalLength - sub.Length();
                 startIdx = json.IndexOf(member, closeIdx);
             }
             return json;
