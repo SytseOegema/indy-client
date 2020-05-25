@@ -167,7 +167,7 @@ namespace indyClient
                     d_openWallet, walletQuery);
                     Console.WriteLine(creds);
 
-                Console.WriteLine(JObject.Parse(creds.CredentialJson));
+                Console.WriteLine(await creds.NextAsync());
 
                 var res = await AnonCreds.ProverFetchCredentialsAsync(
                 creds, 1);
