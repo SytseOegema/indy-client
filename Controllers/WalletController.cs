@@ -160,6 +160,7 @@ namespace indyClient
         {
             string res = await getRecord("creddef", "{}",
                 "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+            PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
             return pretty.dePrettyJsonMember(res, "value");
         }
 
