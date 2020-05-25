@@ -41,7 +41,7 @@ namespace indyClient
                 json = begin + sub + end;
 
                 // correct the closeIdx
-                closeIdx -= originalLength - sub.Length();
+                closeIdx -= originalLength - sub.Length;
                 startIdx = json.IndexOf(member, closeIdx);
             }
             return json;
