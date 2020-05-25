@@ -27,11 +27,11 @@ namespace indyClient
             }
 
             string begin = json.Substring(0, openIdx);
-            Console.WriteLine("begin:  \n" + begin)
+            Console.WriteLine("begin:  \n" + begin);
             string sub = json.Substring(openIdx, closeIdx - openIdx + 1);
-            Console.WriteLine("sub:  \n" + sub)
+            Console.WriteLine("sub:  \n" + sub);
             string end = json.Substring(closeIdx + 1);
-            Console.WriteLine("end:  \n" + end)
+            Console.WriteLine("end:  \n" + end);
 
             sub = sub.Trim(new Char[] {' ', '\n'});
             return begin + sub + end;
