@@ -29,7 +29,7 @@ namespace indyClient
                 }
 
                 // split the json in begin, sub, end
-                int originalLength = closeIdx - openIdx + 1
+                int originalLength = closeIdx - openIdx + 1;
                 string begin = json.Substring(0, openIdx);
                 string sub = json.Substring(openIdx, originalLength);
                 string end = json.Substring(closeIdx + 1);
