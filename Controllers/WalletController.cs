@@ -213,6 +213,10 @@ namespace indyClient
               d_openWallet, list, Int32.Parse(count));
               // make response human readable
               o = JObject.Parse(res);
+              for (int idx = 0; idx < count; ++idx)
+              {
+                    o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"]);
+              }
               return o["records"].ToString();
           }
           catch (Exception e)
