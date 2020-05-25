@@ -131,14 +131,36 @@ namespace indyClient
             return didJson;
         }
 
+        public async Task<string> createCredDef(string schemaJson, string tag)
+        {
+            try
+            {
+                string credDefConfigJson = "{\"support_revocation\":false}";
+
+                Console.WriteLine(schemaJson);
+                Console.WriteLine(credDefConfigJson);
+
+                var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+                getOpenWallet(),
+                getActiveDid(),
+                schemaJson,
+                tag,
+                null,
+                credDefConfigJson);
+
+                // Console.WriteLine(res.CredDefId);
+                // Console.WriteLine(res.CredDefJson);
+                return res.CredDefJson;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error make cred def: {e.Message}");
+                return e.Message;
+            }
+        }
+
         public async Task getCredentials(string walletQuery)
         {
-            if (!isOpen())
-            {
-                Console.WriteLine("There must be a open wallet.");
-                return ;
-            }
-
             try
             {
                 var creds = await AnonCreds.ProverSearchCredentialsAsync(
@@ -199,7 +221,7 @@ namespace indyClient
           }
         }
 
-        public async Task<string> getSchemas()
+          public async Task<string> getSchemas()
         {
             return await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");

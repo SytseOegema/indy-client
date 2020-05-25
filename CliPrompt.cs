@@ -40,6 +40,16 @@ namespace indyClient
         }
 
 
+        public string credDefTag()
+        {
+            return consoleInteraction("credential definition tag(TAG1):");
+        }
+
+        public string schemaJson()
+        {
+            return consoleInteraction("The schema Json:");
+        }
+
         public string submitterDid()
         {
             return consoleInteraction("The did of the submitter:");

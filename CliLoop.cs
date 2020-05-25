@@ -47,6 +47,9 @@ namespace indyClient
                         res = await d_wallet.open(
                             d_prompt.issuerWalletName());
                         break;
+                    case "wallet create":
+                        await d_wallet.create(d_prompt.issuerWalletName());
+                        break;
                     case "wallet close":
                         res = await d_wallet.close();
                         break;
@@ -85,7 +88,11 @@ namespace indyClient
                         IOFacilitator temp = new IOFacilitator();
                         temp.listDirectories("/wallet");
                         break;
-
+                    case "credential definition create":
+                        res = await d_wallet.createCredDef(
+                            d_prompt.schemaJson(),
+                            d_prompt.credDefTag());
+                        break;
 
                     case "wallet record add":
                         Console.WriteLine(
@@ -108,18 +115,14 @@ namespace indyClient
                             d_prompt.walletOptions()
                         );
                         break;
+
+                        
                     // case "wallet setup":
                     //     await d_ledger.initializeWallet(
                     //         d_prompt.issuerWalletName(),
                     //         d_prompt.signerWalletName(),
                     //         d_prompt.issuerRole());
                     //     break;
-                    case "wallet create":
-                        await d_wallet.create(d_prompt.issuerWalletName());
-                        break;
-                    case "help":
-                        d_prompt.helpOptions();
-                        break;
                     case "reset genesis":
                         Console.WriteLine("Reinitialize genesis transactions?(y/n)");
                         if (ensurer())
@@ -129,6 +132,9 @@ namespace indyClient
                         break;
                     case "create genesis wallets":
                         await d_initialize.createGenesisWallets();
+                        break;
+                    case "help":
+                        d_prompt.helpOptions();
                         break;
                     default:
                         d_prompt.inputUnrecognized();
