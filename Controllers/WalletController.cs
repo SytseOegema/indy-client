@@ -206,6 +206,7 @@ namespace indyClient
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);
               string count = o["totalCount"].ToString();
+              Console.WriteLine(res);
               Console.WriteLine(count);
 
               // get count schema's
