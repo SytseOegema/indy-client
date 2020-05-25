@@ -156,10 +156,11 @@ namespace indyClient
             }
         }
 
-        public async Task<string> getCredDef()
+        public async Task<string> listCredDefs()
         {
-            return await getRecord("creddef", "{}",
+            string res = await getRecord("creddef", "{}",
                 "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+            return pretty.dePrettyJsonMember(res, "value");
         }
 
         public async Task getCredentials(string walletQuery)
@@ -234,7 +235,7 @@ namespace indyClient
           }
         }
 
-          public async Task<string> getSchemas()
+          public async Task<string> listSchemas()
         {
             string res = await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");

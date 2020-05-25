@@ -86,10 +86,10 @@ namespace indyClient
                             d_prompt.schemaId());
                             break;
                     case "schema list":
-                        res = await d_wallet.getSchemas();
+                        res = await d_wallet.listSchemas();
                         break;
                     case "credential definition list":
-                        res = await d_wallet.getCredDef();
+                        res = await d_wallet.listCredDefs();
                         break;
                     case "credential definition create":
                         res = await d_wallet.createCredDef(
