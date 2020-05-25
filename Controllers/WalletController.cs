@@ -206,13 +206,13 @@ namespace indyClient
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);
               string count = o["totalCount"].ToString();
-              Console.WriteLine(res);
               Console.WriteLine(count);
 
               // get count schema's
               res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, Int32.Parse(count));
               // make response human readable
+              Console.WriteLine(res.records);
               o = JObject.Parse(res);
               return o["records"].ToString();
           }
