@@ -88,11 +88,16 @@ namespace indyClient
                         IOFacilitator temp = new IOFacilitator();
                         temp.listDirectories("/wallet");
                         break;
+                    case "wallet credential get":
+                        await d_wallet.getCredentials(
+                        d_prompt.walletQuery());
+                        break;
                     case "credential definition create":
                         res = await d_wallet.createCredDef(
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
+
 
                     case "wallet record add":
                         Console.WriteLine(
@@ -104,10 +109,6 @@ namespace indyClient
                             )
                         );
                         break;
-                    case "wallet credential get":
-                        await d_wallet.getCredentials(
-                            d_prompt.walletQuery());
-                        break;
                     case "wallet get record":
                         res = await d_wallet.getRecord(
                             d_prompt.recordType(),
@@ -116,7 +117,7 @@ namespace indyClient
                         );
                         break;
 
-                        
+
                     // case "wallet setup":
                     //     await d_ledger.initializeWallet(
                     //         d_prompt.issuerWalletName(),
