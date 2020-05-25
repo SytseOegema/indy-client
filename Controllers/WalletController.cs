@@ -219,10 +219,12 @@ namespace indyClient
               // parse member value, because it contains schemaJson
               for (int idx = 0; idx < Int32.Parse(count); ++idx)
               {
-                    o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
+                    JObject tmp = JObject.Parse(o["records"][idx]["value"]);
+                    // o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
+                    o["records"][idx]["value"] = tmp.ToString(Formatting.None));
               }
 
-              return o["records"].ToString(Formatting.None);
+              return o["records"].ToString();
           }
           catch (Exception e)
           {
