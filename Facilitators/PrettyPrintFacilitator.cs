@@ -7,7 +7,7 @@ namespace indyClient
         public string dePrettyJsonMember(string json, string member)
         {
             int startIdx = json.IndexOf(member);
-            while(startIdx != -1)
+            while (startIdx != -1)
             {
                 int openIdx = json.IndexOf('{', startIdx);
                 int openIdx2 = openIdx + 1;
@@ -28,16 +28,17 @@ namespace indyClient
                   openIdx2++;
                 }
 
-                Console.WriteLine("begin:  \n" + begin);
-                Console.WriteLine("sub:  \n" + sub);
-                Console.WriteLine("end:  \n" + end);
+                string begin = json.Substring(0, openIdx);
+                string sub = json.Substring(openIdx, closeIdx - openIdx + 1);
+                string end = json.Substring(closeIdx + 1);
 
                 sub = sub.Replace(" ", "");
                 sub = sub.Replace("\n", "");
+
                 json = begin + sub + end;
+
                 startIdx = json.IndexOf(member, closeIdx);
             }
-
             return json;
         }
 
