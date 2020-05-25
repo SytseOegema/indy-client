@@ -203,6 +203,7 @@ namespace indyClient
               // get 0 schema's
               var res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, 0);
+
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);
               string count = o["totalCount"].ToString();
@@ -211,12 +212,17 @@ namespace indyClient
               // get count schema's
               res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, Int32.Parse(count));
+
               // make response human readable
               o = JObject.Parse(res);
+
+              // parse member value, because it contains schemaJson
               for (int idx = 0; idx < Int32.Parse(count); ++idx)
               {
-                    o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
+                    o["records"][idx]["value"] = JObject.Parse(
+                        o["records"][idx]["value"].ToString(Formatting.None));
               }
+
               return o["records"].ToString();
           }
           catch (Exception e)
