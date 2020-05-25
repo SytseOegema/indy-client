@@ -33,7 +33,8 @@ namespace indyClient
             string end = json.Substring(closeIdx + 1);
             Console.WriteLine("end:  \n" + end);
 
-            sub = sub.Trim(new Char[] {' ', '\n'});
+            sub = sub.Replace(" ", "");
+            sub = sub.Replace("\n", "");
             return begin + sub + end;
         }
 
