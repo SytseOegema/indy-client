@@ -223,6 +223,7 @@ namespace indyClient
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
             d_walletCredentials = "{ \"key\": \"" + d_identifier + "\" }";
+            setActiveDid("");
         }
 
         private void resetWalletInfo()
@@ -230,6 +231,7 @@ namespace indyClient
           d_walletConfig = "";
           d_walletCredentials = "";
           d_identifier = "";
+          setActiveDid("");
         }
 
         public bool isOpen()

@@ -82,7 +82,7 @@ namespace indyClient
 
                 await d_walletController.addRecord("schema", version,
                 schema.SchemaJson, recordJson);
-
+                Console.WriteLine("test test test async problem");
                 return schema.SchemaJson;
             }
             catch (Exception e)

@@ -35,6 +35,7 @@ namespace indyClient
             {
                 setInputLine();
                 var input = Console.ReadLine();
+                input = input.Trim();
                 switch (input)
                 {
                     case "exit":
