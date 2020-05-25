@@ -76,6 +76,7 @@ namespace indyClient
                 recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
                 recordJson += "\"schema_name\": \"" + name + "\",";
                 recordJson += "\"schema_version\": \"" + version + "\"";
+                recordJson += "\"schema_json\": \"" + JObject.Parse(schema.SchemaJson) + "\"";
                 recordJson += "}";
 
                 // add record to wallet that saves the schema information.

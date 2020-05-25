@@ -212,7 +212,6 @@ namespace indyClient
               res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, Int32.Parse(count));
               // make response human readable
-              Console.WriteLine(res.records);
               o = JObject.Parse(res);
               return o["records"].ToString();
           }
