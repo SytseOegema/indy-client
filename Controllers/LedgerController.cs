@@ -117,8 +117,40 @@ namespace indyClient
 
         }
 
+        public async Task<string> createCredDef(string schemaJson, string tag)
+        {
+            try
+            {
+                string credDefConfigJson = "{\"support_revocation\":false}";
 
+                var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
+                    d_walletController.getOpenWallet(),
+                    d_walletController.getActiveDid(),
+                    schemaJson,
+                    tag,
+                    null,
+                    credDefConfigJson);
 
+                await d_walletController.addRecord("creddef", res.CredDefId, res.CredDefJson, "{}");
+
+                var credDefRequest = await Ledger.BuildCredDefRequestAsync(
+                    d_walletController.getActiveDid(),
+                    res.CredDefJson);
+
+                await Ledger.SignAndSubmitRequestAsync(
+                    d_poolController.getOpenPool(),
+                    d_walletController.getOpenWallet(),
+                    d_walletController.getActiveDid(),
+                    credDefRequest);
+
+                return res.CredDefJson;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error make cred def: {e.Message}");
+                return e.Message;
+            }
+        }
 
 
         // public async Task initializeWallet(string myWalletName,

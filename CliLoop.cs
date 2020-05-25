@@ -92,7 +92,7 @@ namespace indyClient
                         res = await d_wallet.listCredDefs();
                         break;
                     case "credential definition create":
-                        res = await d_wallet.createCredDef(
+                        res = await d_ledger.createCredDef(
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
