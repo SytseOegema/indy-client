@@ -32,8 +32,6 @@ namespace indyClient
 
 
 
-
-
             options += "create genesis wallets:: creates wallets for Trustee1, Steward1, Steward2\n";
             options += "reset genesis:: does not work :)\n";
             options += "exit:: quit program\n";
