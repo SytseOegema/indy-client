@@ -88,9 +88,8 @@ namespace indyClient
                         IOFacilitator temp = new IOFacilitator();
                         temp.listDirectories("/wallet");
                         break;
-                    case "wallet credential get":
-                        await d_wallet.getCredentials(
-                        d_prompt.walletQuery());
+                    case "credential definition get":
+                        res = await d_wallet.getCredDef();
                         break;
                     case "credential definition create":
                         res = await d_wallet.createCredDef(

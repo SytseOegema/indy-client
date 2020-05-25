@@ -137,9 +137,6 @@ namespace indyClient
             {
                 string credDefConfigJson = "{\"support_revocation\":false}";
 
-                Console.WriteLine(schemaJson);
-                Console.WriteLine(credDefConfigJson);
-
                 var res = await AnonCreds.IssuerCreateAndStoreCredentialDefAsync(
                 getOpenWallet(),
                 getActiveDid(),
@@ -148,8 +145,8 @@ namespace indyClient
                 null,
                 credDefConfigJson);
 
-                // Console.WriteLine(res.CredDefId);
-                // Console.WriteLine(res.CredDefJson);
+                addRecord("creddef", res.CredDefId, res.CredDefJson, "{}");
+
                 return res.CredDefJson;
             }
             catch (Exception e)
@@ -159,15 +156,20 @@ namespace indyClient
             }
         }
 
+        public async Task<string> getCredDef()
+        {
+            return await getRecord("creddef", "{}",
+                "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+        }
+
         public async Task getCredentials(string walletQuery)
         {
             try
             {
-                var creds = await AnonCreds.ProverSearchCredentialsAsync(
+              var creds = await AnonCreds.ProverSearchCredentialsAsync(
                     d_openWallet, walletQuery);
                     Console.WriteLine(creds);
 
-                Console.WriteLine(await creds.NextAsync(1));
 
                 var res = await AnonCreds.ProverFetchCredentialsAsync(
                 creds, 1);
