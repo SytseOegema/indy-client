@@ -71,8 +71,6 @@ namespace indyClient
                     issuerDid,
                     buildschema);
 
-                Console.WriteLine("test test test async problem");
-
                 string recordJson = "{";
                 recordJson += "\"issuer_did\": \"" + issuerDid + "\",";
                 recordJson += "\"schema_id\": \"" + schema.SchemaId + "\",";
@@ -81,11 +79,9 @@ namespace indyClient
                 recordJson += "}";
 
                 // add record to wallet that saves the schema information.
-                Console.WriteLine("test test test async problem");
-
                 await d_walletController.addRecord("schema", version,
                 schema.SchemaJson, recordJson);
-                Console.WriteLine("test test test async problem");
+
                 return schema.SchemaJson;
             }
             catch (Exception e)
