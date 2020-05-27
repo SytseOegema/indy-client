@@ -54,7 +54,7 @@ namespace indyClient
             try
             {
                 await Wallet.CreateWalletAsync(d_walletConfig, d_walletCredentials);
-                close();
+                await close();
                 resetWalletInfo();
             }
             catch (Exception e)
