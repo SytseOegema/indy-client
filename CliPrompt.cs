@@ -56,6 +56,11 @@ namespace indyClient
             return consoleInteraction("The link secret identifier/name:");
         }
 
+        public string credValues()
+        {
+            return consoleInteraction("The values of the credential: [\"name-value\", \"age-value\"]");
+        }
+
         public string credReqMetaJson()
         {
             return consoleInteraction("The credential request meta JSON:");
@@ -206,10 +211,6 @@ namespace indyClient
             return consoleInteraction("What role has the issuer:");
         }
 
-        public string credValueJson()
-        {
-            return "lala";
-        }
 
         // public string walletCredentialsJson()
         // {

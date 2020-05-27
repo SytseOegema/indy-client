@@ -112,10 +112,14 @@ namespace indyClient
                             d_prompt.secretId());
                         break;
                     case "credential create":
+                        CredDefFacilitator credFac =
+                            new CredDefFacilitator();
+
+                            // replace credValueJson() by the output of the facilitator
                         res = await d_wallet.createCredential(
                             d_prompt.credOfferJson(),
                             d_prompt.credReqJson(),
-                            d_prompt.credValueJson());
+                            "d_prompt.credValueJson()");
                         break;
                     case "credential store":
                         res = await d_wallet.storeCredential(
@@ -123,6 +127,16 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                         break;
+                    case "test":
+                        CredDefFacilitator cred =
+                            new CredDefFacilitator();
+
+                        cred.generateCredValueJson(
+                            d_prompt.schemaAttributes(),
+                            d_prompt.credValues());
+                        break;
+
+
 
                     case "wallet record add":
                         Console.WriteLine(
