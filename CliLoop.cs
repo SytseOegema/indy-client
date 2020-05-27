@@ -97,12 +97,22 @@ namespace indyClient
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
-                    case "create credential offer":
+                    case "credential create offer":
                         res = await d_wallet.createCredentialOffer(
                             d_prompt.credDefId());
                         break;
-
-
+                    case "credential create request":
+                        res = await d_wallet.createCredentialRequest(
+                            d_prompt.credOfferJson(),
+                            d_prompt.credDefJson(),
+                            d_prompt.linkSecret());
+                        break;
+                    case "credential create":
+                        res = await d_wallet.createCredential(
+                            d_prompt.credOfferJson(),
+                            d_prompt.credReqJson(),
+                            d_prompt.credValueJson());
+                        break;
 
 
 

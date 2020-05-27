@@ -50,6 +50,27 @@ namespace indyClient
         }
 
 
+
+        public string linkSecret()
+        {
+            return consoleInteraction("The link secret value:");
+        }
+
+        public string credReqJson()
+        {
+            return consoleInteraction("The credential request JSON:");
+        }
+
+        public string credOfferJson()
+        {
+            return consoleInteraction("The credential offer JSON:");
+        }
+
+        public string credDefJson()
+        {
+            return consoleInteraction("The credential definition JSON:");
+        }
+
         public string credDefId()
         {
             return consoleInteraction("credential definition id:");
@@ -173,6 +194,11 @@ namespace indyClient
         public string issuerRole()
         {
             return consoleInteraction("What role has the issuer:");
+        }
+
+        public string credValueJson()
+        {
+            return "lala";
         }
 
         // public string walletCredentialsJson()

@@ -7,6 +7,7 @@ using Hyperledger.Indy.DidApi;
 using Hyperledger.Indy.WalletApi;
 using Hyperledger.Indy.NonSecretsApi;
 using Hyperledger.Indy.AnonCredsApi;
+using Hyperledger.Indy.BlobStorageApi;
 
 
 
@@ -143,9 +144,58 @@ namespace indyClient
         {
             try
             {
-                string res = await AnonCreds.IssuerCreateCredentialOfferAsync(
+                string credOfferJson = await AnonCreds.IssuerCreateCredentialOfferAsync(
                 d_openWallet, credDefId);
-                return res;
+                return credOfferJson;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> createCredentialRequest(
+            string credOfferJson,
+            string credDefJson,
+            string linkSecret)
+        {
+            try
+            {
+                var credReq = await AnonCreds.ProverCreateCredentialReqAsync(
+                    d_openWallet,
+                    d_didController.getActiveDid(),
+                    credOfferJson,
+                    credDefJson,
+                    linkSecret);
+                // credReq: {CredentialRequestJson, CredentialRequestMetaDataJson}
+                return JsonConvert.SerializeObject(credReq);
+                // return credReqJson;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        // public async Task<string> createCredential(string credOfferJson,
+        //     string credReqJson, string credValueJson)
+        // {
+        //     string res = await createCredential(credOfferJson,
+        //         credReqJson, credValueJson, "", null);
+        //     return res;
+        // }
+
+        public async Task<string> createCredential(string credOfferJson,
+            string credReqJson, string credValueJson, string revRegId = "",
+            BlobStorageReader blob = null)
+        {
+            try
+            {
+                var cred = await AnonCreds.IssuerCreateCredentialAsync(
+                    d_openWallet, credOfferJson, credReqJson, credValueJson,
+                    revRegId, blob);
+                // cred: {CredentailJson, RevocId, RevocRegDeltaJson}
+                return cred.CredentialJson;
             }
             catch (Exception e)
             {
