@@ -89,6 +89,10 @@ namespace indyClient
                     case "schema list":
                         res = await d_wallet.listSchemas();
                         break;
+                    case "master secret create":
+                        res = await d_wallet.createMasterSecret(
+                            d_prompt.secretId());
+                        break;
                     case "credential definition list":
                         res = await d_wallet.listCredDefs();
                         break;
@@ -105,7 +109,7 @@ namespace indyClient
                         res = await d_wallet.createCredentialRequest(
                             d_prompt.credOfferJson(),
                             d_prompt.credDefJson(),
-                            d_prompt.linkSecret());
+                            d_prompt.secretId());
                         break;
                     case "credential create":
                         res = await d_wallet.createCredential(
@@ -113,8 +117,12 @@ namespace indyClient
                             d_prompt.credReqJson(),
                             d_prompt.credValueJson());
                         break;
-
-
+                    case "credential store":
+                        res = await d_wallet.storeCredential(
+                            d_prompt.credReqMetaJson(),
+                            d_prompt.credJson(),
+                            d_prompt.credDefJson());
+                        break;
 
                     case "wallet record add":
                         Console.WriteLine(

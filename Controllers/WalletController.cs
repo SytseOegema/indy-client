@@ -141,6 +141,20 @@ namespace indyClient
             return pretty.dePrettyJsonMember(res, "value");
         }
 
+        public async Task<string> createMasterSecret(string secretId)
+        {
+            try
+            {
+                string secret = await AnonCreds.ProverCreateMasterSecretAsync(
+                    d_openWallet, secretId);
+                return secret;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
         public async Task<string> createCredentialOffer(string credDefId)
         {
             try
@@ -178,14 +192,6 @@ namespace indyClient
             }
         }
 
-        // public async Task<string> createCredential(string credOfferJson,
-        //     string credReqJson, string credValueJson)
-        // {
-        //     string res = await createCredential(credOfferJson,
-        //         credReqJson, credValueJson, "", null);
-        //     return res;
-        // }
-
         public async Task<string> createCredential(string credOfferJson,
             string credReqJson, string credValueJson, string revRegId = "",
             BlobStorageReader blob = null)
@@ -197,6 +203,22 @@ namespace indyClient
                     revRegId, blob);
                 // cred: {CredentailJson, RevocId, RevocRegDeltaJson}
                 return cred.CredentialJson;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> storeCredential(string credReqMetaJson,
+            string credJson, string credDefJson, string revRegDefJson = "")
+        {
+            try
+            {
+                string res = await AnonCreds.ProverStoreCredentialAsync(
+                    d_openWallet, null,credReqMetaJson, credJson, credDefJson,
+                    revRegDefJson);
+                return res;
             }
             catch (Exception e)
             {

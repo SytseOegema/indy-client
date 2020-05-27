@@ -51,9 +51,14 @@ namespace indyClient
 
 
 
-        public string linkSecret()
+        public string secretId()
         {
-            return consoleInteraction("The link secret value:");
+            return consoleInteraction("The link secret identifier/name:");
+        }
+
+        public string credReqMetaJson()
+        {
+            return consoleInteraction("The credential request meta JSON:");
         }
 
         public string credReqJson()
@@ -79,6 +84,11 @@ namespace indyClient
         public string credDefTag()
         {
             return consoleInteraction("credential definition tag(TAG1):");
+        }
+
+        public string credJson()
+        {
+            return consoleInteraction("credential json:");
         }
 
         public string schemaJson()
