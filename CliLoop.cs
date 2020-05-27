@@ -97,6 +97,10 @@ namespace indyClient
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
+                    case "create credential offer":
+                        res = await d_wallet.createCredentialOffer(
+                            d_prompt.credDefId());
+                        break;
 
 
 

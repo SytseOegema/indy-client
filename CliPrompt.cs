@@ -50,6 +50,11 @@ namespace indyClient
         }
 
 
+        public string credDefId()
+        {
+            return consoleInteraction("credential definition id:");
+        }
+
         public string credDefTag()
         {
             return consoleInteraction("credential definition tag(TAG1):");

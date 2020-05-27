@@ -139,6 +139,20 @@ namespace indyClient
             return pretty.dePrettyJsonMember(res, "value");
         }
 
+        public async Task<string> createCredentialOffer(string credDefId)
+        {
+            try
+            {
+                string res = await AnonCreds.IssuerCreateCredentialOfferAsync(
+                d_openWallet, credDefId);
+                return res;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
         public async Task getCredentials(string walletQuery)
         {
             try
