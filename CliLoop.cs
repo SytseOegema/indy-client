@@ -119,7 +119,10 @@ namespace indyClient
                         res = await d_wallet.createCredential(
                             d_prompt.credOfferJson(),
                             d_prompt.credReqJson(),
-                            "d_prompt.credValueJson()");
+                            credFac.generateCredValueJson(
+                                d_prompt.schemaAttributes(),
+                                d_prompt.credValues())
+                            );
                         break;
                     case "credential store":
                         res = await d_wallet.storeCredential(
@@ -127,14 +130,9 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                         break;
-                    case "test":
-                        CredDefFacilitator cred =
-                            new CredDefFacilitator();
 
-                        cred.generateCredValueJson(
-                            d_prompt.schemaAttributes(),
-                            d_prompt.credValues());
-                        break;
+
+
 
 
 
