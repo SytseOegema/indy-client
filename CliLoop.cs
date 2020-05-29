@@ -130,6 +130,14 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                         break;
+                    case "test":
+                        CredDefFacilitator cred =
+                            new CredDefFacilitator();
+
+                        res = cred.generateCredValueJson(
+                            d_prompt.schemaAttributes(),
+                            d_prompt.credValues());
+                        break;
 
 
 
