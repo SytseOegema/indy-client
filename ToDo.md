@@ -2,5 +2,4 @@
 - save schema and credential record do not have to include the json, because this can be retrieved from the ledger by providing ids.
 
 
-- create link secret : proverCreateMasterSecret
-- store credenential in prover wallet
+- credential request output pretify

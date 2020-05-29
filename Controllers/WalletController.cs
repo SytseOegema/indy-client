@@ -183,7 +183,10 @@ namespace indyClient
                     credDefJson,
                     linkSecret);
                 // credReq: {CredentialRequestJson, CredentialRequestMetaDataJson}
-                return JsonConvert.SerializeObject(credReq);
+                string json = JsonConvert.SerializeObject(credReq);
+                JObject o = JObject.Parse(json);
+                json = o.ToString();
+                return json;
                 // return credReqJson;
             }
             catch (Exception e)
