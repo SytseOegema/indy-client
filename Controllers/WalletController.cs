@@ -222,7 +222,7 @@ namespace indyClient
         }
 
         public async Task<string> storeCredential(string credReqMetaJson,
-            string credJson, string credDefJson, string revRegDefJson = "")
+            string credJson, string credDefJson, string revRegDefJson = null)
         {
             try
             {
