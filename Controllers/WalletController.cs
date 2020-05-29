@@ -201,11 +201,14 @@ namespace indyClient
         }
 
         public async Task<string> createCredential(string credOfferJson,
-            string credReqJson, string credValueJson, string revRegId = "",
+            string credReqJson, string credValueJson, string revRegId = null,
             BlobStorageReader blob = null)
         {
             try
             {
+                Console.WriteLine("credOfferJson: " + credOfferJson);
+                Console.WriteLine("credReqJson: " + credReqJson);
+                Console.WriteLine("credValueJson: " + credValueJson);
                 var cred = await AnonCreds.IssuerCreateCredentialAsync(
                     d_openWallet, credOfferJson, credReqJson, credValueJson,
                     revRegId, blob);
