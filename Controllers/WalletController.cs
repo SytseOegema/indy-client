@@ -188,6 +188,9 @@ namespace indyClient
                 o["CredentialRequestJson"] = JObject.Parse(credReq.CredentialRequestJson);
                 o["CredentialRequestMetadataJson"] = JObject.Parse(credReq.CredentialRequestMetadataJson);
                 json = o.ToString();
+                PrettyPrintFacilitator pretty =  new PrettyPrintFacilitator();
+                json = pretty.dePrettyJsonMember(json, "CredentialRequestJson");
+                json = pretty.dePrettyJsonMember(json, "CredentialRequestMetadataJson");
                 return json;
                 // return credReqJson;
             }
