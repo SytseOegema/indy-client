@@ -28,8 +28,8 @@ namespace indyClient
                 encoding = hexToDec(encoding);
                 // string encoding = hexToDec(sha256_hash(values[idx]));
 
-                output += "\"" + attributes[idx] + "\": [\"raw\": \"";
-                output += values[idx] + "\", \"encoded\": \"" + encoding + "\"]";
+                output += "\"" + attributes[idx] + "\": {\"raw\": \"";
+                output += values[idx] + "\", \"encoded\": \"" + encoding + "\"}";
 
                 if (idx != values.Count - 1)
                     output += ",";
