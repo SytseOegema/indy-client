@@ -182,9 +182,11 @@ namespace indyClient
                     credOfferJson,
                     credDefJson,
                     linkSecret);
-                // credReq: {CredentialRequestJson, CredentialRequestMetaDataJson}
+                // credReq: {CredentialRequestJson, CredentialRequestMetadataJson}
                 string json = JsonConvert.SerializeObject(credReq);
-                JObject o = JObject.Parse(json);
+                JObject o = new JObject();
+                o["CredentialRequestJson"] = JObject.Parse(credReq.CredentialRequestJson);
+                o["CredentialRequestMetadataJson"] = JObject.Parse(credReq.CredentialRequestMetadataJson);
                 json = o.ToString();
                 return json;
                 // return credReqJson;
