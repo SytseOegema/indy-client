@@ -29,6 +29,10 @@ namespace indyClient
             options += "schema get:: get a schema\n";
             options += "credential definition create:: create a credential definition\n";
             options += "credential definition list:: list all credential definitions in this wallet\n";
+            options += "credential offer create:: issuer creates credential offer\n";
+            options += "credential request create:: prover create credential request\n";
+            options += "credential create:: issuer creates the credential\n";
+            options += "credential store:: prover stores the credential in his wallet\n";
 
 
 

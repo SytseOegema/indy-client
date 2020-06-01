@@ -12,6 +12,8 @@ namespace indyClient
             ref d_pool, ref d_wallet);
         static Initialize d_initialize = new Initialize(
             ref d_wallet, ref d_ledger);
+        static SetupFacilitator d_setup = new SetupFacilitator(
+            ref d_wallet, ref d_ledger, ref d_pool);
 
         public static async Task start()
         {
@@ -101,11 +103,11 @@ namespace indyClient
                             d_prompt.schemaJson(),
                             d_prompt.credDefTag());
                         break;
-                    case "credential create offer":
+                    case "credential offer create":
                         res = await d_wallet.createCredentialOffer(
                             d_prompt.credDefId());
                         break;
-                    case "credential create request":
+                    case "credential request create":
                         res = await d_wallet.createCredentialRequest(
                             d_prompt.credOfferJson(),
                             d_prompt.credDefJson(),
@@ -177,7 +179,7 @@ namespace indyClient
                         }
                         break;
                     case "create genesis wallets":
-                        await d_initialize.createGenesisWallets();
+                        await d_setup.createGenesisWallets();
                         break;
                     case "help":
                         d_prompt.helpOptions();
