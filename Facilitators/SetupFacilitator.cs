@@ -80,7 +80,7 @@ namespace indyClient
                     credOffer, credDefDefinition, linkSecret);
 
                 o = JObject.Parse(credReq);
-                string credReqJson = o["CredRequestJson"].ToString();
+                string credReqJson = o["CredentialRequestJson"].ToString();
                 string credReqMetaJson =
                     o["CredentialRequestMetadataJson"].ToString();
 
