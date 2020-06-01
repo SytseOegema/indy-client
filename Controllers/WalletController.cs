@@ -206,9 +206,9 @@ namespace indyClient
         {
             try
             {
-                Console.WriteLine("credOfferJson: " + credOfferJson);
-                Console.WriteLine("credReqJson: " + credReqJson);
-                Console.WriteLine("credValueJson: " + credValueJson);
+                // Console.WriteLine("credOfferJson: " + credOfferJson);
+                // Console.WriteLine("credReqJson: " + credReqJson);
+                // Console.WriteLine("credValueJson: " + credValueJson);
                 var cred = await AnonCreds.IssuerCreateCredentialAsync(
                     d_openWallet, credOfferJson, credReqJson, credValueJson,
                     revRegId, blob);

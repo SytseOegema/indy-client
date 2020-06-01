@@ -36,8 +36,11 @@ namespace indyClient
 
 
 
-            options += "create genesis wallets:: creates wallets for Trustee1, Steward1, Steward2\n";
-            options += "reset genesis:: does not work :)\n";
+            options += "EHR environment setup:: creates wallets for Trustee1, Steward1, Steward2\n";
+            options += "                     :: creates wallets for Doctor1, Doctor2, Doctor3\n";
+            options += "                     :: creates wallet for Gov-Health-Department\n";
+            options += "                     :: creates schema and CredDef for Doctor-Certificate\n";
+            options += "                     :: creates Doctor-Certificate credential for Doctor{1-3}\n";
             options += "exit:: quit program\n";
             Console.WriteLine(options);
         }
