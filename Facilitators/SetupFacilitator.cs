@@ -166,7 +166,9 @@ namespace indyClient
         {
           string docDid = JArray.Parse(didList)[0]["did"].ToString();
           string docVer = JArray.Parse(didList)[0]["verkey"].ToString();
-          await d_wallet.open(issuer);
+
+          await initialize(issuer, issuerDid);
+
           await d_ledger.sendNymRequest(docDid, docVer, "Doctor", role);
           await d_wallet.close();
         }
