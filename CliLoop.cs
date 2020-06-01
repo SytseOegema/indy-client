@@ -13,7 +13,7 @@ namespace indyClient
         static Initialize d_initialize = new Initialize(
             ref d_wallet, ref d_ledger);
         static SetupFacilitator d_setup = new SetupFacilitator(
-            ref d_wallet, ref d_ledger, ref d_pool);
+            ref d_wallet, ref d_ledger);
 
         public static async Task start()
         {
