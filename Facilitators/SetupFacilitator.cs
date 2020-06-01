@@ -16,7 +16,7 @@ namespace indyClient
             d_ledger = ledger;
         }
 
-        public async Task setupEnvironment(string poolName)
+        public async Task setupEHREnvironment()
         {
             await createGenesisWallets();
             string myName = "Gov-Health-Department";

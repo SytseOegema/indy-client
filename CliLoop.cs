@@ -171,15 +171,9 @@ namespace indyClient
                     //         d_prompt.signerWalletName(),
                     //         d_prompt.issuerRole());
                     //     break;
-                    case "reset genesis":
-                        Console.WriteLine("Reinitialize genesis transactions?(y/n)");
-                        if (ensurer())
-                        {
-                            await d_initialize.reinitialize();
-                        }
-                        break;
-                    case "create genesis wallets":
-                        await d_setup.createGenesisWallets();
+                    case "EHR environment setup":
+                        if(ensurer("Are you sure you want to setup the environment?"))
+                            await d_setup.setupEHREnvironment();
                         break;
                     case "help":
                         d_prompt.helpOptions();
@@ -209,8 +203,9 @@ namespace indyClient
 
         }
 
-        static bool ensurer()
+        static bool ensurer(string question)
         {
+            Console.WriteLine(question);
             string ensurer = "";
             while(true)
             {
