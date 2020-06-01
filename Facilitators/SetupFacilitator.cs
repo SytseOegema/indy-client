@@ -57,7 +57,7 @@ namespace indyClient
             Console.WriteLine(credDefDefinition);
 
             JObject o = JObject.Parse(credDefDefinition);
-            string credDefId = o["CredDefId"].ToString();
+            string credDefId = o["id"].ToString();
 
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
