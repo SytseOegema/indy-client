@@ -21,7 +21,7 @@ namespace indyClient
             await createGenesisWallets();
             string myName = "Gov-Health-Department";
 
-            // create Gov-Health-Department wallet
+            Console.WriteLine("create Gov-Health-Department wallet")
             await d_wallet.create(myName);
             await d_wallet.open(myName);
             await d_wallet.createDid("00000000000Gov-Health-Department",
@@ -50,8 +50,11 @@ namespace indyClient
             string schemaJson = await d_ledger.createSchema(
                 "Doctor-Certificate", "1.0.0", schemaAttributes);
 
+            Console.WriteLine("creating CredDef for schema Doctor-Certificate");
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
+
+            Console.WriteLine(credDefDefinition);
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["CredDefId"].ToString();
@@ -105,7 +108,7 @@ namespace indyClient
                 Console.WriteLine("Doctor wallets already exists.");
                 return;
             }
-            // doctor 1
+            Console.WriteLine("create wallet for doctor 1")
             await d_wallet.create("Doctor1");
             await d_wallet.open("Doctor1");
             await d_wallet.createDid("0000000000000000000000000Doctor1",
@@ -114,7 +117,7 @@ namespace indyClient
             string didList = await d_wallet.listDids();
             await sendNym(issuer, issuerDid, didList);
 
-            // doctor 2
+            Console.WriteLine("create wallet for doctor 2")
             await d_wallet.create("Doctor2");
             await d_wallet.open("Doctor2");
             await d_wallet.createDid("0000000000000000000000000Doctor2",
@@ -123,7 +126,7 @@ namespace indyClient
             didList = await d_wallet.listDids();
             await sendNym(issuer, issuerDid, didList);
 
-            // doctor 3
+            Console.WriteLine("create wallet for doctor 3")
             await d_wallet.create("Doctor3");
             await d_wallet.open("Doctor3");
             await d_wallet.createDid("0000000000000000000000000Doctor3",
@@ -144,6 +147,7 @@ namespace indyClient
                 return;
             }
 
+            Console.WriteLine("Create genesis wallets:");
             await d_wallet.create("Trustee1");
             await d_wallet.open("Trustee1");
             await d_wallet.createDid("000000000000000000000000Trustee1",
