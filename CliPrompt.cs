@@ -23,7 +23,7 @@ namespace indyClient
             options += "did activate:: activate a did to use for transactions\n";
             options += "did list:: list dids in opened wallet\n";
             options += "ledger send initial nym:: send the initial nym request to create a new identity.\n";
-            options += "                          new identities can only be created by Trustees ,Stewards and Endorsers.\n";
+            options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
             options += "schema create:: create a new schema\n";
             options += "schema list:: list al schema in this wallet\n";
             options += "schema get:: get a schema\n";
