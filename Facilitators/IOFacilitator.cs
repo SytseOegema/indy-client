@@ -22,6 +22,7 @@ namespace indyClient
             using (StreamWriter file = new StreamWriter(d_homePath + "/" + filename))
             {
                 file.Write(content);
+                file.Flush();
             }
         }
 
