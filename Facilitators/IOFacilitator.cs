@@ -17,11 +17,11 @@ namespace indyClient
             // /home/hyper/.indy_client
         }
 
-        public void createFile(Stream data, string filename)
+        public void createFile(string content, string filename)
         {
-            using (FileStream file = File.Create(d_homePath + "/" + filename))
+            using (StreamWriter file = new StreamWriter(d_homePath + "/" + filename))
             {
-                data.CopyTo(file);
+                file.Write(content);
             }
         }
 

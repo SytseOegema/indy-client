@@ -35,6 +35,8 @@ namespace indyClient
             JObject o = JObject.Parse(responseString);
             string content = o["Data"].ToString();
             Console.WriteLine(content);
+
+            io.createFile(content, "wallet1");
         }
     }
 }
