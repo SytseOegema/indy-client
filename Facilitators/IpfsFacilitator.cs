@@ -6,7 +6,7 @@ namespace indyClient
 {
     class IpfsFacilitator
     {
-        static IpfsClient ipfs = new IpfsClient("https://ipfs.ioz");
+        static IpfsClient ipfs = new IpfsClient();
 
         public async Task test()
         {
