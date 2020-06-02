@@ -13,5 +13,11 @@ namespace indyClient
             var peer = await ipfs.IdAsync();
             Console.WriteLine(peer);
         }
+
+        public async Task addFile(string path)
+        {
+            var res = await ipfs.FileSystem.AddFileAsync(path);
+            Console.WriteLine(res);
+        }
     }
 }

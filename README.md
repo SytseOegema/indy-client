@@ -53,18 +53,17 @@ rm -r go-ipfs
 
 # create the file /etc/systemd/system/ipfs.service
 # with the following content
+# this assumes there is a user hyper in the system
 [Unit]
 Description=IPFS daemon
 After=network.target
 
 [Service]
-### Uncomment the following line for custom ipfs datastore location
-# Environment=IPFS_PATH=/path/to/your/ipfs/datastore
+User=hyper
 ExecStart=/usr/local/bin/ipfs daemon
-Restart=on-failure
 
 [Install]
-WantedBy=default.target
+WantedBy=multiuser.target
 
 sudo systemctl start ipfs
 sudo systemctl enable ipfs
