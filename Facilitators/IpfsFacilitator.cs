@@ -29,8 +29,11 @@ namespace indyClient
         {
             string url = d_baseUrl + "/api/v0/object/get?arg=" + ipfsPath;
             var response = await client.PostAsync(url, null);
+            // {Links: [], Data:"string"}
             var responseString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseString);
+            JObject o = JObject.Parse(responseString);
+            string content = o["Data"].ToString();
+            Console.WriteLine(content);
         }
     }
 }
