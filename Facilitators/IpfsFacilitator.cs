@@ -17,7 +17,7 @@ namespace indyClient
         public async Task addFile(string path)
         {
             var res = await ipfs.FileSystem.AddFileAsync(path);
-            Console.WriteLine(res);
+            Console.WriteLine(res.Id);
         }
     }
 }
