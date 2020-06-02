@@ -19,6 +19,8 @@ namespace indyClient
             options += "wallet open:: open existing wallet\n";
             options += "wallet close:: close opened wallet\n";
             options += "wallet list:: list wallets on this device\n";
+            options += "wallet record add:: adds local record to wallet.";
+            options += "wallet record get:: gets local records from wallet";
             options += "did create:: create new did in opened wallet\n";
             options += "did activate:: activate a did to use for transactions\n";
             options += "did list:: list dids in opened wallet\n";
@@ -33,7 +35,7 @@ namespace indyClient
             options += "credential request create:: prover create credential request\n";
             options += "credential create:: issuer creates the credential\n";
             options += "credential store:: prover stores the credential in his wallet\n";
-
+            options += "";
 
 
             options += "EHR environment setup:: creates wallets for Trustee1, Steward1, Steward2\n";
@@ -185,12 +187,12 @@ namespace indyClient
 
         public string walletQuery()
         {
-            return consoleInteraction("Wallet Query in JSON");
+            return consoleInteraction("Wallet Query in JSON | {}");
         }
 
         public string walletOptions()
         {
-            return consoleInteraction("Wallet query options in JSON");
+            return consoleInteraction("Wallet query options in JSON | {\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
         }
 
         public string didSeed()

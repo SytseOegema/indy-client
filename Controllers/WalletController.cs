@@ -309,13 +309,15 @@ namespace indyClient
           }
         }
 
-          public async Task<string> listSchemas()
+        public async Task<string> listSchemas()
         {
             string res = await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
             PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
             return pretty.dePrettyJsonMember(res, "value");
         }
+
+
 
         private void setWalletInfo()
         {

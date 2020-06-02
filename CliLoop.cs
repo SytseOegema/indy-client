@@ -132,14 +132,7 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                         break;
-                    case "test":
-                        CredDefFacilitator cred =
-                            new CredDefFacilitator();
 
-                        res = cred.generateCredValueJson(
-                            d_prompt.schemaAttributes(),
-                            d_prompt.credValues());
-                        break;
 
 
 
@@ -163,14 +156,6 @@ namespace indyClient
                             d_prompt.walletOptions()
                         );
                         break;
-
-
-                    // case "wallet setup":
-                    //     await d_ledger.initializeWallet(
-                    //         d_prompt.issuerWalletName(),
-                    //         d_prompt.signerWalletName(),
-                    //         d_prompt.issuerRole());
-                    //     break;
                     case "EHR environment setup":
                         if(ensurer("Are you sure you want to setup the environment?"))
                             await d_setup.setupEHREnvironment();
