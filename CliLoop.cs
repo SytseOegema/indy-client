@@ -138,7 +138,7 @@ namespace indyClient
                         await d_ipfs.test();
                         break;
                     case "test upload":
-                        await d_ipfs.addFile(d_prompt.walletPath());
+                        res = await d_ipfs.addFile(d_prompt.walletPath());
                         break;
                     case "test download":
                         await d_ipfs.getFile(d_prompt.walletPath());
