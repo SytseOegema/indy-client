@@ -6,7 +6,7 @@ namespace indyClient
 {
     class IpfsFacilitator
     {
-        static IpfsClient ipfs = new IpfsClient();
+        static IpfsClient ipfs = new IpfsClient("http://127.0.0.1:5001");
 
         public async Task test()
         {
