@@ -28,7 +28,7 @@ namespace indyClient
 
         public async Task getFile(string ipfsPath)
         {
-            string url = d_baseUrl + "/api/v0/object/cat?arg=" + ipfsPath;
+            string url = d_baseUrl + "/api/v0/cat?arg=" + ipfsPath;
             var response = await client.PostAsync(url, null);
             // {Links: [], Data:"string"}
             var responseString = await response.Content.ReadAsStringAsync();
