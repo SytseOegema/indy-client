@@ -24,7 +24,7 @@ namespace indyClient
 
         public async Task getFile(string ipfsPath)
         {
-            stream res = await ipfs.FileSystem.GetAsync(ipfsPath);
+            Stream res = await ipfs.FileSystem.GetAsync(ipfsPath);
             io.createFile(res, "test");
         }
     }

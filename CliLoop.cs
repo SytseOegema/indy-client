@@ -142,6 +142,7 @@ namespace indyClient
                         break;
                     case "test download":
                         await d_ipfs.getFile(d_prompt.walletPath());
+                        break;
 
 
 
