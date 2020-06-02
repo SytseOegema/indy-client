@@ -317,7 +317,40 @@ namespace indyClient
             return pretty.dePrettyJsonMember(res, "value");
         }
 
+        public async Task<string> walletExport(string path, string key)
+        {
+            string json = "{\"path\": \"" + path + "\",";
+            json += "\"key\": \"" + key + "\"}";
+            try
+            {
+                await d_openWallet.ExportAsync(json);
+                return "Wallet " + d_identifier + " has been exported to " +
+                    path;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
 
+        public async Task<string> walletImport(string identifier, string path,
+            string walletKey, string exportKey)
+        {
+            string config = "{\"id\": \"" + identifier + "\"}";
+            string credentials = "{\"key\":\"" + walletKey + "\"}";
+            string importConf = "{\"path\": \"" + path + "\",";
+            importConf += "\"key\": \"" + exportKey + "\"}";
+
+            try
+            {
+                await Wallet.ImportAsync(config, credentials, importConf);
+                return "Wallet " + d_identifier + " has been imported";
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
 
         private void setWalletInfo()
         {

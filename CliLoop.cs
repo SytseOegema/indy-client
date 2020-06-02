@@ -117,7 +117,6 @@ namespace indyClient
                         CredDefFacilitator credFac =
                             new CredDefFacilitator();
 
-                            // replace credValueJson() by the output of the facilitator
                         res = await d_wallet.createCredential(
                             d_prompt.credOfferJson(),
                             d_prompt.credReqJson(),
@@ -138,16 +137,24 @@ namespace indyClient
 
 
 
-
+                    case "wallet export":
+                        res = await d_wallet.walletExport(
+                            d_prompt.walletPath(),
+                            d_prompt.walletExportKey());
+                        break;
+                    case "wallet import":
+                        res = await d_wallet.walletImport(
+                            d_prompt.walletIdentifier(),
+                            d_prompt.walletPath(),
+                            d_prompt.walletMasterKey(),
+                            d_prompt.walletExportKey());
+                        break;
                     case "wallet record add":
-                        Console.WriteLine(
-                            await d_wallet.addRecord(
-                                d_prompt.recordType(),
-                                d_prompt.recordId(),
-                                d_prompt.recordValue(),
-                                d_prompt.recordTagsJson()
-                            )
-                        );
+                        res = await d_wallet.addRecord(
+                            d_prompt.recordType(),
+                            d_prompt.recordId(),
+                            d_prompt.recordValue(),
+                            d_prompt.recordTagsJson());
                         break;
                     case "wallet get record":
                         res = await d_wallet.getRecord(

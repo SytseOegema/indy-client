@@ -185,6 +185,26 @@ namespace indyClient
             return consoleInteraction("Record Type:");
         }
 
+        public string walletIdentifier()
+        {
+            return consoleInteraction("Name for the import wallet(this name will be used from now on):");
+        }
+
+        public string walletMasterKey()
+        {
+            return consoleInteraction("Wallet master encryption key:");
+        }
+
+        public string walletExportKey()
+        {
+          return consoleInteraction("Wallet export encryption key:");
+        }
+
+        public string walletPath()
+        {
+            return consoleInteraction("Path of the wallet file:");
+        }
+
         public string walletQuery()
         {
             return consoleInteraction("Wallet Query in JSON | {}");
