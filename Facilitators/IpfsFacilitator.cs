@@ -28,7 +28,7 @@ namespace indyClient
 
         public async Task getFile(string ipfsPath)
         {
-            string url = d_baseUrl + "/api/v0/object/get?arg=" + ipfsPath;
+            string url = d_baseUrl + "/api/v0/object/cat?arg=" + ipfsPath;
             var response = await client.PostAsync(url, null);
             // {Links: [], Data:"string"}
             var responseString = await response.Content.ReadAsStringAsync();
@@ -36,9 +36,9 @@ namespace indyClient
             string content = o["Data"].ToString();
             Console.WriteLine(content);
 
-            Stream contentStream = await response.Content.ReadAsStreamAsync();
+            // Stream contentStream = await response.Content["Data"].ReadAsStreamAsync();
 
-            io.createFile(contentStream, "wallet1");
+            io.createFile(content, "wallet1");
         }
     }
 }
