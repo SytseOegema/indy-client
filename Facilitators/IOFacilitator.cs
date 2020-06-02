@@ -19,6 +19,7 @@ namespace indyClient
 
         public void createFile(string content, string filename)
         {
+            Console.WriteLine(d_homePath + "/" + filename);
             using (StreamWriter file = new StreamWriter(d_homePath + "/" + filename))
             {
                 file.Write(content);
