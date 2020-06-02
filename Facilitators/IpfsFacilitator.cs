@@ -36,7 +36,9 @@ namespace indyClient
             string content = o["Data"].ToString();
             Console.WriteLine(content);
 
-            io.createFile(content, "wallet1");
+            Stream contentStream = await response.Content.ReadAsStreamAsync();
+
+            io.createFile(contentStream, "wallet1");
         }
     }
 }
