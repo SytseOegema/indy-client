@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Ipfs.Http;
+using Newtonsoft.Json.Linq;
 
 namespace indyClient
 {
