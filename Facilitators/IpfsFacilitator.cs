@@ -8,7 +8,7 @@ namespace indyClient
 {
     class IpfsFacilitator
     {
-        // private string d_baseUrl = "http://127.0.0.1:5001";
+        private string d_baseUrl = "http://127.0.0.1:5001";
         static IpfsClient ipfs = new IpfsClient("http://127.0.0.1:5001");
         private static readonly HttpClient client = new HttpClient();
         private IOFacilitator io = new IOFacilitator();
@@ -27,11 +27,10 @@ namespace indyClient
 
         public async Task getFile(string ipfsPath)
         {
-            var response = await client.PostAsync("https://postman-echo.com/post", null);
+            string url = d_baseUrl + "/api/v0/get?arg=" + ipfsPath;
+            var response = await client.PostAsync(url, null);
             var responseString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(responseString);
-            // Stream res = await ipfs.FileSystem.ReadFileAsync(ipfsPath);
-            // io.createFile(res, "test");
         }
     }
 }
