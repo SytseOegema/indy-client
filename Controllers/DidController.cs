@@ -11,9 +11,20 @@ namespace indyClient
     class DidController
     {
         private Wallet d_openWallet;
+        private string d_activeDid;
 
         public DidController()
         {}
+
+        public void setActiveDid(string did)
+        {
+            d_activeDid = did;
+        }
+
+        public string getActiveDid()
+        {
+            return d_activeDid;
+        }
 
         public void setOpenWallet(Wallet openWallet)
         {
@@ -43,6 +54,19 @@ namespace indyClient
             {
                 Console.WriteLine($"Error: {e.Message}");
                 return e.Message;
+            }
+        }
+
+        public async Task addMetaData(string did, string metaData)
+        {
+            try
+            {
+                await Did.SetDidMetadataAsync(d_openWallet,
+                    did, metaData);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
             }
         }
 

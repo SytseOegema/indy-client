@@ -15,14 +15,34 @@ namespace indyClient
         {
             string options;
             options = "pool connect:: connect to an identity pool.\n";
-            options += "wallet setup:: publish new wallet with certified did.\n";
             options += "wallet create:: create new wallet\n";
             options += "wallet open:: open existing wallet\n";
             options += "wallet close:: close opened wallet\n";
-            options += "did list:: list dids in opened wallet\n";
+            options += "wallet list:: list wallets on this device\n";
+            options += "wallet record add:: adds local record to wallet.";
+            options += "wallet record get:: gets local records from wallet";
             options += "did create:: create new did in opened wallet\n";
-            options += "create genesis wallets:: creates wallets for Trustee1, Steward1, Steward2\n";
-            options += "reset genesis:: does not work :)\n";
+            options += "did activate:: activate a did to use for transactions\n";
+            options += "did list:: list dids in opened wallet\n";
+            options += "ledger send initial nym:: send the initial nym request to create a new identity.\n";
+            options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
+            options += "schema create:: create a new schema\n";
+            options += "schema list:: list al schema in this wallet\n";
+            options += "schema get:: get a schema\n";
+            options += "credential definition create:: create a credential definition\n";
+            options += "credential definition list:: list all credential definitions in this wallet\n";
+            options += "credential offer create:: issuer creates credential offer\n";
+            options += "credential request create:: prover create credential request\n";
+            options += "credential create:: issuer creates the credential\n";
+            options += "credential store:: prover stores the credential in his wallet\n";
+            options += "";
+
+
+            options += "EHR environment setup:: creates wallets for Trustee1, Steward1, Steward2\n";
+            options += "                     :: creates wallets for Doctor1, Doctor2, Doctor3\n";
+            options += "                     :: creates wallet for Gov-Health-Department\n";
+            options += "                     :: creates schema and CredDef for Doctor-Certificate\n";
+            options += "                     :: creates Doctor-Certificate credential for Doctor{1-3}\n";
             options += "exit:: quit program\n";
             Console.WriteLine(options);
         }
@@ -39,6 +59,111 @@ namespace indyClient
         }
 
 
+
+        public string secretId()
+        {
+            return consoleInteraction("The link secret identifier/name:");
+        }
+
+        public string credValues()
+        {
+            return consoleInteraction("The values of the credential: [\"name-value\", \"age-value\"]");
+        }
+
+        public string credReqMetaJson()
+        {
+            return consoleInteraction("The credential request meta JSON:");
+        }
+
+        public string credReqJson()
+        {
+            return consoleInteraction("The credential request JSON:");
+        }
+
+        public string credOfferJson()
+        {
+            return consoleInteraction("The credential offer JSON:");
+        }
+
+        public string credDefJson()
+        {
+            return consoleInteraction("The credential definition JSON:");
+        }
+
+        public string credDefId()
+        {
+            return consoleInteraction("credential definition id:");
+        }
+
+        public string credDefTag()
+        {
+            return consoleInteraction("credential definition tag(TAG1):");
+        }
+
+        public string credJson()
+        {
+            return consoleInteraction("credential json:");
+        }
+
+        public string schemaJson()
+        {
+            return consoleInteraction("The schema Json:");
+        }
+
+        public string submitterDid()
+        {
+            return consoleInteraction("The did of the submitter:");
+        }
+
+        public string schemaId()
+        {
+            return consoleInteraction("The schema id:");
+        }
+
+        public string schemaAttributes()
+        {
+            return consoleInteraction("The attributes of the schema: [\"name\", \"age\"]");
+        }
+
+        public string schemaVersion()
+        {
+            return consoleInteraction("The version of the schema(x.x.x):");
+        }
+
+        public string schemaName()
+        {
+            return consoleInteraction("The name of the schema:");
+        }
+
+        public string nymRole()
+        {
+            return consoleInteraction("Specify role(TRUSTEE, STEWARD, ENDORER) for the NYM request:");
+        }
+
+        public string nymAlias()
+        {
+            return consoleInteraction("Specify alias for the NYM request:");
+        }
+
+        public string nymVerkey()
+        {
+            return consoleInteraction("Specify verkey for the NYM request:");
+        }
+
+        public string nymDid()
+        {
+            return consoleInteraction("Specify did for the NYM request:");
+        }
+
+        public string myDid()
+        {
+            return consoleInteraction("Specify the did you want to use:");
+        }
+
+        public string didMetaDataJson()
+        {
+            return consoleInteraction("Specify did in metaData JSON:");
+        }
 
         public string recordTagsJson()
         {
@@ -60,14 +185,34 @@ namespace indyClient
             return consoleInteraction("Record Type:");
         }
 
+        public string walletIdentifier()
+        {
+            return consoleInteraction("Name for the import wallet(this name will be used from now on):");
+        }
+
+        public string walletMasterKey()
+        {
+            return consoleInteraction("Wallet master encryption key:");
+        }
+
+        public string walletExportKey()
+        {
+          return consoleInteraction("Wallet export encryption key:");
+        }
+
+        public string walletPath()
+        {
+            return consoleInteraction("Path of the wallet file:");
+        }
+
         public string walletQuery()
         {
-            return consoleInteraction("Wallet Query in JSON");
+            return consoleInteraction("Wallet Query in JSON | {}");
         }
 
         public string walletOptions()
         {
-            return consoleInteraction("Wallet query options in JSON");
+            return consoleInteraction("Wallet query options in JSON | {\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
         }
 
         public string didSeed()
@@ -94,6 +239,7 @@ namespace indyClient
         {
             return consoleInteraction("What role has the issuer:");
         }
+
 
         // public string walletCredentialsJson()
         // {
