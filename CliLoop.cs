@@ -5,6 +5,7 @@ namespace indyClient
 {
     public static class CliLoop
     {
+        static IpfsFacilitator d_ipfs = new IpfsFacilitator();
         static CliPrompt d_prompt = new CliPrompt();
         static PoolController d_pool = new PoolController("sandbox");
         static WalletController d_wallet = new WalletController();
@@ -48,7 +49,8 @@ namespace indyClient
                         break;
                     case "wallet open":
                         res = await d_wallet.open(
-                            d_prompt.issuerWalletName());
+                            d_prompt.issuerWalletName(),
+                            d_prompt.walletMasterKey());
                         break;
                     case "wallet create":
                         await d_wallet.create(d_prompt.issuerWalletName());
@@ -132,6 +134,9 @@ namespace indyClient
                             d_prompt.credDefJson());
                         break;
 
+                    case "test":
+                        await d_ipfs.test();
+                        break;
 
 
 

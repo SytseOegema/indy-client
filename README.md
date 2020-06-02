@@ -5,7 +5,7 @@ This repository holds the source code for a .NET client that interacts with the 
 To start a local indy pool look [here](https://github.com/hyperledger/indy-sdk/blob/master/README.md#how-to-start-local-nodes-pool-with-docker).
 
 ## setup client
-The client is test on Ubuntu 16.04 with .NET 2.1 core SDK. 
+The client is test on Ubuntu 16.04 with .NET 2.1 core SDK.
 ```
 add repository
 wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -29,8 +29,43 @@ sudo apt-get update
 sudo apt-get install -y libindy
 ```
 
-Now we need to add the Indy .NET SDK nd the NewtonSoft.Json library for handling Json.
+### Now we need to add the Indy .NET SDK nd the NewtonSoft.Json library for handling Json.
 ```
 dotnet add package Hyperledger.Indy.Sdk --version 1.11.1
 dotnet add package Newtonsoft.Json --version 12.0.3
+dotnet add package Ipfs.Http.Client
+```
+
+### Install IPFS daemon
+```
+wget https://github.com/ipfs/go-ipfs/releases/download/v0.5.0/go-ipfs_v0.5.0_linux-amd64.tar.gz
+tar -xvzf go-ipfs_v0.5.0_linux-amd64.tar.gz
+cd go-ipfs
+sudo bash install.sh
+ipfs --version
+
+cd ..
+rm go-ipfs_v0.5.0_linux-amd64.tar.gz
+rm -r go-ipfs
+
+
+# create systemd service
+
+# create the file /etc/systemd/system/ipfs.service
+# with the following content
+[Unit]
+Description=IPFS daemon
+After=network.target
+
+[Service]
+### Uncomment the following line for custom ipfs datastore location
+# Environment=IPFS_PATH=/path/to/your/ipfs/datastore
+ExecStart=/usr/local/bin/ipfs daemon
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+sudo systemctl start ipfs
+sudo systemctl enable ipfs
 ```

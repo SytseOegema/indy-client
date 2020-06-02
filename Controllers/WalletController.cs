@@ -18,6 +18,7 @@ namespace indyClient
         private string d_walletConfig;
         private string d_walletCredentials;
         private string d_identifier = "";
+        private string d_masterKey = "";
         private Wallet d_openWallet;
         private DidController d_didController;
 
@@ -63,11 +64,16 @@ namespace indyClient
             }
         }
 
-        public async Task<string> open(string identifier)
+        public async Task<string> open(string identifier, string key = "")
         {
+            // for ease of use most wallet keys are equal to the identifier.
+            if (key == "")
+                key = identifier;
+
             await close();
 
             d_identifier = identifier;
+            d_masterKey = key;
             setWalletInfo();
 
             try
@@ -355,16 +361,17 @@ namespace indyClient
         private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
-            d_walletCredentials = "{ \"key\": \"" + d_identifier + "\" }";
+            d_walletCredentials = "{ \"key\": \"" + d_masterKey + "\" }";
             setActiveDid("");
         }
 
         private void resetWalletInfo()
         {
-          d_walletConfig = "";
-          d_walletCredentials = "";
-          d_identifier = "";
-          setActiveDid("");
+            d_walletConfig = "";
+            d_walletCredentials = "";
+            d_identifier = "";
+            d_masterKey = "";
+            setActiveDid("");
         }
 
         public bool isOpen()
