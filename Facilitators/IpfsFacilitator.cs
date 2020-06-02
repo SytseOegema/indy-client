@@ -32,13 +32,13 @@ namespace indyClient
             var response = await client.PostAsync(url, null);
             // {Links: [], Data:"string"}
             var responseString = await response.Content.ReadAsStringAsync();
-            JObject o = JObject.Parse(responseString);
-            string content = o["Data"].ToString();
-            Console.WriteLine(content);
+            // JObject o = JObject.Parse(responseString);
+            // string content = o["Data"].ToString();
+            Console.WriteLine(responseString);
 
             // Stream contentStream = await response.Content["Data"].ReadAsStreamAsync();
 
-            io.createFile(content, "wallet1");
+            io.createFile(responseString, "wallet1");
         }
     }
 }
