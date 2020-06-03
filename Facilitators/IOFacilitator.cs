@@ -9,6 +9,7 @@ namespace indyClient
 {
     class IOFacilitator
     {
+        private string d_walletExportPathRel;
         private string d_homePath;
 
         public IOFacilitator()
@@ -16,6 +17,17 @@ namespace indyClient
             var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
             d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
             // /home/hyper/.indy_client
+            d_walletExportPathRel = "wallet_export/";
+        }
+
+        public string getWalletExportPathAbs()
+        {
+            return d_homePath + d_walletExportPathRel;
+        }
+
+        public string getWalletExportPathRel()
+        {
+            return d_walletExportPathRel;
         }
 
         public string getHomePath()
@@ -40,7 +52,7 @@ namespace indyClient
 
         public void createFile(Stream content, string file)
         {
-            using (var fileStream = File.Create(d_homePath + "/" + file))
+            using (var fileStream = File.Create(d_homePath + file))
             {
               content.CopyTo(fileStream);
             }
@@ -48,8 +60,8 @@ namespace indyClient
 
         public void createFile(string content, string file)
         {
-            Console.WriteLine(d_homePath + "/" + file);
-            using (StreamWriter fileStream = new StreamWriter(d_homePath + "/" + file))
+            Console.WriteLine(d_homePath + file);
+            using (StreamWriter fileStream = new StreamWriter(d_homePath + file))
             {
                 fileStream.Write(content);
                 fileStream.Flush();

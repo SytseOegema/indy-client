@@ -344,20 +344,21 @@ namespace indyClient
             string exportKey, string walletKey = "")
         {
             IOFacilitator io = new IOFacilitator();
-            string relPath = "wallet_export/" + d_identifier;
-            string path = io.getHomePath() + relPath;
+            string path = io.getWalletExportPathAbs() + d_identifier;
             try
             {
                 await walletExportLocal(path, exportKey);
                 IpfsFacilitator ipfs = new IpfsFacilitator();
-                string ipfsPath = await ipfs.addFile(relPath);
+                string ipfsPath = await ipfs.addFile(d_identifier);
 
                 WalletExportModel model = new WalletExportModel();
                 model.ipfs_path = ipfsPath;
                 model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
                 model.export_key = exportKey;
                 io.createFile(JsonConvert.SerializeObject(model),
-                    relPath += "_config.json");
+                    io.getWalletExportPathRel()
+                    + d_identifier
+                    + "_config.json");
 
                 return JsonConvert.SerializeObject(model);
             }
@@ -393,7 +394,7 @@ namespace indyClient
                 <WalletExportModel>(File.ReadAllText(configPath));
             IpfsFacilitator ipfs = new IpfsFacilitator();
             IOFacilitator io = new IOFacilitator();
-            string localPath = io.getHomePath() + "wallet_export/" + identifier;
+            string localPath = io.getWalletExportPathAbs() + identifier;
             try
             {
                 await ipfs.getFile(model.ipfs_path, identifier);

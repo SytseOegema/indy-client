@@ -165,7 +165,7 @@ namespace indyClient
                         break;
 
                     case "wallet import ipfs":
-                        res = await d_wallet.walletImportLocal(
+                        res = await d_wallet.walletImportIpfs(
                             d_prompt.walletIdentifier(),
                             d_prompt.walletConfigPath());
                         break;
