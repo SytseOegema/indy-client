@@ -5,7 +5,6 @@ namespace indyClient
 {
     public static class CliLoop
     {
-        static IpfsFacilitator d_ipfs = new IpfsFacilitator();
         static CliPrompt d_prompt = new CliPrompt();
         static PoolController d_pool = new PoolController("sandbox");
         static WalletController d_wallet = new WalletController();
@@ -134,23 +133,28 @@ namespace indyClient
                             d_prompt.credDefJson());
                         break;
 
-                    case "test":
-                        await d_ipfs.test();
-                        break;
-                    case "test upload":
-                        res = await d_ipfs.addFile(d_prompt.walletPath());
-                        break;
-                    case "test download":
-                        await d_ipfs.getFile(d_prompt.walletPath());
-                        break;
+                    // case "test":
+                    //     await d_ipfs.test();
+                    //     break;
+                    // case "test upload":
+                    //     res = await d_ipfs.addFile(d_prompt.walletPath());
+                    //     break;
+                    // case "test download":
+                    //     await d_ipfs.getFile(d_prompt.walletPath());
+                    //     break;
 
 
 
 
-                    case "wallet export":
-                        res = await d_wallet.walletExport(
+                    case "wallet export local":
+                        res = await d_wallet.walletExportLocal(
                             d_prompt.walletPath(),
                             d_prompt.walletExportKey());
+                        break;
+                    case "wallet export ipfs":
+                        res = await d_wallet.walletExportIpfs(
+                            d_prompt.walletExportKey(),
+                            d_prompt.walletMasterKey());
                         break;
                     case "wallet import":
                         res = await d_wallet.walletImport(

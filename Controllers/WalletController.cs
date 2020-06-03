@@ -323,7 +323,7 @@ namespace indyClient
             return pretty.dePrettyJsonMember(res, "value");
         }
 
-        public async Task<string> walletExport(string path, string key)
+        public async Task<string> walletExportLocal(string path, string key)
         {
             string json = "{\"path\": \"" + path + "\",";
             json += "\"key\": \"" + key + "\"}";
@@ -332,6 +332,33 @@ namespace indyClient
                 await d_openWallet.ExportAsync(json);
                 return "Wallet " + d_identifier + " has been exported to " +
                     path;
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> walletExportIpfs(
+            string exportKey, string walletKey = "")
+        {
+            IOFacilitator io = new IOFacilitator();
+            string relPath = "/wallet_export/" + d_identifier;
+            string path = io.getHomePath() + relPath;
+            try
+            {
+                await walletExportLocal(path, exportKey);
+                IpfsFacilitator ipfs = new IpfsFacilitator();
+                string ipfsPath = await ipfs.addFile(path);
+
+                WalletExportModel model = new WalletExportModel();
+                model.ipfs_path = ipfsPath;
+                model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
+                model.export_key = exportKey;
+                io.createFile(JsonConvert.SerializeObject(model),
+                    relPath += "_config.json");
+
+                return JsonConvert.SerializeObject(model);
             }
             catch (Exception e)
             {
