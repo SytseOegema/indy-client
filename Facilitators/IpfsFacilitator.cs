@@ -14,12 +14,11 @@ namespace indyClient
         private static readonly HttpClient client = new HttpClient();
         private IOFacilitator io = new IOFacilitator();
 
-        public async Task<string> addFile(string localPath)
+        public async Task<string> addFile(string relPath)
         {
-            string[] paths = splitFullPathLinux(localPath);
+            string[] paths = splitFullPathLinux(relPath);
             string textFilePath = io.convertByteToTextFile(paths[0], paths[1]);
             var res = await ipfs.FileSystem.AddFileAsync(textFilePath);
-            // io.createFile(res.Id, "export_wallets/" + paths[1] + "_config.json");
             return res.Id;
         }
 
@@ -27,14 +26,12 @@ namespace indyClient
         {
             string url = d_baseUrl + "/api/v0/cat?arg=" + ipfsPath;
             var response = await client.PostAsync(url, null);
-            var responseString = await response.Content.ReadAsStringAsync();
-            // JObject o = JObject.Parse(responseString);
-            // string content = o["Data"].ToString();
-            Console.WriteLine(responseString);
 
             Stream contentStream = await response.Content.ReadAsStreamAsync();
-
-            io.createFile(contentStream, "wallet1");
+            // string localPath = "export_wallets/" + walle tName;
+            io.createFile(contentStream,
+                "export_wallets/" + walletName + ".txt");
+            io.convertTextToByteFile("export_wallets/", walletName);
         }
 
         private string[] splitFullPathLinux(string fullPath)

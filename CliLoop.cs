@@ -156,12 +156,18 @@ namespace indyClient
                             d_prompt.walletExportKey(),
                             d_prompt.walletMasterKey());
                         break;
-                    case "wallet import":
-                        res = await d_wallet.walletImport(
+                    case "wallet import local":
+                        res = await d_wallet.walletImportLocal(
                             d_prompt.walletIdentifier(),
                             d_prompt.walletPath(),
                             d_prompt.walletMasterKey(),
                             d_prompt.walletExportKey());
+                        break;
+
+                    case "wallet import ipfs":
+                        res = await d_wallet.walletImportLocal(
+                            d_prompt.walletIdentifier(),
+                            d_prompt.walletConfigPath());
                         break;
                     case "wallet record add":
                         res = await d_wallet.addRecord(

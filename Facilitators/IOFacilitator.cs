@@ -14,7 +14,7 @@ namespace indyClient
         public IOFacilitator()
         {
             var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
-            d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client";
+            d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
             // /home/hyper/.indy_client
         }
 
@@ -23,15 +23,17 @@ namespace indyClient
             return d_homePath;
         }
 
-        public string convertByteToTextFile(string path, string file)
+        public string convertByteToTextFile(string relPath, string file)
         {
+            string path = d_homePath + relPath;
             string command = "xxd " + path + file + " > " + path + file + ".txt";
             ShellFacilitator.Bash(command);
             return path + file + ".txt";
         }
 
-        public void convertTextToByteFile(string path, string file)
+        public void convertTextToByteFile(string relPath, string file)
         {
+            string path = d_homePath + relPath;
             string command = "xxd -r " + path + file + ".txt > " + path + file;
             ShellFacilitator.Bash(command);
         }

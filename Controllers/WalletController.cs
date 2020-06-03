@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -343,13 +344,13 @@ namespace indyClient
             string exportKey, string walletKey = "")
         {
             IOFacilitator io = new IOFacilitator();
-            string relPath = "/wallet_export/" + d_identifier;
+            string relPath = "wallet_export/" + d_identifier;
             string path = io.getHomePath() + relPath;
             try
             {
                 await walletExportLocal(path, exportKey);
                 IpfsFacilitator ipfs = new IpfsFacilitator();
-                string ipfsPath = await ipfs.addFile(path);
+                string ipfsPath = await ipfs.addFile(relPath);
 
                 WalletExportModel model = new WalletExportModel();
                 model.ipfs_path = ipfsPath;
@@ -366,7 +367,7 @@ namespace indyClient
             }
         }
 
-        public async Task<string> walletImport(string identifier, string path,
+        public async Task<string> walletImportLocal(string identifier, string path,
             string walletKey, string exportKey)
         {
             string config = "{\"id\": \"" + identifier + "\"}";
@@ -377,6 +378,27 @@ namespace indyClient
             try
             {
                 await Wallet.ImportAsync(config, credentials, importConf);
+                return "Wallet " + d_identifier + " has been imported";
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> walletImportIpfs(string identifier,
+            string configPath)
+        {
+            WalletExportModel model = JsonConvert.DeserializeObject
+                <WalletExportModel>(File.ReadAllText(configPath));
+            IpfsFacilitator ipfs = new IpfsFacilitator();
+            IOFacilitator io = new IOFacilitator();
+            string localPath = io.getHomePath() + "wallet_export/" + identifier;
+            try
+            {
+                await ipfs.getFile(model.ipfs_path, identifier);
+                await walletImportLocal(identifier, localPath, model.wallet_key,
+                    model.export_key);
                 return "Wallet " + d_identifier + " has been imported";
             }
             catch (Exception e)
