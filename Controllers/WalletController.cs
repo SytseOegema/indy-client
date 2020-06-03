@@ -28,6 +28,11 @@ namespace indyClient
             d_didController = new DidController();
         }
 
+        public bool hasActiveDid()
+        {
+            return d_didController.hasActiveDid();
+        }
+
         public string getActiveDid()
         {
             return d_didController.getActiveDid();

@@ -14,7 +14,14 @@ namespace indyClient
         private string d_activeDid;
 
         public DidController()
-        {}
+        {
+            d_activeDid = "";
+        }
+
+        public bool hasActiveDid()
+        {
+            return d_activeDid != "";
+        }
 
         public void setActiveDid(string did)
         {
