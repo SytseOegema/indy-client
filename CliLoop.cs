@@ -166,8 +166,7 @@ namespace indyClient
                             break;
                         case "doctor proof credentials":
                             requiredWalletCheck();
-                            res = await d_docProof.getCredentialForProof(
-                                d_prompt.proofRequestJson());
+                            res = await d_docProof.getCredentialForProof();
                             break;
 
 

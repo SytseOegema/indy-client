@@ -23,8 +23,9 @@ namespace indyClient
             return File.ReadAllText("Models/DoctorProofRequest.json");
         }
 
-        public async Task<string> getCredentialForProof(string proofReqJson)
+        public async Task<string> getCredentialForProof()
         {
+            string proofReqJson = getProofRequest();
             try
             {
                 var credList =
