@@ -27,7 +27,7 @@ namespace indyClient
         {
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
-            proofReqJson = proofReqJson.Replace("\r\n", string.Empty);
+            proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
 
             Console.WriteLine(proofReqJson);
 
