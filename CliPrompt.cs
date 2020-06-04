@@ -205,6 +205,11 @@ namespace indyClient
             return consoleInteraction("Path of the wallet file:");
         }
 
+        public string walletConfigPath()
+        {
+            return consoleInteraction("Path of the wallet config.json file:");
+        }
+
         public string walletQuery()
         {
             return consoleInteraction("Wallet Query in JSON | {}");

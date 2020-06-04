@@ -14,7 +14,7 @@ namespace indyClient
 
         public PoolController(string identifier)
         {
-            d_identifier = identifier;
+            connect(identifier);
         }
 
         public string getIdentifier()

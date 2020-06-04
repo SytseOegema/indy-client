@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -18,12 +19,18 @@ namespace indyClient
         private string d_walletConfig;
         private string d_walletCredentials;
         private string d_identifier = "";
+        private string d_masterKey = "";
         private Wallet d_openWallet;
         private DidController d_didController;
 
         public WalletController()
         {
             d_didController = new DidController();
+        }
+
+        public bool hasActiveDid()
+        {
+            return d_didController.hasActiveDid();
         }
 
         public string getActiveDid()
@@ -63,11 +70,16 @@ namespace indyClient
             }
         }
 
-        public async Task<string> open(string identifier)
+        public async Task<string> open(string identifier, string key = "")
         {
+            // for ease of use most wallet keys are equal to the identifier.
+            if (key == "")
+                key = identifier;
+
             await close();
 
             d_identifier = identifier;
+            d_masterKey = key;
             setWalletInfo();
 
             try
@@ -317,7 +329,7 @@ namespace indyClient
             return pretty.dePrettyJsonMember(res, "value");
         }
 
-        public async Task<string> walletExport(string path, string key)
+        public async Task<string> walletExportLocal(string path, string key)
         {
             string json = "{\"path\": \"" + path + "\",";
             json += "\"key\": \"" + key + "\"}";
@@ -333,7 +345,35 @@ namespace indyClient
             }
         }
 
-        public async Task<string> walletImport(string identifier, string path,
+        public async Task<string> walletExportIpfs(
+            string exportKey, string walletKey = "")
+        {
+            IOFacilitator io = new IOFacilitator();
+            string path = io.getWalletExportPathAbs() + d_identifier;
+            try
+            {
+                await walletExportLocal(path, exportKey);
+                IpfsFacilitator ipfs = new IpfsFacilitator();
+                string ipfsPath = await ipfs.addFile(d_identifier);
+
+                WalletExportModel model = new WalletExportModel();
+                model.ipfs_path = ipfsPath;
+                model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
+                model.export_key = exportKey;
+                io.createFile(JsonConvert.SerializeObject(model),
+                    io.getWalletExportPathRel()
+                    + d_identifier
+                    + "_config.json");
+
+                return JsonConvert.SerializeObject(model);
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> walletImportLocal(string identifier, string path,
             string walletKey, string exportKey)
         {
             string config = "{\"id\": \"" + identifier + "\"}";
@@ -352,19 +392,41 @@ namespace indyClient
             }
         }
 
+        public async Task<string> walletImportIpfs(string identifier,
+            string configPath)
+        {
+            WalletExportModel model = JsonConvert.DeserializeObject
+                <WalletExportModel>(File.ReadAllText(configPath));
+            IpfsFacilitator ipfs = new IpfsFacilitator();
+            IOFacilitator io = new IOFacilitator();
+            string localPath = io.getWalletExportPathAbs() + identifier;
+            try
+            {
+                await ipfs.getFile(model.ipfs_path, identifier);
+                await walletImportLocal(identifier, localPath, model.wallet_key,
+                    model.export_key);
+                return "Wallet " + d_identifier + " has been imported";
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
         private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
-            d_walletCredentials = "{ \"key\": \"" + d_identifier + "\" }";
+            d_walletCredentials = "{ \"key\": \"" + d_masterKey + "\" }";
             setActiveDid("");
         }
 
         private void resetWalletInfo()
         {
-          d_walletConfig = "";
-          d_walletCredentials = "";
-          d_identifier = "";
-          setActiveDid("");
+            d_walletConfig = "";
+            d_walletCredentials = "";
+            d_identifier = "";
+            d_masterKey = "";
+            setActiveDid("");
         }
 
         public bool isOpen()
