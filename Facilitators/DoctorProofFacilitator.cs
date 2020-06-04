@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Newtonsoft.Json;
 
 
@@ -9,8 +10,7 @@ namespace indyClient
 
         public string getProofRequest()
         {
-            DoctorProofModel model = new DoctorProofModel();
-            return JsonConvert.SerializeObject(model);
+            return File.ReadAllText("Models/DoctorProofModel.json");
         }
     }
 }
