@@ -23,7 +23,11 @@ namespace indyClient
             return File.ReadAllText("Models/DoctorProofRequest.json");
         }
 
-        public async Task<string> getCredentialForProof()
+        /*
+         * Proofs the holder of the open wallet is a doctor by using the first
+         * credential that meets the docotr proof requirements.
+         */
+        public async Task<string> createDoctorProof()
         {
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
@@ -33,18 +37,21 @@ namespace indyClient
 
             try
             {
-                Console.WriteLine("1");
                 var credList =
                     await AnonCreds.ProverSearchCredentialsForProofRequestAsync(
                         d_walletController.getOpenWallet(), proofReqJson);
-                Console.WriteLine("2");
 
                 string attr1Cred = await getCredentialforRequest(
                     credList, "attr1_referent");
+                string attr2Cred = await getCredentialforRequest(
+                    credList, "attr2_referent");
+                string predicate1Cred = await getCredentialforRequest(
+                    credList, "predicate1_referent");
 
-                Console.WriteLine("3");
+                string requestedCreds = proverDoctorRequestCreds(
+                    attr1Cred, attr2Cred, predicate1Cred);
 
-                return attr1Cred;
+                return requestedCreds;
             }
             catch (Exception e)
             {
@@ -52,12 +59,36 @@ namespace indyClient
             }
         }
 
+        private string proverDoctorRequestCreds(string attr1_referent,
+            string attr2_referent, string predicate1_referent)
+        {
+            string json = "{";
+              json += "\"self_attested_attributes\": {},";
+              json += "\"requested_attributes\": {";
+                json += "\"attr1_referent\": {";
+                  json += "\"cred_id\": \"" + attr1_referent + "\",";
+                  json += "\"reveald\": True";
+                json += "}";
+                json += "\"attr2_referent\": {";
+                  json += "\"cred_id\": \"" + attr2_referent + "\",";
+                  json += "\"reveald\": True";
+                json += "}";
+              json += "}";
+              json += "\"requested_predicates\": {";
+                json += "\"predicate1_referent\": {";
+                  json += "\"cred_id\": \"" + predicate1_referent + "\"";
+                json += "}";
+              json += "}";
+            json += "}";
+
+            return json;
+        }
+
         private async Task<string> getCredentialforRequest(
             CredentialSearchForProofRequest search, string itemReferent)
         {
             try
             {
-                Console.WriteLine("a1");
                 return await AnonCreds.ProverFetchCredentialsForProofRequestAsync(search,
                     itemReferent, 1);
             }

@@ -164,9 +164,9 @@ namespace indyClient
                         case "doctor proof request":
                             res = d_docProof.getProofRequest();
                             break;
-                        case "doctor proof credentials":
+                        case "doctor proof create":
                             requiredWalletCheck();
-                            res = await d_docProof.getCredentialForProof();
+                            res = await d_docProof.createDoctorProof();
                             break;
 
 
