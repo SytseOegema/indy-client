@@ -111,7 +111,7 @@ namespace indyClient
             }
             catch (Exception e)
             {
-                throw new Error($"Error in fetching a credential for ${itemReferent}. ${e.Message}")
+                throw new Error($"Error in fetching a credential for ${itemReferent}. ${e.Message}");
             }
         }
     }
