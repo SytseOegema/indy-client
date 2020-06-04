@@ -104,8 +104,15 @@ namespace indyClient
         private async Task<string> getCredentialforRequest(
             CredentialSearchForProofRequest search, string itemReferent)
         {
+            try
+            {
                 return await AnonCreds.ProverFetchCredentialsForProofRequestAsync(search,
                     itemReferent, 1);
+            }
+            catch (Exception e)
+            {
+                throw new Error($"Error in fetching a credential for ${itemReferent}. ${e.Message}")
+            }
         }
     }
 }
