@@ -39,12 +39,12 @@ namespace indyClient
                     await AnonCreds.ProverSearchCredentialsForProofRequestAsync(
                         d_walletController.getOpenWallet(), proofReqJson);
 
+                string predicate1Cred = await getCredentialforRequest(
+                    credList, "predicate1_referent");
                 string attr1Cred = await getCredentialforRequest(
                     credList, "attr1_referent");
                 string attr2Cred = await getCredentialforRequest(
                     credList, "attr2_referent");
-                string predicate1Cred = await getCredentialforRequest(
-                    credList, "predicate1_referent");
 
                 Console.WriteLine(predicate1Cred);
                 Console.WriteLine(attr1Cred);
