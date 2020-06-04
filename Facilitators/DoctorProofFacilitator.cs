@@ -33,6 +33,8 @@ namespace indyClient
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
             proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
 
+            Console.WriteLine(proofReqJson);
+
             try
             {
                 var credList =
