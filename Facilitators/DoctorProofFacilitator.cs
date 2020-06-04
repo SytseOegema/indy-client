@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using Hyperledger.Indy.AnonCredsApi;
 
@@ -49,14 +49,29 @@ namespace indyClient
                     credList, "predicate1_referent");
 
                 string requestedCreds = proverDoctorRequestCreds(
-                    attr1Cred, attr2Cred, predicate1Cred);
+                    getReferentFromCredential(attr1Cred),
+                    getReferentFromCredential(attr2Cred),
+                    getReferentFromCredential(predicate1Cred));
 
                 return requestedCreds;
+            }
+            catch (InvalidOperationException e)
+            {
+                return e.Message;
             }
             catch (Exception e)
             {
                 return $"Error: {e.Message}";
             }
+        }
+
+        private string getReferentFromCredential(string json)
+        {
+            JArray jArr = JArray.Parse(json);
+            if (jArr.Count == 0)
+                throw new InvalidOperationException("This wallet does not contain a credential that meets the doctor proof requirements");
+
+            return jArr[0]["cred_info"]["referent"].ToString();
         }
 
         private string proverDoctorRequestCreds(string attr1_referent,
