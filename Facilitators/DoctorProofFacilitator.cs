@@ -28,12 +28,16 @@ namespace indyClient
             string proofReqJson = getProofRequest();
             try
             {
+                Console.WriteLine("1");
                 var credList =
                     await AnonCreds.ProverSearchCredentialsForProofRequestAsync(
                         d_walletController.getOpenWallet(), proofReqJson);
+                Console.WriteLine("2");
 
                 string attr1Cred = await getCredentialforRequest(
                     credList, "attr1_referent");
+
+                Console.WriteLine("3");
 
                 return attr1Cred;
             }
@@ -48,6 +52,7 @@ namespace indyClient
         {
             try
             {
+                Console.WriteLine("a1");
                 return await AnonCreds.ProverFetchCredentialsForProofRequestAsync(search,
                     itemReferent, 1);
             }
