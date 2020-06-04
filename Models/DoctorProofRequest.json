@@ -1,6 +1,6 @@
 {
-  "nonce": "1242510923874109246129",
-  "name": "Emergency-Doctor-Check",
+  "nonce": "123432421212",
+  "name": "Emergency-Doctor-Proof",
   "version": "1.0",
   "requested_attributes": {
     "attr1_referent": {
@@ -14,7 +14,7 @@
   "requested_predicates": {
     "predicate1_referent": {
       "name": "is_emergency_doctor",
-      "p_type": "==",
+      "p_type": ">=",
       "p_value": "1",
       "restrictions": [{"cred_def_id": "NcZ4tw9KDDGnCWpGShk9n5:3:CL:NcZ4tw9KDDGnCWpGShk9n5:2:Doctor-Certificate:1.0.0:TAG1"}]
     }
