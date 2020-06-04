@@ -14,7 +14,8 @@ namespace indyClient
             ref d_wallet, ref d_ledger);
         static SetupFacilitator d_setup = new SetupFacilitator(
             ref d_wallet, ref d_ledger);
-        static DoctorProofFacilitator d_docProof = new DoctorProofFacilitator();
+        static DoctorProofFacilitator d_docProof = new DoctorProofFacilitator(
+            ref d_wallet);
 
 
         public static async Task start()
@@ -160,12 +161,12 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                             break;
-                        case "proof request doctor":
+                        case "doctor proof request":
                             res = d_docProof.getProofRequest();
                             break;
-                        case "proof credential get":
+                        case "doctor proof credentials":
                             requiredWalletCheck();
-                            res = await d_wallet.getCredentialForProof(
+                            res = await d_docProof.getCredentialForProof(
                                 d_prompt.proofRequestJson());
                             break;
 

@@ -413,23 +413,6 @@ namespace indyClient
             }
         }
 
-        public async Task<string> getCredentialForProof(string proofReqJson)
-        {
-            try
-            {
-                var credList =
-                    await AnonCreds.ProverSearchCredentialsForProofRequestAsync(
-                        d_openWallet, proofReqJson);
-
-
-                return  "";
-            }
-            catch (Exception e)
-            {
-                return $"Error: {e.Message}";
-            }
-        }
-
         private void setWalletInfo()
         {
             d_walletConfig = "{ \"id\": \"" + d_identifier + "\" }";
