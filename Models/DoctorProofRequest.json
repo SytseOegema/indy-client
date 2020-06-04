@@ -1,0 +1,22 @@
+{
+  "nonce": "1242510923874109246129",
+  "name": "Emergency-Doctor-Check",
+  "version": "1.0",
+  "requested_attributes": {
+    "attr1_referent": {
+      "name": "name"
+    }
+    "attr2_referent": {
+      "name": "school",
+      "restrictions": [{"cred_def_id": }]
+    }
+  },
+  "requested_predicates": {
+    "predicate1_referent": {
+      "name": "is_emergency_doctor",
+      "p_type": "==",
+      "p_value": "1",
+      "restrictions": [{"cred_def_id": }]
+    },
+  }
+}

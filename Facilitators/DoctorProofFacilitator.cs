@@ -10,7 +10,7 @@ namespace indyClient
 
         public string getProofRequest()
         {
-            return File.ReadAllText("Models/DoctorProofModel.json");
+            return File.ReadAllText("Models/DoctorProofRequest.json");
         }
     }
 }
