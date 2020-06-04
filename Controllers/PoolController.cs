@@ -12,11 +12,6 @@ namespace indyClient
         private string d_identifier;
         private Pool d_openPool;
 
-        public PoolController(string identifier)
-        {
-            connect(identifier);
-        }
-
         public string getIdentifier()
         {
             return d_identifier;

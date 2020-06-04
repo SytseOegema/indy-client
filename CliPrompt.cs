@@ -59,6 +59,10 @@ namespace indyClient
         }
 
 
+        public string proofRequestJson()
+        {
+            return consoleInteraction("The proof request JSON:");
+        }
 
         public string secretId()
         {

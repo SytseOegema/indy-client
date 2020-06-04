@@ -6,7 +6,7 @@ namespace indyClient
     public static class CliLoop
     {
         static CliPrompt d_prompt = new CliPrompt();
-        static PoolController d_pool = new PoolController("sandbox");
+        static PoolController d_pool = new PoolController();
         static WalletController d_wallet = new WalletController();
         static LedgerController d_ledger = new LedgerController(
             ref d_pool, ref d_wallet);
@@ -14,18 +14,20 @@ namespace indyClient
             ref d_wallet, ref d_ledger);
         static SetupFacilitator d_setup = new SetupFacilitator(
             ref d_wallet, ref d_ledger);
+        static DoctorProofFacilitator d_docProof = new DoctorProofFacilitator();
+
 
         public static async Task start()
         {
-            Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
-                + ".");
-            Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
-            // await d_pool.connect(d_pool.getIdentifier());
-
-            Console.WriteLine("wallet open");
-            var res = await d_wallet.open(
-                d_prompt.issuerWalletName());
-            Console.WriteLine(res);
+            // Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
+            //     + ".");
+            // Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
+            // // await d_pool.connect(d_pool.getIdentifier());
+            //
+            // Console.WriteLine("wallet open");
+            // var res = await d_wallet.open(
+            //     d_prompt.issuerWalletName());
+            // Console.WriteLine(res);
 
             await run();
         }
@@ -158,6 +160,16 @@ namespace indyClient
                             d_prompt.credJson(),
                             d_prompt.credDefJson());
                             break;
+                        case "proof request doctor":
+                            res = d_docProof.getProofRequest();
+                            break;
+                        case "proof credential get":
+                            requiredWalletCheck();
+                            res = await d_wallet.getCredentialForProof(
+                                d_prompt.proofRequestJson());
+                            break;
+
+
                         case "wallet export local":
                             requiredWalletCheck();
                             res = await d_wallet.walletExportLocal(
