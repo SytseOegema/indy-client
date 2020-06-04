@@ -26,6 +26,11 @@ namespace indyClient
         public async Task<string> getCredentialForProof()
         {
             string proofReqJson = getProofRequest();
+            proofReqJson = proofReqJson.Replace(" ", string.Empty);
+            proofReqJson = proofReqJson.Replace("\r\n", string.Empty);
+
+            Console.WriteLine(proofReqJson);
+
             try
             {
                 Console.WriteLine("1");
