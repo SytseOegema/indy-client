@@ -46,9 +46,9 @@ namespace indyClient
                 string predicate1Cred = await getCredentialforRequest(
                     credList, "predicate1_referent");
 
+                Console.WriteLine(predicate1Cred);
                 Console.WriteLine(attr1Cred);
                 Console.WriteLine(attr2Cred);
-                Console.WriteLine(predicate1Cred);
 
                 string requestedCreds = proverDoctorRequestCreds(
                     getReferentFromCredential(attr1Cred),
