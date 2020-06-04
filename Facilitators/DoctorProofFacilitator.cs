@@ -33,8 +33,6 @@ namespace indyClient
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
             proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
 
-            Console.WriteLine(proofReqJson);
-
             try
             {
                 var credList =
@@ -47,6 +45,10 @@ namespace indyClient
                     credList, "attr2_referent");
                 string predicate1Cred = await getCredentialforRequest(
                     credList, "predicate1_referent");
+
+                Console.WriteLine(attr1Cred);
+                Console.WriteLine(attr2Cred);
+                Console.WriteLine(predicate1Cred);
 
                 string requestedCreds = proverDoctorRequestCreds(
                     getReferentFromCredential(attr1Cred),
