@@ -33,8 +33,6 @@ namespace indyClient
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
             proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
 
-            Console.WriteLine(proofReqJson);
-
             try
             {
                 var credList =
@@ -49,13 +47,22 @@ namespace indyClient
                 //     credList, "predicate1_referent");
 
                 // Console.WriteLine(predicate1Cred);
-                Console.WriteLine(attr1Cred);
-                Console.WriteLine(attr2Cred);
+                // Console.WriteLine(attr1Cred);
+                // Console.WriteLine(attr2Cred);
 
                 string requestedCreds = proverDoctorRequestCreds(
                     getReferentFromCredential(attr1Cred),
                     getReferentFromCredential(attr2Cred),
                     getReferentFromCredential(attr2Cred));
+
+
+                // string res = AnonCreds.ProverCreateProofAsync(
+                //     d_walletController.getOpenWallet(),
+                //     proofReqJson,
+                //     requestedCreds,
+                //     "doctor-certificate",
+                //
+                //     );
 
                 return requestedCreds;
             }

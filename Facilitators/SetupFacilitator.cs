@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace indyClient
@@ -64,6 +65,21 @@ namespace indyClient
             Console.WriteLine("Creating Docotor-Certificate Credential for: ");
             string[] doctors = {"Doctor1", "Doctor2", "Doctor3"};
             CredDefFacilitator credDefFac = new CredDefFacilitator();
+
+            o = JObject.Parse(schemaJson);
+            string schemaId = o["id"].ToString();
+
+            DoctorCredDefInfoModel model = new DoctorCredDefInfoModel();
+            model.issuer_did = issuerDid;
+            model.schema_id = schemaId;
+            model.schema_json = schemaJson;
+            model.cred_def_json = credDefDefinition;
+            model.cred_def_id = credDefId;
+            IOFacilitator io = new IOFacilitator();
+
+            io.createFile(JsonConvert.SerializeObject(model),
+                io.getWalletExportPathRel()
+                + "config_doctor_cred_def.json");
 
             foreach (string doctor in doctors) {
                 Console.WriteLine(doctor);

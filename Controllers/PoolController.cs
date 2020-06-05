@@ -9,7 +9,7 @@ namespace indyClient
 {
     class PoolController
     {
-        private string d_identifier;
+        private string d_identifier = "";
         private Pool d_openPool;
 
         public string getIdentifier()
