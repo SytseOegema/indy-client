@@ -179,8 +179,11 @@ namespace indyClient
                             requiredWalletCheck();
                             res = await d_docProof.createDoctorProof();
                             break;
-
-
+                        case "doctor proof verify":
+                            bool result = await d_docProof.verifyDoctorProof(
+                                d_prompt.proofJson());
+                            res = result.ToString();
+                            break;
                         case "wallet export local":
                             requiredWalletCheck();
                             res = await d_wallet.walletExportLocal(

@@ -66,6 +66,11 @@ namespace indyClient
         }
 
 
+        public string proofJson()
+        {
+            return consoleInteraction("The proof JSON / the result of proof create:");
+        }
+
         public string proofRequestJson()
         {
             return consoleInteraction("The proof request JSON:");
