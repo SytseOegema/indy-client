@@ -77,5 +77,16 @@ namespace indyClient
                 Console.WriteLine(file.Replace(fullPath + "/", ""));
             }
         }
+
+        public bool directoryExists(string pathAbs, string directory)
+        {
+            string [] files = Directory.GetDirectories(pathAbs);
+            foreach(string file in files)
+            {
+                if (file.Replace(pathAbs, "") == directory)
+                    return true;
+            }
+            return false;
+        }
     }
 }

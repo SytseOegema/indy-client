@@ -21,19 +21,22 @@ namespace indyClient
         public static async Task start()
         {
             IOFacilitator io = new IOFacilitator();
-            ShellFacilitator shell = new ShellFacilitator();
 
-            string command = "mkdir " + io.getWalletExportPathAbs();
-            shell.Bash(command);
-            // Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
-            //     + ".");
-            // Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
-            // // await d_pool.connect(d_pool.getIdentifier());
-            //
-            // Console.WriteLine("wallet open");
-            // var res = await d_wallet.open(
-            //     d_prompt.issuerWalletName());
-            // Console.WriteLine(res);
+            if (io.directoryExists(io.getHomePath(), "wallet_export"))
+            {
+                Console.WriteLine("Welcome back to the indy doctor emergency client!");
+            }
+            else
+            {
+                string command = "mkdir " + io.getWalletExportPathAbs();
+                ShellFacilitator.Bash(command);
+                Console.WriteLine("Welcome to the indy doctor emergency client!");
+                Console.WriteLine("You can setup the environment using the command:");
+                Console.WriteLine("EHR environment setup");
+                Console.WriteLine("However you have to connect to a pool first using:");
+                Console.WriteLine("pool connect");
+                Console.WriteLine("Use the command `help` to list all available commands");
+            }
 
             await run();
         }
