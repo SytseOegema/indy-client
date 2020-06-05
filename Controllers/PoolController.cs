@@ -32,6 +32,7 @@ namespace indyClient
             try
             {
                 d_openPool = await Pool.OpenPoolLedgerAsync(poolname, "{}");
+                d_identifier = poolname;
             }
             catch (Exception e)
             {
