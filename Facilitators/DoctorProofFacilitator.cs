@@ -67,8 +67,11 @@ namespace indyClient
                 credDefs += "\"" + model.cred_def_id + "\":" + model.cred_def_json;
                 credDefs += "}";
 
-                Console.WriteLine("schemas: " + schemas);
-                Console.WriteLine("CredDefFacilitator: " + credDefs);
+                Console.WriteLine("proofReqJson: " + proofReqJson + "\n");
+                Console.WriteLine("requestedCreds: " + requestedCreds + "\n");
+                Console.WriteLine("masterKey: " + masterKey + "\n");
+                Console.WriteLine("schemas: " + schemas + "\n");
+                Console.WriteLine("CredDefFacilitator: " + credDefs + "\n");
 
                 string res = await AnonCreds.ProverCreateProofAsync(
                     d_walletController.getOpenWallet(),
