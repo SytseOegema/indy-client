@@ -24,7 +24,7 @@ namespace indyClient
             ShellFacilitator shell = new ShellFacilitator();
 
             string command = "mkdir " + io.getWalletExportPathAbs();
-            shell.Bash()
+            shell.Bash(command);
             // Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
             //     + ".");
             // Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
