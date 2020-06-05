@@ -103,9 +103,6 @@ namespace indyClient
                 string schemaValues = "[\"" + doctor + "\", 1, \"RUG\"]";
                 string credValue = credDefFac.generateCredValueJson(
                     schemaAttributes, schemaValues);
-
-                Console.WriteLine(schemaValues);
-
                 await d_wallet.open(issuer);
                 string cred = await d_wallet.createCredential(credOffer,
                     credReqJson, credValue);

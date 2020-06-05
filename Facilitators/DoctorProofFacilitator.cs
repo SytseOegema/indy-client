@@ -33,8 +33,6 @@ namespace indyClient
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
             proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
-            Console.WriteLine(proofReqJson + '\n');
-
             try
             {
                 var credList =
@@ -47,10 +45,6 @@ namespace indyClient
                     credList, "attr2_referent");
                 string predicate1Cred = await getCredentialforRequest(
                     credList, "predicate1_referent");
-
-                // Console.WriteLine(predicate1Cred);
-                // Console.WriteLine(attr1Cred);
-                // Console.WriteLine(attr2Cred);
 
                 string requestedCreds = proverDoctorRequestCreds(
                     getReferentFromCredential(attr1Cred),
@@ -67,12 +61,6 @@ namespace indyClient
                 string credDefs = "{";
                 credDefs += "\"" + model.cred_def_id + "\":" + model.cred_def_json;
                 credDefs += "}";
-
-                Console.WriteLine("proofReqJson: " + proofReqJson + "\n");
-                Console.WriteLine("requestedCreds: " + requestedCreds + "\n");
-                Console.WriteLine("masterKey: " + masterKey + "\n");
-                Console.WriteLine("schemas: " + schemas + "\n");
-                Console.WriteLine("CredDefFacilitator: " + credDefs + "\n");
 
                 string res = await AnonCreds.ProverCreateProofAsync(
                     d_walletController.getOpenWallet(),
@@ -93,6 +81,35 @@ namespace indyClient
             catch (Exception e)
             {
                 return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<bool> verifyDoctorProof(string proofJson)
+        {
+            string proofReqJson = getProofRequest();
+            proofReqJson = proofReqJson.Replace(" ", string.Empty);
+            proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
+            try
+            {
+                IOFacilitator io = new IOFacilitator();
+                DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
+                    <DoctorCredDefInfoModel>(File.ReadAllText(
+                        io.getDoctorCredDefConfigPathAbs()));
+                string schemas = "{";
+                schemas += "\"" + model.schema_id + "\":" + model.schema_json;
+                schemas += "}";
+                string credDefs = "{";
+                credDefs += "\"" + model.cred_def_id + "\":" + model.cred_def_json;
+                credDefs += "}";
+
+                bool result = await AnonCreds.VerifierVerifyProofAsync(proofReqJson, proofJson,
+                    schemas, credDefs, "{}", "{}");
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+                return false;
             }
         }
 
