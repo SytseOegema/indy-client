@@ -60,8 +60,8 @@ namespace indyClient
                             break;
                         case "wallet open":
                             res = await d_wallet.open(
-                            d_prompt.issuerWalletName(),
-                            d_prompt.walletMasterKey());
+                                d_prompt.issuerWalletName(),
+                                d_prompt.walletMasterKey());
                             break;
                         case "wallet create":
                             await d_wallet.create(d_prompt.issuerWalletName());
@@ -80,7 +80,7 @@ namespace indyClient
                         case "did create":
                             requiredWalletCheck();
                             await d_wallet.createDid(d_prompt.didSeed(),
-                            d_prompt.didMetaDataJson());
+                                d_prompt.didMetaDataJson());
                             break;
                         case "did activate":
                             requiredWalletCheck();
@@ -91,27 +91,27 @@ namespace indyClient
                             requiredDidCheck();
                             requiredPoolCheck();
                             await d_ledger.sendNymRequest(
-                            d_prompt.nymDid(),
-                            d_prompt.nymVerkey(),
-                            d_prompt.nymAlias(),
-                            d_prompt.nymRole());
+                                d_prompt.nymDid(),
+                                d_prompt.nymVerkey(),
+                                d_prompt.nymAlias(),
+                                d_prompt.nymRole());
                             break;
                         case "schema create":
                             requiredWalletCheck();
                             requiredDidCheck();
                             requiredPoolCheck();
                             res = await d_ledger.createSchema(
-                            d_prompt.schemaName(),
-                            d_prompt.schemaVersion(),
-                            d_prompt.schemaAttributes());
+                                d_prompt.schemaName(),
+                                d_prompt.schemaVersion(),
+                                d_prompt.schemaAttributes());
                             break;
                         case "schema get":
                             requiredWalletCheck();
                             requiredDidCheck();
                             requiredPoolCheck();
                             res = await d_ledger.getSchema(
-                            d_prompt.submitterDid(),
-                            d_prompt.schemaId());
+                                d_prompt.submitterDid(),
+                                d_prompt.schemaId());
                             break;
                         case "schema list":
                             requiredWalletCheck();
@@ -120,7 +120,7 @@ namespace indyClient
                         case "master secret create":
                             requiredWalletCheck();
                             res = await d_wallet.createMasterSecret(
-                            d_prompt.secretId());
+                                d_prompt.secretId());
                             break;
                         case "credential definition list":
                             requiredWalletCheck();
@@ -132,41 +132,46 @@ namespace indyClient
                             requiredDidCheck();
                             requiredPoolCheck();
                             res = await d_ledger.createCredDef(
-                            d_prompt.schemaJson(),
-                            d_prompt.credDefTag());
+                                d_prompt.schemaJson(),
+                                d_prompt.credDefTag());
                             break;
                         case "credential offer create":
                             requiredWalletCheck();
                             res = await d_wallet.createCredentialOffer(
-                            d_prompt.credDefId());
+                                d_prompt.credDefId());
                             break;
                         case "credential request create":
                             requiredWalletCheck();
                             requiredDidCheck();
                             res = await d_wallet.createCredentialRequest(
-                            d_prompt.credOfferJson(),
-                            d_prompt.credDefJson(),
-                            d_prompt.secretId());
+                                d_prompt.credOfferJson(),
+                                d_prompt.credDefJson(),
+                                d_prompt.secretId());
                             break;
                         case "credential create":
                             requiredWalletCheck();
                             CredDefFacilitator credFac =
-                            new CredDefFacilitator();
+                                new CredDefFacilitator();
 
                             res = await d_wallet.createCredential(
-                            d_prompt.credOfferJson(),
-                            d_prompt.credReqJson(),
-                            credFac.generateCredValueJson(
-                            d_prompt.schemaAttributes(),
-                            d_prompt.credValues())
-                            );
+                                d_prompt.credOfferJson(),
+                                d_prompt.credReqJson(),
+                                credFac.generateCredValueJson(
+                                d_prompt.schemaAttributes(),
+                                d_prompt.credValues())
+                                );
                             break;
                         case "credential store":
                             requiredWalletCheck();
                             res = await d_wallet.storeCredential(
-                            d_prompt.credReqMetaJson(),
-                            d_prompt.credJson(),
-                            d_prompt.credDefJson());
+                                d_prompt.credReqMetaJson(),
+                                d_prompt.credJson(),
+                                d_prompt.credDefJson());
+                            break;
+                        case "credential list":
+                            requiredWalletCheck();
+                            res = await d_wallet.getCredentials(
+                                d_prompt.walletQuery());
                             break;
                         case "doctor proof request":
                             res = d_docProof.getProofRequest();
@@ -180,42 +185,41 @@ namespace indyClient
                         case "wallet export local":
                             requiredWalletCheck();
                             res = await d_wallet.walletExportLocal(
-                            d_prompt.walletPath(),
-                            d_prompt.walletExportKey());
+                                d_prompt.walletPath(),
+                                d_prompt.walletExportKey());
                             break;
                         case "wallet export ipfs":
                             requiredWalletCheck();
                             res = await d_wallet.walletExportIpfs(
-                            d_prompt.walletExportKey(),
-                            d_prompt.walletMasterKey());
+                                d_prompt.walletExportKey(),
+                                d_prompt.walletMasterKey());
                             break;
                         case "wallet import local":
                             res = await d_wallet.walletImportLocal(
-                            d_prompt.walletIdentifier(),
-                            d_prompt.walletPath(),
-                            d_prompt.walletMasterKey(),
-                            d_prompt.walletExportKey());
+                                d_prompt.walletIdentifier(),
+                                d_prompt.walletPath(),
+                                d_prompt.walletMasterKey(),
+                                d_prompt.walletExportKey());
                             break;
                         case "wallet import ipfs":
                             res = await d_wallet.walletImportIpfs(
-                            d_prompt.walletIdentifier(),
-                            d_prompt.walletConfigPath());
+                                d_prompt.walletIdentifier(),
+                                d_prompt.walletConfigPath());
                             break;
                         case "wallet record add":
                             requiredWalletCheck();
                             res = await d_wallet.addRecord(
-                            d_prompt.recordType(),
-                            d_prompt.recordId(),
-                            d_prompt.recordValue(),
-                            d_prompt.recordTagsJson());
+                                d_prompt.recordType(),
+                                d_prompt.recordId(),
+                                d_prompt.recordValue(),
+                                d_prompt.recordTagsJson());
                             break;
                         case "wallet get record":
                             requiredWalletCheck();
                             res = await d_wallet.getRecord(
-                            d_prompt.recordType(),
-                            d_prompt.walletQuery(),
-                            d_prompt.walletOptions()
-                            );
+                                d_prompt.recordType(),
+                                d_prompt.walletQuery(),
+                                d_prompt.walletOptions());
                             break;
                         case "EHR environment setup":
                             requiredPoolCheck();

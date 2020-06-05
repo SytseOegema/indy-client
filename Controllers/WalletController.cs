@@ -250,7 +250,7 @@ namespace indyClient
             }
         }
 
-        public async Task getCredentials(string walletQuery)
+        public async Task<string> getCredentials(string walletQuery)
         {
             try
             {
@@ -261,11 +261,11 @@ namespace indyClient
 
                 var res = await AnonCreds.ProverFetchCredentialsAsync(
                 creds, 1);
-                Console.WriteLine(res);
+                return res;
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                return $"Error: {e.Message}";
             }
         }
 
