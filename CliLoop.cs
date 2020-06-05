@@ -20,6 +20,11 @@ namespace indyClient
 
         public static async Task start()
         {
+            IOFacilitator io = new IOFacilitator();
+            ShellFacilitator shell = new ShellFacilitator();
+
+            string command = "mkdir " + io.getWalletExportPathAbs();
+            shell.Bash()
             // Console.WriteLine("Connecting to pool " + d_pool.getIdentifier()
             //     + ".");
             // Console.WriteLine("DIKKE DUISTER NIET VERGETEN DIT WEER AAN TE ZETTEN");
