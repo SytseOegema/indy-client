@@ -32,12 +32,11 @@ namespace indyClient
                 ShellFacilitator.Bash(command);
                 Console.WriteLine("Welcome to the indy doctor emergency client!");
                 Console.WriteLine("You can setup the environment using the command:");
-                Console.WriteLine("EHR environment setup");
+                Console.WriteLine("> EHR environment setup");
                 Console.WriteLine("However you have to connect to a pool first using:");
                 Console.WriteLine("pool connect");
-                Console.WriteLine("Use the command `help` to list all available commands");
+                Console.WriteLine("> Use the command `help` to list all available commands");
             }
-
             await run();
         }
 

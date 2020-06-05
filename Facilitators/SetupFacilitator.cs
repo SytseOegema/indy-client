@@ -78,8 +78,7 @@ namespace indyClient
             IOFacilitator io = new IOFacilitator();
 
             io.createFile(JsonConvert.SerializeObject(model),
-                io.getWalletExportPathRel()
-                + "config_doctor_cred_def.json");
+                io.getDoctorCredDefConfigPathRel());
 
             foreach (string doctor in doctors) {
                 Console.WriteLine(doctor);

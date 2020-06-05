@@ -10,6 +10,7 @@ namespace indyClient
     class IOFacilitator
     {
         private string d_walletExportPathRel;
+        private string d_doctorCredDefConfigPathRel;
         private string d_homePath;
 
         public IOFacilitator()
@@ -18,6 +19,17 @@ namespace indyClient
             d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
             // /home/hyper/.indy_client
             d_walletExportPathRel = "wallet_export/";
+            d_doctorCredDefConfigPathRel = "wallet_export/config_doctor_cred_def.json";
+        }
+
+        public string getDoctorCredDefConfigPathAbs()
+        {
+            return d_homePath + d_doctorCredDefConfigPathRel;
+        }
+
+        public string getDoctorCredDefConfigPathRel()
+        {
+            return d_doctorCredDefConfigPathRel;
         }
 
         public string getWalletExportPathAbs()

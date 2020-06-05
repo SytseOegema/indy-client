@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Hyperledger.Indy.AnonCredsApi;
@@ -27,7 +28,7 @@ namespace indyClient
          * Proofs the holder of the open wallet is a doctor by using the first
          * credential that meets the docotr proof requirements.
          */
-        public async Task<string> createDoctorProof()
+        public async Task<string> createDoctorProof(string masterKey = "doctor-certificate")
         {
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
@@ -55,16 +56,31 @@ namespace indyClient
                     getReferentFromCredential(attr2Cred),
                     getReferentFromCredential(attr2Cred));
 
+                IOFacilitator io = new IOFacilitator();
+                DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
+                    <DoctorCredDefInfoModel>(File.ReadAllText(
+                        io.getDoctorCredDefConfigPathAbs()));
+                string schemas = "{";
+                schemas += "\"" + model.schema_id + "\":" + model.schema_json;
+                schemas += "}";
+                string credDefs = "{";
+                credDefs += "\"" + model.cred_def_id + "\":" + model.cred_def_json;
+                credDefs += "}";
 
-                // string res = AnonCreds.ProverCreateProofAsync(
-                //     d_walletController.getOpenWallet(),
-                //     proofReqJson,
-                //     requestedCreds,
-                //     "doctor-certificate",
-                //
-                //     );
+                Console.WriteLine("schemas: " + schemas);
+                Console.WriteLine("CredDefFacilitator: " + credDefs);
 
-                return requestedCreds;
+                string res = await AnonCreds.ProverCreateProofAsync(
+                    d_walletController.getOpenWallet(),
+                    proofReqJson,
+                    requestedCreds,
+                    masterKey,
+                    schemas,
+                    credDefs,
+                    "{}"
+                    );
+
+                return res;
             }
             catch (InvalidOperationException e)
             {
