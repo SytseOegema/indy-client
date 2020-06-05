@@ -109,11 +109,11 @@ namespace indyClient
               json += "\"requested_attributes\": {";
                 json += "\"attr1_referent\": {";
                   json += "\"cred_id\": \"" + attr1_referent + "\",";
-                  json += "\"reveald\": True";
+                  json += "\"revealed\": True";
                 json += "}";
                 json += "\"attr2_referent\": {";
                   json += "\"cred_id\": \"" + attr2_referent + "\",";
-                  json += "\"reveald\": True";
+                  json += "\"revealed\": True";
                 json += "}";
               json += "}";
               json += "\"requested_predicates\": {";
