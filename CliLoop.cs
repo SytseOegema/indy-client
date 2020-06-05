@@ -211,8 +211,9 @@ namespace indyClient
                             );
                             break;
                         case "EHR environment setup":
+                            requiredPoolCheck();
                             if(ensurer("Are you sure you want to setup the environment?"))
-                            await d_setup.setupEHREnvironment();
+                                await d_setup.setupEHREnvironment();
                             break;
                         case "help":
                             d_prompt.helpOptions();
