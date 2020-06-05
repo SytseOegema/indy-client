@@ -170,8 +170,7 @@ namespace indyClient
                             break;
                         case "credential list":
                             requiredWalletCheck();
-                            res = await d_wallet.getCredentials(
-                                d_prompt.walletQuery());
+                            res = await d_wallet.getCredentials("{}");
                             break;
                         case "doctor proof request":
                             res = d_docProof.getProofRequest();

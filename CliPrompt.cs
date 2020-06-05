@@ -15,35 +15,42 @@ namespace indyClient
         {
             string options;
             options = "pool connect:: connect to an identity pool.\n";
-            options += "wallet create:: create new wallet\n";
-            options += "wallet open:: open existing wallet\n";
-            options += "wallet close:: close opened wallet\n";
-            options += "wallet list:: list wallets on this device\n";
-            options += "wallet record add:: adds local record to wallet.";
-            options += "wallet record get:: gets local records from wallet";
-            options += "did create:: create new did in opened wallet\n";
-            options += "did activate:: activate a did to use for transactions\n";
-            options += "did list:: list dids in opened wallet\n";
+            options += "wallet create:: create new wallet.\n";
+            options += "wallet open:: open existing wallet.\n";
+            options += "wallet close:: close opened wallet.\n";
+            options += "wallet list:: list wallets on this device.\n";
+            options += "wallet record add:: adds local record to wallet.\n";
+            options += "wallet record get:: gets local records from wallet.\n";
+            options += "wallet export local:: export wallet to a file on your system.\n";
+            options += "wallet export ipfs:: export wallet to IPFS.\n";
+            options += "wallet import local:: import wallet from a file on your system.\n";
+            options += "wallet import ipfs:: export wallet from IPFS.\n";
+            options += "did create:: create new did in opened wallet.\n";
+            options += "did activate:: activate a did to use for transactions.\n";
+            options += "did list:: list dids in opened wallet.\n";
             options += "ledger send initial nym:: send the initial nym request to create a new identity.\n";
             options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
-            options += "schema create:: create a new schema\n";
-            options += "schema list:: list al schema in this wallet\n";
-            options += "schema get:: get a schema\n";
-            options += "credential definition create:: create a credential definition\n";
-            options += "credential definition list:: list all credential definitions in this wallet\n";
-            options += "credential offer create:: issuer creates credential offer\n";
-            options += "credential request create:: prover create credential request\n";
-            options += "credential create:: issuer creates the credential\n";
-            options += "credential store:: prover stores the credential in his wallet\n";
-            options += "";
+            options += "schema create:: create a new schema.\n";
+            options += "schema list:: list al schema in this wallet.\n";
+            options += "schema get:: get a schema.\n";
+            options += "credential definition create:: create a credential definition.\n";
+            options += "credential definition list:: list all credential definitions in this wallet.\n";
+            options += "credential offer create:: issuer creates credential offer.\n";
+            options += "credential request create:: prover create credential request.\n";
+            options += "credential create:: issuer creates the credential.\n";
+            options += "credential store:: prover stores the credential in his wallet.\n";
+            options += "credential list:: list all crednetials in open wallet.\n";
+
+            options += "doctor proof request:: shows predefined request for doctor certificate.\n";
+            options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
 
 
             options += "EHR environment setup:: creates wallets for Trustee1, Steward1, Steward2\n";
             options += "                     :: creates wallets for Doctor1, Doctor2, Doctor3\n";
             options += "                     :: creates wallet for Gov-Health-Department\n";
             options += "                     :: creates schema and CredDef for Doctor-Certificate\n";
-            options += "                     :: creates Doctor-Certificate credential for Doctor{1-3}\n";
-            options += "exit:: quit program\n";
+            options += "                     :: creates Doctor-Certificate credential for Doctor{1-3}.\n";
+            options += "exit:: quit program.\n";
             Console.WriteLine(options);
         }
 
