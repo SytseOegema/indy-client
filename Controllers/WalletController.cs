@@ -56,6 +56,7 @@ namespace indyClient
         public async Task create(string identifier)
         {
             d_identifier = identifier;
+            d_masterKey = identifier;
             setWalletInfo();
 
             try
