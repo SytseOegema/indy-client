@@ -44,8 +44,8 @@ namespace indyClient
                     credList, "attr1_referent");
                 string attr2Cred = await getCredentialforRequest(
                     credList, "attr2_referent");
-                // string predicate1Cred = await getCredentialforRequest(
-                //     credList, "predicate1_referent");
+                string predicate1Cred = await getCredentialforRequest(
+                    credList, "predicate1_referent");
 
                 // Console.WriteLine(predicate1Cred);
                 // Console.WriteLine(attr1Cred);
@@ -54,7 +54,7 @@ namespace indyClient
                 string requestedCreds = proverDoctorRequestCreds(
                     getReferentFromCredential(attr1Cred),
                     getReferentFromCredential(attr2Cred),
-                    getReferentFromCredential(attr2Cred));
+                    getReferentFromCredential(predicate1Cred));
 
                 IOFacilitator io = new IOFacilitator();
                 DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
