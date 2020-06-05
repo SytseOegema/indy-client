@@ -112,13 +112,13 @@ namespace indyClient
               json += "\"requested_attributes\": {";
                 json += "\"attr1_referent\": {";
                   json += "\"cred_id\": \"" + attr1_referent + "\",";
-                  json += "\"revealed\": True";
-                json += "}";
+                  json += "\"revealed\": true";
+                json += "},";
                 json += "\"attr2_referent\": {";
                   json += "\"cred_id\": \"" + attr2_referent + "\",";
-                  json += "\"revealed\": True";
+                  json += "\"revealed\": true";
                 json += "}";
-              json += "}";
+              json += "},";
               json += "\"requested_predicates\": {";
                 json += "\"predicate1_referent\": {";
                   json += "\"cred_id\": \"" + predicate1_referent + "\"";
