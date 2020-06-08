@@ -173,13 +173,16 @@ namespace indyClient
                             res = await d_wallet.getCredentials("{}");
                             break;
                         case "emergency shared secret list":
+                            requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets();
                             break;
                         case "emergency shared secret list unused":
+                            requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
                                 "{\"is_shared\": 0}");
                             break;
                         case "emergency shared secret create":
+                            requiredWalletCheck();
                             res = await d_wallet.createEmergencySharedSecrets(
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
