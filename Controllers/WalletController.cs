@@ -441,8 +441,8 @@ namespace indyClient
             {
                 await addRecord(
                     "emergency-shared-secret",
-                    "1.0",
                     secret,
+                    "1.0",
                     createSharedSecretTagJson(++idx, min, total));
             }
             list = await listEmergencySharedSecrets();
