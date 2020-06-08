@@ -47,6 +47,21 @@ namespace indyClient
             return d_homePath;
         }
 
+        public string getIpfsExportPathRel(string identifier)
+        {
+            return d_walletExportPathRel + identifier + "_ipfs_export.json";
+        }
+
+        public string getIpfsExportPathAbs(string identifier)
+        {
+            return getHomePath() + getIpfsExportPathRel(identifier);
+        }
+
+        public bool existsIpfsExportFile(string identifier)
+        {
+            return File.Exists(getIpfsExportPathAbs(identifier));
+        }
+
         public string convertByteToTextFile(string relPath, string file)
         {
             string path = d_homePath + relPath;

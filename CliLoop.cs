@@ -52,16 +52,6 @@ namespace indyClient
                 {
                     switch (input)
                     {
-                        case "reconstruct":
-                            res = SecretSharingFacilitator.combineSharedSecrets(
-                                d_prompt.readSharedSecrets());
-                            break;
-                        case "test":
-                            SecretSharingFacilitator.createSharedSecret(
-                                d_prompt.sharedSecret(),
-                                d_prompt.sharedSecretMinimum(),
-                                d_prompt.sharedSecretTotal());
-                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;
@@ -181,6 +171,22 @@ namespace indyClient
                         case "credential list":
                             requiredWalletCheck();
                             res = await d_wallet.getCredentials("{}");
+                            break;
+                        case "emergency shared secret list":
+                            res = await d_wallet.listEmergencySharedSecrets();
+                            break;
+                        case "emergency shared secret list unused":
+                            res = await d_wallet.listEmergencySharedSecrets(
+                                "{\"is_shared\": 0}");
+                            break;
+                        case "emergency shared secret create":
+                            res = await d_wallet.createEmergencySharedSecrets(
+                            d_prompt.sharedSecretMinimum(),
+                            d_prompt.sharedSecretTotal());
+                            break;
+                        case "emergency shared secret reconstruct":
+                            res = SecretSharingFacilitator.combineSharedSecrets(
+                                d_prompt.readSharedSecrets());
                             break;
                         case "doctor proof request":
                             res = d_docProof.getProofRequest();

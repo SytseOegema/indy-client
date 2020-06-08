@@ -32,7 +32,6 @@ namespace indyClient
             }
 
             return secrets;
-
         }
 
         public static string combineSharedSecrets(List<string> secrets)
@@ -46,25 +45,6 @@ namespace indyClient
             var combine = new ShamirsSecretSharing<BigInteger>(gcd);
 
             return combine.Reconstruction(points.ToArray()).ToString();
-
-
-          // FinitePoint<BigInteger> big = FinitePoint<BigInteger>.Parse(test);
-          // Console.WriteLine(big.Equals(item));
-
-          //
-          // List<Secret<TNumber>> shamirs =
-          //     new List<Secret<TNumber>>();
-          //
-          // foreach(string secret in secrets)
-          // {
-          //     shamirs.Add(new Secret<TNumber>(secret));
-          // }
-          //
-
-          // var subSet1 = x.Item2.Where (p => p.X.IsEven).ToList ();
-          // var recoveredSecret1 = combine.Reconstruction(subSet1.ToArray());
-          // var subSet2 = x.Item2.Where (p => !p.X.IsEven).ToList ();
-          // var recoveredSecret2 = combine.Reconstruction(subSet2.ToArray());
         }
 
 

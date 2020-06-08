@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -195,6 +196,7 @@ namespace indyClient
                     credOfferJson,
                     credDefJson,
                     linkSecret);
+
                 // credReq: {CredentialRequestJson, CredentialRequestMetadataJson}
                 string json = JsonConvert.SerializeObject(credReq);
                 JObject o = new JObject();
@@ -205,7 +207,6 @@ namespace indyClient
                 json = pretty.dePrettyJsonMember(json, "CredentialRequestJson");
                 json = pretty.dePrettyJsonMember(json, "CredentialRequestMetadataJson");
                 return json;
-                // return credReqJson;
             }
             catch (Exception e)
             {
@@ -219,9 +220,6 @@ namespace indyClient
         {
             try
             {
-                // Console.WriteLine("credOfferJson: " + credOfferJson);
-                // Console.WriteLine("credReqJson: " + credReqJson);
-                // Console.WriteLine("credValueJson: " + credValueJson);
                 var cred = await AnonCreds.IssuerCreateCredentialAsync(
                     d_openWallet, credOfferJson, credReqJson, credValueJson,
                     revRegId, blob);
@@ -362,9 +360,7 @@ namespace indyClient
                 model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
                 model.export_key = exportKey;
                 io.createFile(JsonConvert.SerializeObject(model),
-                    io.getWalletExportPathRel()
-                    + d_identifier
-                    + "_config.json");
+                    io.getIpfsExportPathRel(d_identifier));
 
                 return JsonConvert.SerializeObject(model);
             }
@@ -412,6 +408,55 @@ namespace indyClient
             {
                 return $"Error: {e.Message}";
             }
+        }
+
+        public async Task<string> listEmergencySharedSecrets(string query = "{}")
+        {
+          string res = await getRecord("emergency-shared-secret", query,
+              "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+          return res;
+        }
+
+
+        public async Task<string> createEmergencySharedSecrets(
+            int min, int total)
+        {
+            string list = await listEmergencySharedSecrets();
+            if (list != "0")
+                throw new Exception("There allready exist emergency shared secrets.");
+
+            IOFacilitator io = new IOFacilitator();
+            if (!io.existsIpfsExportFile(d_identifier))
+                throw new Exception("There must be an IPFS backup of the wallet. No IPFS export JSON file was found for this wallet.");
+
+            string ipfsExportJson =
+                File.ReadAllText(io.getIpfsExportPathAbs(d_identifier));
+
+            List<string> secrets = SecretSharingFacilitator.createSharedSecret(
+                ipfsExportJson, min, total);
+
+            // Nu moet je de secrets in records zetten.
+            int idx = 0;
+            foreach (string secret in secrets)
+            {
+                await addRecord(
+                    "emergency-shared-secret",
+                    "1.0",
+                    secret,
+                    createSharedSecretTagJson(++idx, min, total));
+            }
+            list = await listEmergencySharedSecrets();
+            return list;
+        }
+
+        private string createSharedSecretTagJson(int num, int min, int total)
+        {
+            string json = "{";
+            json += "\"is_shared\": 0,";
+            json += "\"number\": " + num + ",";
+            json += "\"minimum\": " + min + ",";
+            json += "\"total\": " + total + "}";
+            return json;
         }
 
         private void setWalletInfo()
