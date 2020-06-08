@@ -282,6 +282,19 @@ namespace indyClient
             }
         }
 
+        public async Task deleteRecord(string type , string id)
+        {
+            try
+            {
+                await NonSecrets.DeleteRecordAsync(d_openWallet, type, id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+
+
         public async Task<string> getRecord(string type,
         string queryJson, string optionsJson)
         {
@@ -418,6 +431,10 @@ namespace indyClient
           return res;
         }
 
+        public async Task deleteEmergencySharedSecrets()
+        {
+            await deleteRecord("emergency-shared-secret", "1.0");
+        }
 
         public async Task<string> createEmergencySharedSecrets(
             int min, int total)
@@ -446,6 +463,7 @@ namespace indyClient
                     secret,
                     createSharedSecretTagJson(++idx, min, total));
             }
+
             list = await listEmergencySharedSecrets();
             return list;
         }

@@ -187,6 +187,10 @@ namespace indyClient
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
+                        case "emergency shared secret delete":
+                            requiredWalletCheck();
+                            await d_wallet.deleteEmergencySharedSecrets();
+                            break;
                         case "emergency shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
