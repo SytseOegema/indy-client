@@ -52,6 +52,16 @@ namespace indyClient
                 {
                     switch (input)
                     {
+                        case "reconstruct":
+                            res = SecretSharingFacilitator.combineSharedSecrets(
+                                d_prompt.readSharedSecrets());
+                            break;
+                        case "test":
+                            SecretSharingFacilitator.createSharedSecret(
+                                d_prompt.sharedSecret(),
+                                d_prompt.sharedSecretMinimum(),
+                                d_prompt.sharedSecretTotal());
+                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;
@@ -238,7 +248,7 @@ namespace indyClient
                 }
                 catch (Exception e)
                 {
-                    res = e.Message;
+                    res = "An error happened:" + e.Message;
                 }
                 if (res != "")
                     Console.WriteLine(res);

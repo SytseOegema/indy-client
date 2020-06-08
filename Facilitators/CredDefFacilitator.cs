@@ -25,7 +25,7 @@ namespace indyClient
             for (int idx = 0; idx < values.Count; ++idx)
             {
                 string encoding = values[idx];
-                if (!IsDigitsOnly(values[idx]))
+                if (!StringFacilitator.IsDigitsOnly(values[idx]))
                 {
                     encoding = sha256_hash(values[idx]);
                     encoding = hexToDec(encoding);
@@ -40,17 +40,6 @@ namespace indyClient
             output += "}";
 
             return output;
-        }
-
-        private bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
         }
 
         private string hexToDec(string hex)

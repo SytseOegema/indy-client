@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -65,6 +67,40 @@ namespace indyClient
             Console.WriteLine("Try 'help' for a list of available commands.");
         }
 
+
+
+        public List<string> readSharedSecrets()
+        {
+            List<string> secrets = new List<string>();
+            string input = consoleInteraction("The shared secrets(end list with an empty line):");
+            while (input != "")
+            {
+                secrets.Add(input);
+                input = Console.ReadLine();
+            }
+            return secrets;
+        }
+
+        public int sharedSecretMinimum()
+        {
+            string min = consoleInteraction("The minimum number of people required to recover the secret(minimum of 3):");
+            int res = stringToIntParser(min);
+            if (res < 3)
+                throw new InvalidDataException("The number should be bigger than 3.");
+
+            return res;
+        }
+
+        public int sharedSecretTotal()
+        {
+            string tot =  consoleInteraction("The number of people that the secret is shared with:");
+            return stringToIntParser(tot);
+        }
+
+        public string sharedSecret()
+        {
+            return consoleInteraction("The shared secret:");
+        }
 
         public string proofJson()
         {
@@ -262,29 +298,18 @@ namespace indyClient
         }
 
 
-        // public string walletCredentialsJson()
-        // {
-        //     var input = "{";
-        //     Console.WriteLine("Schema id (optional):");
-        //     input += "\"schema_id\": \"" + Console.ReadLine() + "\",";
-        //     Console.WriteLine("Issuer did (optional):");
-        //     input += "\"schema_issuer_did\": \"" + Console.ReadLine() + "\",";
-        //     Console.WriteLine("Schema name (optional):");
-        //     input += "\"schema_name\": \"" + Console.ReadLine() + "\",";
-        //     Console.WriteLine("Schema version (optional):");
-        //     input += "\"schema_version\": \"" + Console.ReadLine() + "\",";
-        //     Console.WriteLine("Issuer did (optional):");
-        //     input += "\"issuer_did\": \"" + Console.ReadLine() + "\",";
-        //     Console.WriteLine("Credential definition id (optional):");
-        //     input += "\"cred_def_id\": \"" + Console.ReadLine() + "\"";
-        //     input += "}";
-        //     return input;
-        // }
-
         private string consoleInteraction(string definition)
         {
             Console.WriteLine(definition);
             return Console.ReadLine();
+        }
+
+        private int stringToIntParser(string input)
+        {
+            if (!StringFacilitator.IsDigitsOnly(input))
+                throw new InvalidDataException("This value may only contain numbers");
+
+            return Int32.Parse(input);
         }
     }
 }
