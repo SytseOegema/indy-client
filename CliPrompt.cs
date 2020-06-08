@@ -263,9 +263,11 @@ namespace indyClient
             return consoleInteraction("Path of the wallet file:");
         }
 
-        public string walletConfigPath()
+        public string walletExportJson()
         {
-            return consoleInteraction("Path of the wallet config.json file:");
+            string question = "Either the absolute path of the wallet ipfs_export.json file.\n";
+            question += "Or the ipfs export json:";
+            return consoleInteraction(question);
         }
 
         public string walletQuery()

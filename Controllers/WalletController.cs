@@ -404,10 +404,14 @@ namespace indyClient
         }
 
         public async Task<string> walletImportIpfs(string identifier,
-            string configPath)
+            string exportConfig)
         {
+            // check if export config is a path towards the export file.
+            if (exportConfig[0] != '{')
+                exportConfig = File.ReadAllText(exportConfig);
+
             WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(File.ReadAllText(configPath));
+                <WalletExportModel>(exportConfig);
             IpfsFacilitator ipfs = new IpfsFacilitator();
             IOFacilitator io = new IOFacilitator();
             string localPath = io.getWalletExportPathAbs() + identifier;

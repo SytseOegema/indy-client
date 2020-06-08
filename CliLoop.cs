@@ -225,7 +225,7 @@ namespace indyClient
                         case "wallet import ipfs":
                             res = await d_wallet.walletImportIpfs(
                                 d_prompt.walletIdentifier(),
-                                d_prompt.walletConfigPath());
+                                d_prompt.walletExportJson());
                             break;
                         case "wallet record add":
                             requiredWalletCheck();
