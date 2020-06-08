@@ -422,7 +422,8 @@ namespace indyClient
             int min, int total)
         {
             string list = await listEmergencySharedSecrets();
-            if (list != "0")
+            Console.WriteLine(list);
+            if (list != "0\n")
                 throw new Exception("There allready exist emergency shared secrets.");
 
             IOFacilitator io = new IOFacilitator();
