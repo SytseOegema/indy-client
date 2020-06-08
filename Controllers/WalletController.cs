@@ -325,9 +325,8 @@ namespace indyClient
         {
             string res = await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
-            // PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
-            // return pretty.dePrettyJsonMember(res, "value");
-            return res;
+            PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
+            return pretty.dePrettyJsonMember(res, "value");
         }
 
         public async Task<string> walletExportLocal(string path, string key)
@@ -443,8 +442,8 @@ namespace indyClient
             {
                 await addRecord(
                     "emergency-shared-secret",
-                    secret,
                     "1.0",
+                    secret,
                     createSharedSecretTagJson(++idx, min, total));
             }
             list = await listEmergencySharedSecrets();
