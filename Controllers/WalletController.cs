@@ -431,11 +431,6 @@ namespace indyClient
           return res;
         }
 
-        public async Task deleteEmergencySharedSecrets()
-        {
-            await deleteRecord("emergency-shared-secret", "1.0");
-        }
-
         public async Task<string> createEmergencySharedSecrets(
             int min, int total)
         {
@@ -453,16 +448,14 @@ namespace indyClient
             List<string> secrets = SecretSharingFacilitator.createSharedSecret(
                 ipfsExportJson, min, total);
 
-            // Nu moet je de secrets in records zetten.
             int idx = 0;
             foreach (string secret in secrets)
             {
-                string res = await addRecord(
+                await addRecord(
                     "emergency-shared-secret",
-                    "1.0",
                     secret,
+                    "1.0",
                     createSharedSecretTagJson(++idx, min, total));
-                Console.WriteLine(res);
             }
 
             list = await listEmergencySharedSecrets();

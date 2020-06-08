@@ -187,10 +187,6 @@ namespace indyClient
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
-                        case "emergency shared secret delete":
-                            requiredWalletCheck();
-                            await d_wallet.deleteEmergencySharedSecrets();
-                            break;
                         case "emergency shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
@@ -239,12 +235,18 @@ namespace indyClient
                                 d_prompt.recordValue(),
                                 d_prompt.recordTagsJson());
                             break;
-                        case "wallet get record":
+                        case "wallet record get":
                             requiredWalletCheck();
                             res = await d_wallet.getRecord(
                                 d_prompt.recordType(),
                                 d_prompt.walletQuery(),
                                 d_prompt.walletOptions());
+                            break;
+                        case "wallet record delete":
+                            requiredWalletCheck();
+                            await d_wallet.deleteRecord(
+                                d_prompt.recordType(),
+                                d_prompt.recordId());
                             break;
                         case "EHR environment setup":
                             requiredPoolCheck();

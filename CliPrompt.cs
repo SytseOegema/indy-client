@@ -23,6 +23,7 @@ namespace indyClient
             options += "wallet list:: list wallets on this device.\n";
             options += "wallet record add:: adds local record to wallet.\n";
             options += "wallet record get:: gets local records from wallet.\n";
+            options += "wallet record delete:: delets local records from wallet.\n";
             options += "wallet export local:: export wallet to a file on your system.\n";
             options += "wallet export ipfs:: export wallet to IPFS.\n";
             options += "wallet import local:: import wallet from a file on your system.\n";
