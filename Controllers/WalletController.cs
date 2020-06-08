@@ -457,14 +457,12 @@ namespace indyClient
             int idx = 0;
             foreach (string secret in secrets)
             {
-                Console.WriteLine(secrets.Count);
-                Console.WriteLine(idx);
-                Console.WriteLine(secret);
-                await addRecord(
+                string res = await addRecord(
                     "emergency-shared-secret",
                     "1.0",
                     secret,
                     createSharedSecretTagJson(++idx, min, total));
+                Console.WriteLine(res);
             }
 
             list = await listEmergencySharedSecrets();
