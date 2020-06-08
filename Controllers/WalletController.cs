@@ -312,6 +312,7 @@ namespace indyClient
               //     o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
               // }
 
+
               return o["records"].ToString();
           }
           catch (Exception e)
@@ -324,8 +325,9 @@ namespace indyClient
         {
             string res = await getRecord("schema", "{}",
             "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
-            PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
-            return pretty.dePrettyJsonMember(res, "value");
+            // PrettyPrintFacilitator pretty = new PrettyPrintFacilitator();
+            // return pretty.dePrettyJsonMember(res, "value");
+            return res;
         }
 
         public async Task<string> walletExportLocal(string path, string key)
