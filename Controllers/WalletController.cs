@@ -452,10 +452,10 @@ namespace indyClient
         private string createSharedSecretTagJson(int num, int min, int total)
         {
             string json = "{";
-            json += "\"is_shared\": 0,";
-            json += "\"number\": " + num + ",";
-            json += "\"minimum\": " + min + ",";
-            json += "\"total\": " + total + "}";
+            json += "\"is_shared\": \"0\",";
+            json += "\"number\": \"" + num + "\",";
+            json += "\"minimum\": \"" + min + "\",";
+            json += "\"total\": \"" + total + "\"}";
             return json;
         }
 
