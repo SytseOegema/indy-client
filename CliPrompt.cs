@@ -43,10 +43,10 @@ namespace indyClient
             options += "credential store:: prover stores the credential in his wallet.\n";
             options += "credential list:: list all crednetials in open wallet.\n";
 
-            options += "emergency shared secret list:: lists all emergency keys.";
-            options += "emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.";
-            options += "emergency shared secret create:: devides the emergency access secrets over multiple keys.";
-            options += "emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.";
+            options += "emergency shared secret list:: lists all emergency keys.\n";
+            options += "emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
+            options += "emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
+            options += "emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
