@@ -10,6 +10,7 @@ namespace indyClient
     class IOFacilitator
     {
         private string d_walletExportPathRel;
+        private string d_doctorCredDefConfigPathRel;
         private string d_homePath;
 
         public IOFacilitator()
@@ -18,6 +19,17 @@ namespace indyClient
             d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
             // /home/hyper/.indy_client
             d_walletExportPathRel = "wallet_export/";
+            d_doctorCredDefConfigPathRel = "wallet_export/config_doctor_cred_def.json";
+        }
+
+        public string getDoctorCredDefConfigPathAbs()
+        {
+            return d_homePath + d_doctorCredDefConfigPathRel;
+        }
+
+        public string getDoctorCredDefConfigPathRel()
+        {
+            return d_doctorCredDefConfigPathRel;
         }
 
         public string getWalletExportPathAbs()
@@ -33,6 +45,21 @@ namespace indyClient
         public string getHomePath()
         {
             return d_homePath;
+        }
+
+        public string getIpfsExportPathRel(string identifier)
+        {
+            return d_walletExportPathRel + identifier + "_ipfs_export.json";
+        }
+
+        public string getIpfsExportPathAbs(string identifier)
+        {
+            return getHomePath() + getIpfsExportPathRel(identifier);
+        }
+
+        public bool existsIpfsExportFile(string identifier)
+        {
+            return File.Exists(getIpfsExportPathAbs(identifier));
         }
 
         public string convertByteToTextFile(string relPath, string file)
@@ -76,6 +103,17 @@ namespace indyClient
             {
                 Console.WriteLine(file.Replace(fullPath + "/", ""));
             }
+        }
+
+        public bool directoryExists(string pathAbs, string directory)
+        {
+            string [] files = Directory.GetDirectories(pathAbs);
+            foreach(string file in files)
+            {
+                if (file.Replace(pathAbs, "") == directory)
+                    return true;
+            }
+            return false;
         }
     }
 }

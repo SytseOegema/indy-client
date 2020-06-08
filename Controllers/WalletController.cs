@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -56,6 +57,7 @@ namespace indyClient
         public async Task create(string identifier)
         {
             d_identifier = identifier;
+            d_masterKey = identifier;
             setWalletInfo();
 
             try
@@ -194,6 +196,7 @@ namespace indyClient
                     credOfferJson,
                     credDefJson,
                     linkSecret);
+
                 // credReq: {CredentialRequestJson, CredentialRequestMetadataJson}
                 string json = JsonConvert.SerializeObject(credReq);
                 JObject o = new JObject();
@@ -204,7 +207,6 @@ namespace indyClient
                 json = pretty.dePrettyJsonMember(json, "CredentialRequestJson");
                 json = pretty.dePrettyJsonMember(json, "CredentialRequestMetadataJson");
                 return json;
-                // return credReqJson;
             }
             catch (Exception e)
             {
@@ -218,9 +220,6 @@ namespace indyClient
         {
             try
             {
-                // Console.WriteLine("credOfferJson: " + credOfferJson);
-                // Console.WriteLine("credReqJson: " + credReqJson);
-                // Console.WriteLine("credValueJson: " + credValueJson);
                 var cred = await AnonCreds.IssuerCreateCredentialAsync(
                     d_openWallet, credOfferJson, credReqJson, credValueJson,
                     revRegId, blob);
@@ -249,7 +248,7 @@ namespace indyClient
             }
         }
 
-        public async Task getCredentials(string walletQuery)
+        public async Task<string> getCredentials(string walletQuery)
         {
             try
             {
@@ -260,11 +259,11 @@ namespace indyClient
 
                 var res = await AnonCreds.ProverFetchCredentialsAsync(
                 creds, 1);
-                Console.WriteLine(res);
+                return res;
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                return $"Error: {e.Message}";
             }
         }
 
@@ -282,6 +281,19 @@ namespace indyClient
                 return $"Error: {e.Message}";
             }
         }
+
+        public async Task deleteRecord(string type , string id)
+        {
+            try
+            {
+                await NonSecrets.DeleteRecordAsync(d_openWallet, type, id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+
 
         public async Task<string> getRecord(string type,
         string queryJson, string optionsJson)
@@ -308,10 +320,11 @@ namespace indyClient
               o = JObject.Parse(res);
 
               // parse member value, because it contains schemaJson
-              for (int idx = 0; idx < Int32.Parse(count); ++idx)
-              {
-                  o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
-              }
+              // for (int idx = 0; idx < Int32.Parse(count); ++idx)
+              // {
+              //     o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
+              // }
+
 
               return o["records"].ToString();
           }
@@ -361,9 +374,7 @@ namespace indyClient
                 model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
                 model.export_key = exportKey;
                 io.createFile(JsonConvert.SerializeObject(model),
-                    io.getWalletExportPathRel()
-                    + d_identifier
-                    + "_config.json");
+                    io.getIpfsExportPathRel(d_identifier));
 
                 return JsonConvert.SerializeObject(model);
             }
@@ -393,10 +404,14 @@ namespace indyClient
         }
 
         public async Task<string> walletImportIpfs(string identifier,
-            string configPath)
+            string exportConfig)
         {
+            // check if export config is a path towards the export file.
+            if (exportConfig[0] != '{')
+                exportConfig = File.ReadAllText(exportConfig);
+
             WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(File.ReadAllText(configPath));
+                <WalletExportModel>(exportConfig);
             IpfsFacilitator ipfs = new IpfsFacilitator();
             IOFacilitator io = new IOFacilitator();
             string localPath = io.getWalletExportPathAbs() + identifier;
@@ -411,6 +426,54 @@ namespace indyClient
             {
                 return $"Error: {e.Message}";
             }
+        }
+
+        public async Task<string> listEmergencySharedSecrets(string query = "{}")
+        {
+          string res = await getRecord("emergency-shared-secret", query,
+              "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+          return res;
+        }
+
+        public async Task<string> createEmergencySharedSecrets(
+            int min, int total)
+        {
+            string list = await listEmergencySharedSecrets();
+            if (list == "0")
+                throw new Exception("There allready exist emergency shared secrets.");
+
+            IOFacilitator io = new IOFacilitator();
+            if (!io.existsIpfsExportFile(d_identifier))
+                throw new Exception("There must be an IPFS backup of the wallet. No IPFS export JSON file was found for this wallet.");
+
+            string ipfsExportJson =
+                File.ReadAllText(io.getIpfsExportPathAbs(d_identifier));
+
+            List<string> secrets = SecretSharingFacilitator.createSharedSecret(
+                ipfsExportJson, min, total);
+
+            int idx = 0;
+            foreach (string secret in secrets)
+            {
+                await addRecord(
+                    "emergency-shared-secret",
+                    secret,
+                    "1.0",
+                    createSharedSecretTagJson(++idx, min, total));
+            }
+
+            list = await listEmergencySharedSecrets();
+            return list;
+        }
+
+        private string createSharedSecretTagJson(int num, int min, int total)
+        {
+            string json = "{";
+            json += "\"is_shared\": \"0\",";
+            json += "\"number\": \"" + num + "\",";
+            json += "\"minimum\": \"" + min + "\",";
+            json += "\"total\": \"" + total + "\"}";
+            return json;
         }
 
         private void setWalletInfo()

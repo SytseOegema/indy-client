@@ -34,6 +34,7 @@ sudo apt-get install -y libindy
 dotnet add package Hyperledger.Indy.Sdk --version 1.11.1
 dotnet add package Newtonsoft.Json --version 12.0.3
 dotnet add package Ipfs.Http.Client
+dotnet add package SecretSharingDotNet --version 0.3.0
 ```
 
 ### Install IPFS daemon

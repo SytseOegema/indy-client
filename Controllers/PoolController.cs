@@ -9,13 +9,8 @@ namespace indyClient
 {
     class PoolController
     {
-        private string d_identifier;
+        private string d_identifier = "";
         private Pool d_openPool;
-
-        public PoolController(string identifier)
-        {
-            connect(identifier);
-        }
 
         public string getIdentifier()
         {
@@ -37,6 +32,7 @@ namespace indyClient
             try
             {
                 d_openPool = await Pool.OpenPoolLedgerAsync(poolname, "{}");
+                d_identifier = poolname;
             }
             catch (Exception e)
             {
