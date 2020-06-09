@@ -180,12 +180,12 @@ namespace indyClient
                         case "test list":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
-                                "{\"is_shared\": 1}");
+                                "{\"is_shared\": \"1\"}");
                             break;
                         case "emergency shared secret list unused":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
-                                "{\"is_shared\": 0}");
+                                "{\"is_shared\": \"0\"}");
                             break;
                         case "emergency shared secret create":
                             requiredWalletCheck();
