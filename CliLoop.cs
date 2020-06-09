@@ -176,12 +176,6 @@ namespace indyClient
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets();
                             break;
-
-                        case "test list":
-                            requiredWalletCheck();
-                            res = await d_wallet.listEmergencySharedSecrets(
-                                "{\"is_shared\": \"1\"}");
-                            break;
                         case "emergency shared secret list unused":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
@@ -196,6 +190,13 @@ namespace indyClient
                         case "emergency shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
+                            break;
+                        case "emergency shared secret mark shared":
+                            requiredWalletCheck();
+                            await d_wallet.updateRecordTag(
+                                d_prompt.recordType(),
+                                d_prompt.recordId(),
+                                "{\"~is_shared\": \"1\"}");
                             break;
                         case "doctor proof request":
                             res = d_docProof.getProofRequest();
@@ -253,6 +254,13 @@ namespace indyClient
                             await d_wallet.deleteRecord(
                                 d_prompt.recordType(),
                                 d_prompt.recordId());
+                            break;
+                        case "wallet record update tag":
+                            requiredWalletCheck();
+                            await d_wallet.updateRecordTag(
+                                d_prompt.recordType(),
+                                d_prompt.recordId(),
+                                d_prompt.recordTagsJson());
                             break;
                         case "EHR environment setup":
                             requiredPoolCheck();

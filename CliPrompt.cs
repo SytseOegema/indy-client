@@ -24,6 +24,7 @@ namespace indyClient
             options += "wallet record add:: adds local record to wallet.\n";
             options += "wallet record get:: gets local records from wallet.\n";
             options += "wallet record delete:: delets local records from wallet.\n";
+            options += "wallet record update tag:: update the tags of a wallet record.\n";
             options += "wallet export local:: export wallet to a file on your system.\n";
             options += "wallet export ipfs:: export wallet to IPFS.\n";
             options += "wallet import local:: import wallet from a file on your system.\n";
@@ -48,6 +49,7 @@ namespace indyClient
             options += "emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
             options += "emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
             options += "emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
+            options += "emergency shared secret mark shared:: marks a secret is shared with a trusted party.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";

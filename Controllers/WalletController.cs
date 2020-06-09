@@ -294,6 +294,20 @@ namespace indyClient
             }
         }
 
+        public async Task updateRecordTag(string type, string id,
+            string tagJson)
+        {
+            try
+            {
+                await NonSecrets.UpdateRecordTagsAsync(d_openWallet, type, id,
+                    tagJson);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+
 
         public async Task<string> getRecord(string type,
         string queryJson, string optionsJson)
