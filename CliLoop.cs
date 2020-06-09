@@ -194,7 +194,7 @@ namespace indyClient
                         case "emergency shared secret mark shared":
                             requiredWalletCheck();
                             await d_wallet.updateRecordTag(
-                                d_prompt.recordType(),
+                                "emergency-shared-secret",
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;
