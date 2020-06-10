@@ -86,7 +86,7 @@ namespace indyClient
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
             }
-            d_wallet.close();
+            await d_wallet.close();
         }
 
         public async Task<string> createSharedSecretSchema(string issuer,
@@ -100,7 +100,7 @@ namespace indyClient
             string schemaJson = await d_ledger.createSchema(
                 "Emergency-Shared-Secret", "1.0.0", schemaAttributes);
 
-            d_wallet.close();
+            await d_wallet.close();
             return schemaJson;
         }
 
