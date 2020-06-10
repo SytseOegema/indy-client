@@ -492,7 +492,7 @@ namespace indyClient
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"";
+            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"}";
 
             // return array with credentials json
             json = await getCredentials(json);
