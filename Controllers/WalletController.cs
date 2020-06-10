@@ -252,14 +252,29 @@ namespace indyClient
         {
             try
             {
-              var creds = await AnonCreds.ProverSearchCredentialsAsync(
+                var creds = await AnonCreds.ProverSearchCredentialsAsync(
                     d_openWallet, walletQuery);
                     Console.WriteLine(creds);
 
-
                 var res = await AnonCreds.ProverFetchCredentialsAsync(
-                creds, 1);
-                return res;
+                creds, 0);
+
+                // parse result to see the count of schema's
+                JObject o = JObject.Parse(res);
+                string count = o["totalCount"].ToString();
+
+                // return "0" if there are no records for the type and query
+                if (count == "0")
+                    return "0";
+
+                // get count schema's
+                res = await AnonCreds.ProverFetchCredentialsAsync(
+                creds, Int32.Parse(count));
+
+                // make response human readable
+                o = JObject.Parse(res);
+
+                return o.ToString();
             }
             catch (Exception e)
             {
@@ -320,7 +335,6 @@ namespace indyClient
               // get 0 schema's
               var res = await NonSecrets.FetchNextRecordsAsync(
               d_openWallet, list, 0);
-
 
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);

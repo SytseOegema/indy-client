@@ -99,7 +99,9 @@ namespace indyClient
         {
             string fullPath = d_homePath + path;
             string [] files = Directory.GetDirectories(fullPath);
-            foreach(string file in files)
+            List<string> list = new List<string>(files);
+            list.Sort();
+            foreach(string file in list)
             {
                 Console.WriteLine(file.Replace(fullPath + "/", ""));
             }
@@ -108,9 +110,7 @@ namespace indyClient
         public bool directoryExists(string pathAbs, string directory)
         {
             string [] files = Directory.GetDirectories(pathAbs);
-            List<string> list = new List<string>(files);
-            list.Sort();
-            foreach(string file in list)
+            foreach(string file in files)
             {
                 if (file.Replace(pathAbs, "") == directory)
                     return true;
