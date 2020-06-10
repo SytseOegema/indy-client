@@ -109,7 +109,7 @@ namespace indyClient
             string schemaJson, string credOffer, string credDefDefinition)
         {
 
-            await d_wallet.open(d_wallet);
+            await d_wallet.open(walletId);
             // takes the first did from the list and makes it the active did
             string didList = await d_wallet.listDids();
             d_wallet.setActiveDid(
@@ -132,7 +132,7 @@ namespace indyClient
                 schemaAttributes, schemaValues);
             await d_wallet.open(issuer);
             // takes the first did from the list and makes it the active did
-            string didList = await d_wallet.listDids();
+            didList = await d_wallet.listDids();
             d_wallet.setActiveDid(
                 JArray.Parse(didList)[0]["did"].ToString());
             string cred = await d_wallet.createCredential(credOffer,
