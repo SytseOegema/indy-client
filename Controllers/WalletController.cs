@@ -272,9 +272,9 @@ namespace indyClient
                 creds, count);
 
                 // make response human readable
-                JObject o = JObject.Parse(res);
+                JArray a = JArray.Parse(res);
 
-                return o.ToString();
+                return a.ToString();
             }
             catch (Exception e)
             {
