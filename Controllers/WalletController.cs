@@ -500,7 +500,6 @@ namespace indyClient
             for(int idx = 0; idx < a.Count; ++idx)
             {
                 JObject cred = (JObject) a[idx];
-                Console.WriteLine(cred.ToString());
                 if (cred["attrs"]["secret_issuer"].ToString() == identifier)
                     return cred["attrs"]["secret"].ToString();
             }
