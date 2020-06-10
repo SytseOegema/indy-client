@@ -41,7 +41,10 @@ namespace indyClient
             // didList = await d_wallet.listDids();
             // await sendNym("Trustee1", trusteeDid, didList, "ENDORSER");
 
+            await d_wallet.open("Gov-Health-Department");
+            string didList = await d_wallet.listDids();
             string govDid = JArray.Parse(didList)[0]["did"].ToString();
+
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid);
             await createEHRWallets(myName, govDid);
