@@ -254,25 +254,25 @@ namespace indyClient
             {
                 var creds = await AnonCreds.ProverSearchCredentialsAsync(
                     d_openWallet, walletQuery);
-                    Console.WriteLine(creds);
 
-                var res = await AnonCreds.ProverFetchCredentialsAsync(
-                creds, 0);
+                // var res = await AnonCreds.ProverFetchCredentialsAsync(
+                // creds, 0);
+                //
+                // // parse result to see the count of schema's
+                // JObject o = JObject.Parse(res);
+                // string count = o["totalCount"].ToString();
 
-                // parse result to see the count of schema's
-                JObject o = JObject.Parse(res);
-                string count = o["totalCount"].ToString();
-
+                int count = creds.TotalCount;
                 // return "0" if there are no records for the type and query
-                if (count == "0")
+                if (count == 0)
                     return "0";
 
                 // get count schema's
-                res = await AnonCreds.ProverFetchCredentialsAsync(
-                creds, Int32.Parse(count));
+                string res = await AnonCreds.ProverFetchCredentialsAsync(
+                creds, count);
 
                 // make response human readable
-                o = JObject.Parse(res);
+                JObject o = JObject.Parse(res);
 
                 return o.ToString();
             }
