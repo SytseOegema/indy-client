@@ -255,13 +255,6 @@ namespace indyClient
                 var creds = await AnonCreds.ProverSearchCredentialsAsync(
                     d_openWallet, walletQuery);
 
-                // var res = await AnonCreds.ProverFetchCredentialsAsync(
-                // creds, 0);
-                //
-                // // parse result to see the count of schema's
-                // JObject o = JObject.Parse(res);
-                // string count = o["totalCount"].ToString();
-
                 int count = creds.TotalCount;
                 // return "0" if there are no records for the type and query
                 if (count == 0)
@@ -489,6 +482,16 @@ namespace indyClient
 
             list = await listEmergencySharedSecrets();
             return list;
+        }
+
+        public async Task<string> holderSharedSecretProvide(
+            string doctorProofJson, string identifier)
+        {
+            bool res = await DoctorProofFacilitator.verifyDoctorProof(
+                doctorProofJson);
+            if (!res)
+                return "The doctor proof json that was provided is not valid!";
+            return "test";
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)

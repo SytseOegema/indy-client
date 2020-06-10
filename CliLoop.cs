@@ -170,6 +170,11 @@ namespace indyClient
                             requiredWalletCheck();
                             res = await d_wallet.getCredentials("{}");
                             break;
+                        case "credential get":
+                            requiredWalletCheck();
+                            res = await d_wallet.getCredentials(
+                                d_prompt.walletQuery());
+                            break;
                         case "issuer emergency shared secret list":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets();
@@ -195,6 +200,9 @@ namespace indyClient
                                 "emergency-shared-secret",
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
+                            break;
+                        case "holder emergency shared secret provide":
+                            res = "not doing a thing yet.";
                             break;
                         case "offline emergency secret obtain":
                             res = await OfflineSecretController.obtain(

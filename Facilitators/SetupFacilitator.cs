@@ -78,9 +78,16 @@ namespace indyClient
                     "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
                     o["id"] + "\"]";
 
+                // share secret via credential
                 await issueCredential(issuer, trustees[idx], "shared-secret-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
+
+                // mark secret as shared
+                await d_wallet.updateRecordTag(
+                    "emergency-shared-secret",
+                    o["id"].ToString(),
+                    "{\"~is_shared\": \"1\"}");
             }
             await d_wallet.close();
         }
