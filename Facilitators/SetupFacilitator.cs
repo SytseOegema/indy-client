@@ -292,7 +292,7 @@ namespace indyClient
             await d_wallet.close();
         }
 
-        private async Task initialize(string issuer, string issuerDid = "")
+        private async Task<string> initialize(string issuer, string issuerDid = "")
         {
           await d_wallet.open(issuer);
           string didList = await d_wallet.listDids();
