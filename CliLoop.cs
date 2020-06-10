@@ -75,7 +75,7 @@ namespace indyClient
                             break;
                         case "did list":
                             requiredWalletCheck();
-                            await d_wallet.listDids();
+                            res = await d_wallet.listDids();
                             break;
                         case "did create":
                             requiredWalletCheck();

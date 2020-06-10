@@ -31,15 +31,6 @@ namespace indyClient
             await createAndPublishWallet("Trustee1", trusteeDid, myName,
                 "00000000000Gov-Health-Department");
 
-            // await d_wallet.create(myName);
-            // await d_wallet.open(myName);
-            // await d_wallet.createDid("00000000000Gov-Health-Department",
-            //     "{purpose: Verinym}");
-            //
-            //
-            // await d_wallet.open(myName);
-            // didList = await d_wallet.listDids();
-            // await sendNym("Trustee1", trusteeDid, didList, "ENDORSER");
 
             await d_wallet.open("Gov-Health-Department");
             didList = await d_wallet.listDids();
@@ -57,6 +48,8 @@ namespace indyClient
         public async Task setupSharedSecretCredentials(string issuer,
             string schemaJson)
         {
+            await d_wallet.open(issuer);
+
             // create creddef in patient wallet
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
@@ -93,18 +86,21 @@ namespace indyClient
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
             }
+            d_wallet.close();
         }
 
         public async Task<string> createSharedSecretSchema(string issuer,
             string issuerDid)
         {
             await initialize(issuer, issuerDid);
-
             Console.WriteLine("creating schema for sharing emergency shared secrets");
+
             string schemaAttributes =
             "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
             string schemaJson = await d_ledger.createSchema(
                 "Emergency-Shared-Secret", "1.0.0", schemaAttributes);
+
+            d_wallet.close();
             return schemaJson;
         }
 
@@ -156,14 +152,14 @@ namespace indyClient
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
 
-            Console.WriteLine(credDefDefinition);
+            // Console.WriteLine(credDefDefinition);
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
 
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
-            Console.WriteLine("Creating Docotor-Certificate Credential for: ");
+            Console.WriteLine("Creating Docotor-Certificate Credentials for: ");
             string[] doctors = {"Doctor1", "Doctor2", "Doctor3"};
             CredDefFacilitator credDefFac = new CredDefFacilitator();
 
@@ -243,41 +239,12 @@ namespace indyClient
                 Console.WriteLine("Doctor wallets already exists.");
                 return;
             }
-            Console.WriteLine("create wallet for doctor 1");
             await createAndPublishWallet(issuer, issuerDid, "Doctor1",
                 "0000000000000000000000000Doctor1");
             await createAndPublishWallet(issuer, issuerDid, "Doctor2",
                 "0000000000000000000000000Doctor2");
             await createAndPublishWallet(issuer, issuerDid, "Doctor3",
                 "0000000000000000000000000Doctor3");
-
-            // await d_wallet.create("Doctor1");
-            // await d_wallet.open("Doctor1");
-            // await d_wallet.createDid("0000000000000000000000000Doctor1",
-            //     "{purpose: Verinym}");
-            //
-            // string didList = await d_wallet.listDids();
-            // await sendNym(issuer, issuerDid, didList);
-            //
-            // Console.WriteLine("create wallet for doctor 2");
-            // await d_wallet.create("Doctor2");
-            // await d_wallet.open("Doctor2");
-            // await d_wallet.createDid("0000000000000000000000000Doctor2",
-            //     "{purpose: Verinym}");
-            //
-            // didList = await d_wallet.listDids();
-            // await sendNym(issuer, issuerDid, didList);
-            //
-            // Console.WriteLine("create wallet for doctor 3");
-            // await d_wallet.create("Doctor3");
-            // await d_wallet.open("Doctor3");
-            // await d_wallet.createDid("0000000000000000000000000Doctor3",
-            //     "{purpose: Verinym}");
-            //
-            // didList = await d_wallet.listDids();
-            // await sendNym(issuer, issuerDid, didList);
-            //
-            // await d_wallet.close();
         }
 
         public async Task createGenesisWallets()
@@ -296,20 +263,6 @@ namespace indyClient
                 "000000000000000000000000Steward1");
             await createWallet("Steward2",
                 "000000000000000000000000Steward2");
-            // await d_wallet.create("Trustee1");
-            // await d_wallet.open("Trustee1");
-            // await d_wallet.createDid("000000000000000000000000Trustee1",
-            //     "{purpose: Verinym}");
-
-            // await d_wallet.create("Steward1");
-            // await d_wallet.open("Steward1");
-            // await d_wallet.createDid("000000000000000000000000Steward1",
-            //     "{purpose: Verinym}");
-
-            // await d_wallet.create("Steward2");
-            // await d_wallet.open("Steward2");
-            // await d_wallet.createDid("000000000000000000000000Steward2",
-            //     "{purpose: Verinym}");
             await d_wallet.close();
         }
 
@@ -327,6 +280,7 @@ namespace indyClient
             await d_wallet.createDid(seed,
                 "{purpose: Verinym}");
             await d_wallet.close();
+            Console.WriteLine("Wallet created for " + walletId);
         }
 
         private async Task publishNYM(string issuer, string issuerDid,
@@ -343,11 +297,6 @@ namespace indyClient
         {
             string did = JArray.Parse(didList)[0]["did"].ToString();
             string ver = JArray.Parse(didList)[0]["verkey"].ToString();
-
-            Console.WriteLine("issuer: " + issuer);
-            Console.WriteLine("issuerdid: " + issuerDid);
-            Console.WriteLine("did: " + did);
-            Console.WriteLine("ver: " + ver);
 
             await initialize(issuer, issuerDid);
 

@@ -87,7 +87,6 @@ namespace indyClient
 
         public void createFile(string content, string file)
         {
-            Console.WriteLine(d_homePath + file);
             using (StreamWriter fileStream = new StreamWriter(d_homePath + file))
             {
                 fileStream.Write(content);

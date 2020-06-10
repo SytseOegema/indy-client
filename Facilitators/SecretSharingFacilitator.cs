@@ -28,7 +28,6 @@ namespace indyClient
             foreach(var item in x.Item2)
             {
                 secrets.Add(item.ToString());
-                Console.WriteLine(item);
             }
 
             return secrets;
