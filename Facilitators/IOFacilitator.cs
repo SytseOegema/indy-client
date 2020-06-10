@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
@@ -107,7 +108,9 @@ namespace indyClient
         public bool directoryExists(string pathAbs, string directory)
         {
             string [] files = Directory.GetDirectories(pathAbs);
-            foreach(string file in files)
+            List<string> list = new List<string>(files);
+            list.Sort();
+            foreach(string file in list)
             {
                 if (file.Replace(pathAbs, "") == directory)
                     return true;
