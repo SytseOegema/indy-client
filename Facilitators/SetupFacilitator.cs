@@ -69,8 +69,8 @@ namespace indyClient
             string schemaAttributes =
                 "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
 
-            string[] trustees = {"TrustedPaty1", "TrustedPaty2", "TrustedPaty3"
-                , "TrustedPaty4", "TrustedPaty5"};
+            string[] trustees = {"TrustedParty1", "TrustedParty2", "TrustedParty3"
+                , "TrustedParty4", "TrustedParty5"};
 
             Console.WriteLine("test3");
 
