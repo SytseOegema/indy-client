@@ -68,7 +68,7 @@ namespace indyClient
             await d_wallet.walletExportIpfs("export_key", issuer);
 
             // create shared secrets
-            List<string> secrets = new List<string>();
+            string secretsJson =
                 await d_wallet.createEmergencySharedSecrets(3, 5);
 
             // schemaAttributes
@@ -80,9 +80,11 @@ namespace indyClient
 
             for(int idx = 0; idx < 5; idx++)
             {
+                o = (JObject) JArray.Parse(secretsJson)[idx];
+
                 string schemaValues =
                     "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
-                    secrets[idx] + "\"]";
+                    o["value"] + "\"]";
 
                 await issueCredential(issuer, trustees[idx], "shared-secret",
                     schemaAttributes, schemaValues, schemaJson,
