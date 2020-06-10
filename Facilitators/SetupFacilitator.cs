@@ -76,7 +76,7 @@ namespace indyClient
 
                 string schemaValues =
                     "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
-                    o["value"] + "\"]";
+                    o["id"] + "\"]";
 
                 await issueCredential(issuer, trustees[idx], "shared-secret-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
