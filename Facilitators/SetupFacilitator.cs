@@ -46,7 +46,6 @@ namespace indyClient
             string schemaJson)
         {
             await initialize(issuer);
-            Console.WriteLine("test1");
             // create creddef in patient wallet
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
@@ -56,7 +55,6 @@ namespace indyClient
 
             // create cred def offer to share with trusted parties
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
-            Console.WriteLine("test2");
 
             // export wallet to ipfs
             await d_wallet.walletExportIpfs("export_key", issuer);
@@ -71,8 +69,6 @@ namespace indyClient
 
             string[] trustees = {"TrustedParty1", "TrustedParty2", "TrustedParty3"
                 , "TrustedParty4", "TrustedParty5"};
-
-            Console.WriteLine("test3");
 
             for(int idx = 0; idx < 5; idx++)
             {
@@ -109,18 +105,12 @@ namespace indyClient
             string masterSecret, string schemaAttributes, string schemaValues,
             string schemaJson, string credOffer, string credDefDefinition)
         {
-            Console.WriteLine("issue credential test4");
-
             await initialize(walletId);
-
-            Console.WriteLine("issue credential test5");
 
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
-            Console.WriteLine("issue credential test6");
             string credReq = await d_wallet.createCredentialRequest(
                 credOffer, credDefDefinition, linkSecret);
-            Console.WriteLine(credReq);
 
             JObject o = JObject.Parse(credReq);
             string credReqJson = o["CredentialRequestJson"].ToString();
@@ -128,8 +118,6 @@ namespace indyClient
                 o["CredentialRequestMetadataJson"].ToString();
 
             CredDefFacilitator credDefFac = new CredDefFacilitator();
-
-            Console.WriteLine("issue credential test5");
 
             string credValue = credDefFac.generateCredValueJson(
                 schemaAttributes, schemaValues);
