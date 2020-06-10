@@ -338,12 +338,17 @@ namespace indyClient
         private async Task sendNym(string issuer, string issuerDid,
         string didList, string role = "ENDORSER")
         {
-            string docDid = JArray.Parse(didList)[0]["did"].ToString();
-            string docVer = JArray.Parse(didList)[0]["verkey"].ToString();
+            string did = JArray.Parse(didList)[0]["did"].ToString();
+            string ver = JArray.Parse(didList)[0]["verkey"].ToString();
+
+            Console.WriteLine("issuer: " + issuer);
+            Console.WriteLine("issuerdid: " + issuerDid);
+            Console.WriteLine("did: " + did);
+            Console.WriteLine("ver: " + ver);
 
             await initialize(issuer, issuerDid);
 
-            await d_ledger.sendNymRequest(docDid, docVer, "Doctor", role);
+            await d_ledger.sendNymRequest(did, ver, "", role);
             await d_wallet.close();
         }
 
