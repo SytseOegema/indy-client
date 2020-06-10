@@ -6,20 +6,15 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Hyperledger.Indy.AnonCredsApi;
+using Hyperledger.Indy.WalletApi;
 
 
 namespace indyClient
 {
-    class DoctorProofFacilitator
+    public static class DoctorProofFacilitator
     {
-        WalletController d_walletController;
 
-        public DoctorProofFacilitator(ref WalletController wallet)
-        {
-            d_walletController = wallet;
-        }
-
-        public string getProofRequest()
+        public static string getProofRequest()
         {
             return File.ReadAllText("Models/DoctorProofRequest.json");
         }
@@ -28,7 +23,9 @@ namespace indyClient
          * Proofs the holder of the open wallet is a doctor by using the first
          * credential that meets the docotr proof requirements.
          */
-        public async Task<string> createDoctorProof(string masterKey = "doctor-certificate")
+        public static async Task<string> createDoctorProof(
+            Wallet wallet,
+            string masterKey = "doctor-certificate")
         {
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
@@ -37,7 +34,7 @@ namespace indyClient
             {
                 var credList =
                     await AnonCreds.ProverSearchCredentialsForProofRequestAsync(
-                        d_walletController.getOpenWallet(), proofReqJson);
+                        wallet, proofReqJson);
 
                 string attr1Cred = await getCredentialforRequest(
                     credList, "attr1_referent");
@@ -63,7 +60,7 @@ namespace indyClient
                 credDefs += "}";
 
                 string res = await AnonCreds.ProverCreateProofAsync(
-                    d_walletController.getOpenWallet(),
+                    wallet,
                     proofReqJson,
                     requestedCreds,
                     masterKey,
@@ -84,7 +81,7 @@ namespace indyClient
             }
         }
 
-        public async Task<bool> verifyDoctorProof(string proofJson)
+        public static async Task<bool> verifyDoctorProof(string proofJson)
         {
             string proofReqJson = getProofRequest();
             proofReqJson = proofReqJson.Replace(" ", string.Empty);
@@ -113,7 +110,7 @@ namespace indyClient
             }
         }
 
-        private string getReferentFromCredential(string json)
+        private static string getReferentFromCredential(string json)
         {
             JArray jArr = JArray.Parse(json);
             if (jArr.Count == 0)
@@ -122,7 +119,7 @@ namespace indyClient
             return jArr[0]["cred_info"]["referent"].ToString();
         }
 
-        private string proverDoctorRequestCreds(string attr1_referent,
+        private static string proverDoctorRequestCreds(string attr1_referent,
             string attr2_referent, string predicate1_referent)
         {
             string json = "{";
@@ -147,7 +144,7 @@ namespace indyClient
             return json;
         }
 
-        private async Task<string> getCredentialforRequest(
+        private static async Task<string> getCredentialforRequest(
             CredentialSearchForProofRequest search, string itemReferent)
         {
             try

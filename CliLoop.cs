@@ -14,8 +14,6 @@ namespace indyClient
             ref d_wallet, ref d_ledger);
         static SetupFacilitator d_setup = new SetupFacilitator(
             ref d_wallet, ref d_ledger);
-        static DoctorProofFacilitator d_docProof = new DoctorProofFacilitator(
-            ref d_wallet);
 
 
         public static async Task start()
@@ -172,26 +170,26 @@ namespace indyClient
                             requiredWalletCheck();
                             res = await d_wallet.getCredentials("{}");
                             break;
-                        case "emergency shared secret list":
+                        case "issuer emergency shared secret list":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets();
                             break;
-                        case "emergency shared secret list unused":
+                        case "issuer emergency shared secret list unused":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
                                 "{\"is_shared\": \"0\"}");
                             break;
-                        case "emergency shared secret create":
+                        case "issuer emergency shared secret create":
                             requiredWalletCheck();
                             res = await d_wallet.createEmergencySharedSecrets(
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
-                        case "emergency shared secret reconstruct":
+                        case "issuer emergency shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
                             break;
-                        case "emergency shared secret mark shared":
+                        case "issuer emergency shared secret mark shared":
                             requiredWalletCheck();
                             await d_wallet.updateRecordTag(
                                 "emergency-shared-secret",
@@ -199,15 +197,18 @@ namespace indyClient
                                 "{\"~is_shared\": \"1\"}");
                             break;
                         case "doctor proof request":
-                            res = d_docProof.getProofRequest();
+                            res = DoctorProofFacilitator.getProofRequest();
                             break;
                         case "doctor proof create":
                             requiredWalletCheck();
-                            res = await d_docProof.createDoctorProof();
+                            res = await DoctorProofFacilitator.
+                                createDoctorProof(d_wallet.getOpenWallet());
                             break;
                         case "doctor proof verify":
-                            bool result = await d_docProof.verifyDoctorProof(
-                                d_prompt.proofJson());
+                            bool result =
+                                await DoctorProofFacilitator.verifyDoctorProof(
+                                    d_prompt.proofJson());
+
                             res = result.ToString();
                             break;
                         case "wallet export local":
