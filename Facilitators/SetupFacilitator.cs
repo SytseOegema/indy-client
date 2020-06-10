@@ -108,12 +108,13 @@ namespace indyClient
             string masterSecret, string schemaAttributes, string schemaValues,
             string schemaJson, string credOffer, string credDefDefinition)
         {
-            await d_wallet.open(walletId);
 
-            // takes the first did from the list and makes it teh active did
+            await d_wallet.open(d_wallet);
+            // takes the first did from the list and makes it the active did
             string didList = await d_wallet.listDids();
             d_wallet.setActiveDid(
                 JArray.Parse(didList)[0]["did"].ToString());
+
 
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
@@ -130,6 +131,10 @@ namespace indyClient
             string credValue = credDefFac.generateCredValueJson(
                 schemaAttributes, schemaValues);
             await d_wallet.open(issuer);
+            // takes the first did from the list and makes it the active did
+            string didList = await d_wallet.listDids();
+            d_wallet.setActiveDid(
+                JArray.Parse(didList)[0]["did"].ToString());
             string cred = await d_wallet.createCredential(credOffer,
                 credReqJson, credValue);
 
@@ -151,8 +156,6 @@ namespace indyClient
             Console.WriteLine("creating CredDef for schema Doctor-Certificate");
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
-
-            // Console.WriteLine(credDefDefinition);
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
