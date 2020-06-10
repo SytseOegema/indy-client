@@ -84,6 +84,7 @@ namespace indyClient
                     credOffer, credDefDefinition);
 
                 // mark secret as shared
+                await initialize(issuer);
                 await d_wallet.updateRecordTag(
                     "emergency-shared-secret",
                     o["id"].ToString(),
