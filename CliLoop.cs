@@ -196,6 +196,11 @@ namespace indyClient
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;
+                        case "offine emergency secret obtain":
+                            await OfflineSecretController.obtain(
+                                d_prompt.proofJson(),
+                                d_prompt.walletIdentifier());
+                            break;
                         case "doctor proof request":
                             res = DoctorProofFacilitator.getProofRequest();
                             break;
