@@ -23,9 +23,7 @@ namespace indyClient
             await createGenesisWallets();
             string myName = "Gov-Health-Department";
 
-            await d_wallet.open("Trustee1");
-            string didList = await d_wallet.listDids();
-            string trusteeDid = JArray.Parse(didList)[0]["did"].ToString();
+            await initialize("Trustee1");
 
             Console.WriteLine("create Gov-Health-Department wallet");
             await createAndPublishWallet("Trustee1", trusteeDid, myName,
@@ -48,7 +46,7 @@ namespace indyClient
         public async Task setupSharedSecretCredentials(string issuer,
             string schemaJson)
         {
-            await d_wallet.open(issuer);
+            await initialize(issuer);
 
             // create creddef in patient wallet
             string credDefDefinition = await d_ledger.createCredDef(
@@ -109,12 +107,7 @@ namespace indyClient
             string schemaJson, string credOffer, string credDefDefinition)
         {
 
-            await d_wallet.open(walletId);
-            // takes the first did from the list and makes it the active did
-            string didList = await d_wallet.listDids();
-            d_wallet.setActiveDid(
-                JArray.Parse(didList)[0]["did"].ToString());
-
+            await initialize(walletId);
 
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
@@ -130,11 +123,9 @@ namespace indyClient
 
             string credValue = credDefFac.generateCredValueJson(
                 schemaAttributes, schemaValues);
-            await d_wallet.open(issuer);
-            // takes the first did from the list and makes it the active did
-            didList = await d_wallet.listDids();
-            d_wallet.setActiveDid(
-                JArray.Parse(didList)[0]["did"].ToString());
+
+            await initialize(issuer);
+
             string cred = await d_wallet.createCredential(credOffer,
                 credReqJson, credValue);
 
@@ -182,12 +173,7 @@ namespace indyClient
 
             foreach (string doctor in doctors) {
                 Console.WriteLine(doctor);
-                await d_wallet.open(doctor);
-
-                // takes the first did from the list and makes it teh active did
-                string didList = await d_wallet.listDids();
-                d_wallet.setActiveDid(
-                    JArray.Parse(didList)[0]["did"].ToString());
+                await initialize(doctor);
 
                 string linkSecret =
                     await d_wallet.createMasterSecret("doctor-certificate");
@@ -307,10 +293,15 @@ namespace indyClient
             await d_wallet.close();
         }
 
-        private async Task initialize(string issuer, string issuerDid)
+        private async Task initialize(string issuer, string issuerDid = "")
         {
           await d_wallet.open(issuer);
-          d_wallet.setActiveDid(issuerDid);
+          string didList = await d_wallet.listDids();
+          string did = JArray.Parse(didList)[0]["did"].ToString();
+          if (issuerDid != "")
+              did = issuerDid;
+
+          d_wallet.setActiveDid(did);
         }
     }
 }
