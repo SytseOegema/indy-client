@@ -23,16 +23,15 @@ namespace indyClient
             await createGenesisWallets();
             string myName = "Gov-Health-Department";
 
-            await initialize("Trustee1");
+            string trusteeDid = await initialize("Trustee1");
+
 
             Console.WriteLine("create Gov-Health-Department wallet");
             await createAndPublishWallet("Trustee1", trusteeDid, myName,
                 "00000000000Gov-Health-Department");
 
 
-            await d_wallet.open("Gov-Health-Department");
-            didList = await d_wallet.listDids();
-            string govDid = JArray.Parse(didList)[0]["did"].ToString();
+            string govDid = await initialize("Gov-Health-Department");
 
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid);
@@ -302,6 +301,7 @@ namespace indyClient
               did = issuerDid;
 
           d_wallet.setActiveDid(did);
+          return did;
         }
     }
 }
