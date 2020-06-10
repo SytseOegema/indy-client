@@ -31,7 +31,7 @@ namespace indyClient
                 "00000000000Gov-Health-Department");
 
 
-            string govDid = await initialize("Gov-Health-Department");
+            string govDid = await initialize(myName);
 
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid);
@@ -46,7 +46,7 @@ namespace indyClient
             string schemaJson)
         {
             await initialize(issuer);
-
+            Console.WriteLine("test1");
             // create creddef in patient wallet
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
@@ -56,6 +56,7 @@ namespace indyClient
 
             // create cred def offer to share with trusted parties
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
+            Console.WriteLine("test2");
 
             // export wallet to ipfs
             await d_wallet.walletExportIpfs("export_key", issuer);
@@ -70,6 +71,8 @@ namespace indyClient
 
             string[] trustees = {"TrustedPaty1", "TrustedPaty2", "TrustedPaty3"
                 , "TrustedPaty4", "TrustedPaty5"};
+
+            Console.WriteLine("test3");
 
             for(int idx = 0; idx < 5; idx++)
             {
@@ -97,6 +100,7 @@ namespace indyClient
             string schemaJson = await d_ledger.createSchema(
                 "Emergency-Shared-Secret", "1.0.0", schemaAttributes);
 
+            Console.WriteLine("schemaJson:" + schemaJson);
             await d_wallet.close();
             return schemaJson;
         }
@@ -105,6 +109,7 @@ namespace indyClient
             string masterSecret, string schemaAttributes, string schemaValues,
             string schemaJson, string credOffer, string credDefDefinition)
         {
+            Console.WriteLine("issue credential test4");
 
             await initialize(walletId);
 
@@ -119,6 +124,8 @@ namespace indyClient
                 o["CredentialRequestMetadataJson"].ToString();
 
             CredDefFacilitator credDefFac = new CredDefFacilitator();
+
+            Console.WriteLine("issue credential test5");
 
             string credValue = credDefFac.generateCredValueJson(
                 schemaAttributes, schemaValues);
@@ -263,12 +270,12 @@ namespace indyClient
 
         private async Task createWallet(string walletId, string seed = "")
         {
+            Console.WriteLine("Create wallet for " + walletId);
             await d_wallet.create(walletId);
             await d_wallet.open(walletId);
             await d_wallet.createDid(seed,
                 "{purpose: Verinym}");
             await d_wallet.close();
-            Console.WriteLine("Wallet created for " + walletId);
         }
 
         private async Task publishNYM(string issuer, string issuerDid,
@@ -295,8 +302,10 @@ namespace indyClient
         private async Task<string> initialize(string issuer, string issuerDid = "")
         {
           await d_wallet.open(issuer);
+
           string didList = await d_wallet.listDids();
           string did = JArray.Parse(didList)[0]["did"].ToString();
+
           if (issuerDid != "")
               did = issuerDid;
 
