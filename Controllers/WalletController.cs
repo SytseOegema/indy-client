@@ -325,8 +325,10 @@ namespace indyClient
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);
               string count = o["totalCount"].ToString();
-              Console.WriteLine(count);
-              Console.WriteLine(o.ToString());
+
+              // return "0" if there are no records for the type and query
+              if (count == "0")
+                  return "0";
 
               // get count schema's
               res = await NonSecrets.FetchNextRecordsAsync(
@@ -334,14 +336,6 @@ namespace indyClient
 
               // make response human readable
               o = JObject.Parse(res);
-              Console.WriteLine(o.ToString());
-
-              // parse member value, because it contains schemaJson
-              // for (int idx = 0; idx < Int32.Parse(count); ++idx)
-              // {
-              //     o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
-              // }
-
 
               return o["records"].ToString();
           }
