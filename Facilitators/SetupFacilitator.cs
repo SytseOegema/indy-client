@@ -82,7 +82,7 @@ namespace indyClient
                     "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
                     o["value"] + "\"]";
 
-                await issueCredential(issuer, trustees[idx], "shared-secret",
+                await issueCredential(issuer, trustees[idx], "shared-secret-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
             }
