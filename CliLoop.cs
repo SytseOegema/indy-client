@@ -182,7 +182,7 @@ namespace indyClient
                             Console.WriteLine(output);
                             Console.WriteLine(output.IndexOf('0'));
                             Console.WriteLine(output.IndexOf('0') == 0);
-                            Console.WriteLine(output == "0\n");
+                            Console.WriteLine(output == null);
                             break;
                         case "emergency shared secret list unused":
                             requiredWalletCheck();
