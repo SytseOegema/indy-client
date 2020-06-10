@@ -450,7 +450,7 @@ namespace indyClient
             int min, int total)
         {
             string list = await listEmergencySharedSecrets();
-            if (list == "0")
+            if (list != "0")
                 throw new Exception("There allready exist emergency shared secrets.");
 
             IOFacilitator io = new IOFacilitator();
