@@ -219,16 +219,16 @@ namespace indyClient
             await createAndPublishWallet(issuer, issuerDid, "Patient2",
                 "000000000000000000000000Patient2");
 
-            await createAndPublishWallet(issuer, issuerDid, "TrustedPaty1",
-                "00000000000000000000TrustedPaty1");
-            await createAndPublishWallet(issuer, issuerDid, "TrustedPaty2",
-                "00000000000000000000TrustedPaty2");
-            await createAndPublishWallet(issuer, issuerDid, "TrustedPaty3",
-                "00000000000000000000TrustedPaty3");
-            await createAndPublishWallet(issuer, issuerDid, "TrustedPaty4",
-                "00000000000000000000TrustedPaty4");
-            await createAndPublishWallet(issuer, issuerDid, "TrustedPaty5",
-                "00000000000000000000TrustedPaty5");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty1",
+                "0000000000000000000TrustedParty1");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty2",
+                "0000000000000000000TrustedParty2");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty3",
+                "0000000000000000000TrustedParty3");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty4",
+                "0000000000000000000TrustedParty4");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty5",
+                "0000000000000000000TrustedParty5");
         }
 
         public async Task createDoctorWallets(string issuer, string issuerDid)
