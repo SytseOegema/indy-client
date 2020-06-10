@@ -51,7 +51,7 @@ namespace indyClient
             options += "issuer emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
             options += "issuer emergency shared secret mark shared:: marks a secret is shared with a trusted party.\n";
             options += "holder emergency shared secret provide:: not impelemented yet.\n";
-            options += "offine emergency secret obtain:: not impelemented yet.\n";
+            options += "offline emergency secret obtain:: not impelemented yet.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
