@@ -113,10 +113,14 @@ namespace indyClient
 
             await initialize(walletId);
 
+            Console.WriteLine("issue credential test5");
+
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
+            Console.WriteLine("issue credential test6");
             string credReq = await d_wallet.createCredentialRequest(
                 credOffer, credDefDefinition, linkSecret);
+            Console.WriteLine("issue credential test7");
 
             JObject o = JObject.Parse(credReq);
             string credReqJson = o["CredentialRequestJson"].ToString();
