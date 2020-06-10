@@ -202,7 +202,9 @@ namespace indyClient
                                 "{\"~is_shared\": \"1\"}");
                             break;
                         case "holder emergency shared secret provide":
-                            res = "not doing a thing yet.";
+                            res = await d_wallet.holderSharedSecretProvide(
+                                d_prompt.proofJson(),
+                                d_prompt.issuerWalletName());
                             break;
                         case "offline emergency secret obtain":
                             res = await OfflineSecretController.obtain(

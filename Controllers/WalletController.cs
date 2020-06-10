@@ -491,7 +491,19 @@ namespace indyClient
                 doctorProofJson);
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
-            return "test";
+
+            string json = "\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"";
+
+            // return array with credentials json
+            json = await getCredentials(json);
+            JArray a = JArray.Parse(json);
+            for(int idx = 0; idx < a.Count; ++idx)
+            {
+                JObject cred = (JObject) a[idx];
+                if (cred["attrs"]["secret_issuer"].ToString() == identifier)
+                    return cred["attrs"]["secret"].ToString();
+            }
+            return "No secret found for specified identifier";
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)
