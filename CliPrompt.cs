@@ -49,10 +49,10 @@ namespace indyClient
             options += "issuer emergency shared secret list:: lists all emergency keys.\n";
             options += "issuer emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
             options += "issuer emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
-            options += "issuer emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
             options += "issuer emergency shared secret mark shared:: marks a secret is shared with a trusted party.\n";
             options += "holder emergency shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
             options += "offline emergency secret obtain:: obtain emergency secret by providing a doctor proof.\n";
+            options += "emergency secret reconstruct:: reconstructs the secret based on the shared keys.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";

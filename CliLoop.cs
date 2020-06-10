@@ -190,7 +190,7 @@ namespace indyClient
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
-                        case "issuer emergency shared secret reconstruct":
+                        case "emergency secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
                             break;

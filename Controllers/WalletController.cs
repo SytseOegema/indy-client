@@ -413,7 +413,7 @@ namespace indyClient
             try
             {
                 await Wallet.ImportAsync(config, credentials, importConf);
-                return "Wallet " + d_identifier + " has been imported";
+                return "Wallet " + identifier + " has been imported";
             }
             catch (Exception e)
             {
@@ -436,9 +436,9 @@ namespace indyClient
             try
             {
                 await ipfs.getFile(model.ipfs_path, identifier);
-                await walletImportLocal(identifier, localPath, model.wallet_key,
+                string res = await walletImportLocal(identifier, localPath, model.wallet_key,
                     model.export_key);
-                return "Wallet " + d_identifier + " has been imported";
+                return res;
             }
             catch (Exception e)
             {
