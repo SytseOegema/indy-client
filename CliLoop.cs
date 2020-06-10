@@ -180,6 +180,7 @@ namespace indyClient
                             requiredWalletCheck();
                             string output = await d_wallet.listEmergencySharedSecrets();
                             Console.WriteLine(output);
+                            Console.WriteLine(output.IndexOf('0'));
                             Console.WriteLine(output.IndexOf('0') == 0);
                             Console.WriteLine(output == "0\n");
                             break;
