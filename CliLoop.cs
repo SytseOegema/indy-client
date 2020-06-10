@@ -176,6 +176,13 @@ namespace indyClient
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets();
                             break;
+                        case "test list":
+                            requiredWalletCheck();
+                            string output = await d_wallet.listEmergencySharedSecrets();
+                            Console.WriteLine(output);
+                            Console.WriteLine(output == "0");
+                            Console.WriteLine(output == "0\n");
+                            break;
                         case "emergency shared secret list unused":
                             requiredWalletCheck();
                             res = await d_wallet.listEmergencySharedSecrets(
