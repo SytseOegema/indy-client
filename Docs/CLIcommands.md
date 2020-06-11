@@ -11,4 +11,5 @@ This command can be used to initialize the client with wallets, schemas, credent
 This command can be used to connect to a pool. The command connects via a genesis file in the `.indy_client` folder.
 
 | inputs | format | example |
+| ------ | ------ | ------- |
 | pool name| string | sandbox |
