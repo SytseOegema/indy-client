@@ -3,9 +3,11 @@ This document contains a list with all commands provided via the command line in
 
 ### `exit`
 This command can be used to exit the client.
+
 ---
 ### `help`
 This command can be used to view a list of available commands.
+
 ---
 ### `EHR environment setup`
 **Requires**
