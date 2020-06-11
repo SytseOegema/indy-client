@@ -4,6 +4,9 @@ This document contains a list with all commands provided via the command line in
 ### `exit`
 This command can be used to exit the client.
 
+### `help`
+This command can be used to view a list of available commands.
+
 ### `EHR environment setup`
 **Requires**
 - an active pool connection
@@ -24,6 +27,7 @@ This command can be used to create a new Wallet.
 | ------ | ------- |
 | wallet identifier | Anne |
 | wallet key | Anne |
+
 *wallet key may be empty. In that case the wallet key will be the same as the wallet identifier*
 
 ### `wallet open`
@@ -33,6 +37,7 @@ This command can be used to open an existing wallet
 | ------ | ------- |
 | wallet identifier | Anne |
 | wallet key | Anne |
+
 *wallet key may be empty. In that case the wallet key will be the same as the wallet identifier*
 
 ### `wallet close`
@@ -99,6 +104,7 @@ This command can be used to export the open wallet to a file on your system.
 | ------ | ------- |
 | export path | /home/export_wallet_file |
 | export key | export-key |
+
 *make sure the export path points to a file that does not exist yet.*
 
 ### `wallet export ipfs`
@@ -136,3 +142,37 @@ This command can be used to import a wallet file from IPFS. Both the IPFS export
 | wallet name | Anne_IPFS_import |
 | wallet IPFS export JSON | {"ipfs_path": "QMasldhaslgsahdjgasldjgsahdgowej134lk", "wallet_key": "Anne", "export_key": "export-key"} |
 | path to file with IPFS export JSON | /home/{user}/.indy_client/wallet_export/Anne_ipfs_export.json |
+
+*Either provide the JSON or the path to the file containing the JSON.*
+
+### `did create`
+**Requires**
+- an opened wallet
+
+This command can be used to create a new DID in the opened wallet. **Be aware that this DID is not published.** To publish the DID use command `ledger send initial nym`. The DID can be created with a seed. This seed must always contain 32 characters! The command will always create the same DID for a specific seed.
+
+| inputs | example |
+| ------ | ------- |
+| DID seed | 000000000000000000000000Trustee1 |
+
+### `did activate`
+**Requires**
+- an opened wallet
+
+This command can be used to activate one of the DIDs in the open wallet. This DID will be used to sign transactions until another DID is activated.
+
+| inputs | example |
+| ------ | ------- |
+| DID | 7zExvrP1Qc5UQ6CZZUrG1e |
+
+### `did list`
+**Requires**
+- an opened wallet
+
+This command can be used to list all DIDs in the open wallet.
+
+### `ledger send initial nym`
+**Requires**
+- an active pool connection
+- an opened wallet
+- an active DID
