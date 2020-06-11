@@ -54,10 +54,12 @@ namespace indyClient
             return d_identifier;
         }
 
-        public async Task create(string identifier)
+        public async Task create(string identifier, string masterKey = "")
         {
             d_identifier = identifier;
-            d_masterKey = identifier;
+            if (masterKey = "")
+                masterKey = identifier;
+            d_masterKey = masterKey;
             setWalletInfo();
 
             try
