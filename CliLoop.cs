@@ -63,7 +63,7 @@ namespace indyClient
                             break;
                         case "wallet create":
                             await d_wallet.create(d_prompt.issuerWalletName(),
-                                d_prompt.walletKey());
+                                d_prompt.walletMasterKey());
                             break;
                         case "wallet close":
                             res = await d_wallet.close();
