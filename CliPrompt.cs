@@ -29,16 +29,23 @@ namespace indyClient
             options += "wallet export ipfs:: export wallet to IPFS.\n";
             options += "wallet import local:: import wallet from a file on your system.\n";
             options += "wallet import ipfs:: export wallet from IPFS.\n";
+
             options += "did create:: create new did in opened wallet.\n";
             options += "did activate:: activate a did to use for transactions.\n";
             options += "did list:: list dids in opened wallet.\n";
+
             options += "ledger send initial nym:: send the initial nym request to create a new identity.\n";
             options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
+
             options += "schema create:: create a new schema.\n";
             options += "schema list:: list al schema in this wallet.\n";
             options += "schema get:: get a schema.\n";
+
+            options += "master secret create:: creates a master secret.\n";
+
             options += "credential definition create:: create a credential definition.\n";
             options += "credential definition list:: list all credential definitions in this wallet.\n";
+
             options += "credential offer create:: issuer creates credential offer.\n";
             options += "credential request create:: prover create credential request.\n";
             options += "credential create:: issuer creates the credential.\n";

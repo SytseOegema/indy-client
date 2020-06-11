@@ -13,24 +13,27 @@ This command can be used to initialize the client with wallets, schemas, credent
 ### `pool connect`
 This command can be used to connect to a pool. The command connects via a genesis file in the `.indy_client` folder.
 
-| inputs | type | example |
-| ------ | ------ | ------- |
-| pool name| string | sandbox |
+| inputs | example |
+| ------ | ------- |
+| pool name | sandbox |
 
 ### `wallet create`
 This command can be used to create a new Wallet.
 
-| inputs | type | example |
-| ------ | ------ | ------- |
-| wallet identifier | string | Anne |
+| inputs | example |
+| ------ | ------- |
+| wallet identifier | Anne |
+| wallet key | Anne |
+*wallet key may be empty. In that case the wallet key will be the same as the wallet identifier*
 
 ### `wallet open`
 This command can be used to open an existing wallet
 
-| inputs | type | example |
-| ------ | ------ | ------- |
-| wallet identifier| string | Anne |
-| wallet key | string | Anne |
+| inputs | example |
+| ------ | ------- |
+| wallet identifier | Anne |
+| wallet key | Anne |
+*wallet key may be empty. In that case the wallet key will be the same as the wallet identifier*
 
 ### `wallet close`
 This command can be used to close the currently opened wallet. If there is no wallet currently opened nothing happens.
@@ -41,6 +44,6 @@ This command can be used to list the wallets that exist on your system
 ### `wallet open`
 This command can be used to
 
-| inputs | type | example |
-| ------ | ------ | ------- |
-| | | |
+| inputs | example |
+| ------ | ------- |
+| | |
