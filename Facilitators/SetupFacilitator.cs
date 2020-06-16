@@ -115,7 +115,7 @@ namespace indyClient
             string schemaAttributes =
             "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
             string schemaJson = await d_ledger.createSchema(
-                "Emergency-Shared-Secret", "1.0.0", schemaAttributes);
+                "Shared-Secret", "1.0.0", schemaAttributes);
 
             Console.WriteLine("schemaJson:" + schemaJson);
             await d_wallet.close();
