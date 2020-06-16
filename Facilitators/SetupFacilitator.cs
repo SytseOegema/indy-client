@@ -45,7 +45,11 @@ namespace indyClient
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid);
             await createEHRWallets(myName, govDid);
-            string schemaJson = await createSharedSecretSchema(myName, govDid);
+
+            string schemaJson =
+                await createEmergencyTrustedPartiesSchema(myName, govDid);
+
+            schemaJson = await createSharedSecretSchema(myName, govDid);
 
             await setupSharedSecretCredentials("Patient1", schemaJson);
             await setupSharedSecretCredentials("Patient2", schemaJson);

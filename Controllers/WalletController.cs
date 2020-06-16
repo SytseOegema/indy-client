@@ -492,7 +492,7 @@ namespace indyClient
                 await addRecord(
                     "shared-secret",
                     secret,
-                    "1.0",
+                    "Emergency-Health-Record-Access secret",
                     createSharedSecretTagJson(++idx, min, total));
             }
 
@@ -501,14 +501,14 @@ namespace indyClient
         }
 
         public async Task<string> holderSharedSecretProvide(
-            string doctorProofJson, string identifier)
+            string doctorProofJson, string patientDid)
         {
             bool res = await DoctorProofFacilitator.verifyDoctorProof(
                 doctorProofJson);
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "{\"cred_def_id\": \"" + identifier +
+            string json = "{\"cred_def_id\": \"" + patientDid +
             ":3:CL:NcZ4tw9KDDGnCWpGShk9n5:2:Shared-Secret:1.0.0:Emergency-Health-Record-Access\"}";
 
             // return array with credentials json
