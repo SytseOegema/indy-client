@@ -18,6 +18,15 @@ namespace indyClient
             d_ledger = ledger;
         }
 
+        static public void setupFolderStructure()
+        {
+            string command = "mkdir " + IOFacilitator.homePath();
+            // create env folder
+            ShellFacilitator.Bash(command + "/env");
+            // create wallet_export folder
+            ShellFacilitator.Bash(command + "/wallet_export");
+        }
+
         public async Task setupEHREnvironment()
         {
             await createGenesisWallets();
@@ -172,7 +181,7 @@ namespace indyClient
                 schemaJson,
                 credDefId,
                 credDefDefinition);
-                
+
             model.exportToJsonFile();
 
             foreach (string doctor in doctors) {

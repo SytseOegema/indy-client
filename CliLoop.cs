@@ -22,12 +22,11 @@ namespace indyClient
 
             if (IOFacilitator.directoryExists(IOFacilitator.homePath(), "wallet_export"))
             {
-                Console.WriteLine("Welcome back to the indy doctor emergency client!");
+                Console.WriteLine("Welcome back to the indy medical client!");
             }
             else
             {
-                // string command = "mkdir " + io.getHomePath();
-                // ShellFacilitator.Bash(command);
+                SetupFacilitator.setupFolderStructure();
                 Console.WriteLine("Welcome to the indy doctor emergency client!");
                 Console.WriteLine("You can setup the environment using the command:");
                 Console.WriteLine("> EHR environment setup");
