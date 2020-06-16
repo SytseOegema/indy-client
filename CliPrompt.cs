@@ -24,33 +24,46 @@ namespace indyClient
             options += "wallet record add:: adds local record to wallet.\n";
             options += "wallet record get:: gets local records from wallet.\n";
             options += "wallet record delete:: delets local records from wallet.\n";
+            options += "wallet record update tag:: update the tags of a wallet record.\n";
             options += "wallet export local:: export wallet to a file on your system.\n";
             options += "wallet export ipfs:: export wallet to IPFS.\n";
             options += "wallet import local:: import wallet from a file on your system.\n";
             options += "wallet import ipfs:: export wallet from IPFS.\n";
+
             options += "did create:: create new did in opened wallet.\n";
             options += "did activate:: activate a did to use for transactions.\n";
             options += "did list:: list dids in opened wallet.\n";
+
             options += "ledger send initial nym:: send the initial nym request to create a new identity.\n";
             options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
+
             options += "schema create:: create a new schema.\n";
             options += "schema list:: list al schema in this wallet.\n";
             options += "schema get:: get a schema.\n";
+
+            options += "master secret create:: creates a master secret.\n";
+
             options += "credential definition create:: create a credential definition.\n";
             options += "credential definition list:: list all credential definitions in this wallet.\n";
+
             options += "credential offer create:: issuer creates credential offer.\n";
             options += "credential request create:: prover create credential request.\n";
             options += "credential create:: issuer creates the credential.\n";
             options += "credential store:: prover stores the credential in his wallet.\n";
             options += "credential list:: list all crednetials in open wallet.\n";
+            options += "credential get:: get all crednetials in open wallet according to wallet query.\n";
 
-            options += "emergency shared secret list:: lists all emergency keys.\n";
-            options += "emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
-            options += "emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
-            options += "emergency shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
+            options += "issuer emergency shared secret list:: lists all emergency keys.\n";
+            options += "issuer emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
+            options += "issuer emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
+            options += "issuer emergency shared secret mark shared:: marks a secret is shared with a trusted party.\n";
+            options += "holder emergency shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
+            options += "offline emergency secret obtain:: obtain emergency secret by providing a doctor proof.\n";
+            options += "emergency secret reconstruct:: reconstructs the secret based on the shared keys.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
+            options += "doctor proof verify:: verify if doctor proof is valid.\n";
 
 
             options += "EHR environment setup:: creates wallets for Trustee1, Steward1, Steward2\n";

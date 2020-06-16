@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,23 +23,121 @@ namespace indyClient
             await createGenesisWallets();
             string myName = "Gov-Health-Department";
 
+            string trusteeDid = await initialize("Trustee1");
+
+
             Console.WriteLine("create Gov-Health-Department wallet");
-            await d_wallet.create(myName);
-            await d_wallet.open(myName);
-            await d_wallet.createDid("00000000000Gov-Health-Department",
-                "{purpose: Verinym}");
+            await createAndPublishWallet("Trustee1", trusteeDid, myName,
+                "00000000000Gov-Health-Department");
 
-            await d_wallet.open("Trustee1");
-            string didList = await d_wallet.listDids();
-            string trusteeDid = JArray.Parse(didList)[0]["did"].ToString();
 
-            await d_wallet.open(myName);
-            didList = await d_wallet.listDids();
-            await sendNym("Trustee1", trusteeDid, didList, "ENDORSER");
+            string govDid = await initialize(myName);
 
-            string govDid = JArray.Parse(didList)[0]["did"].ToString();
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid);
+            await createEHRWallets(myName, govDid);
+            string schemaJson = await createSharedSecretSchema(myName, govDid);
+
+            await setupSharedSecretCredentials("Patient1", schemaJson);
+            await setupSharedSecretCredentials("Patient2", schemaJson);
+        }
+
+        public async Task setupSharedSecretCredentials(string issuer,
+            string schemaJson)
+        {
+            await initialize(issuer);
+            // create creddef in patient wallet
+            string credDefDefinition = await d_ledger.createCredDef(
+                schemaJson, "TAG1");
+
+            JObject o = JObject.Parse(credDefDefinition);
+            string credDefId = o["id"].ToString();
+
+            // create cred def offer to share with trusted parties
+            string credOffer = await d_wallet.createCredentialOffer(credDefId);
+
+            // export wallet to ipfs
+            await d_wallet.walletExportIpfs("export_key", issuer);
+
+            // create shared secrets
+            string secretsJson =
+                await d_wallet.createEmergencySharedSecrets(3, 5);
+
+            // schemaAttributes
+            string schemaAttributes =
+                "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
+
+            string[] trustees = {"TrustedParty1", "TrustedParty2", "TrustedParty3"
+                , "TrustedParty4", "TrustedParty5"};
+
+            for(int idx = 0; idx < 5; idx++)
+            {
+                o = (JObject) JArray.Parse(secretsJson)[idx];
+
+                string schemaValues =
+                    "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
+                    o["id"] + "\"]";
+
+                // share secret via credential
+                await issueCredential(issuer, trustees[idx], "shared-secret-" + issuer,
+                    schemaAttributes, schemaValues, schemaJson,
+                    credOffer, credDefDefinition);
+
+                // mark secret as shared
+                await initialize(issuer);
+                await d_wallet.updateRecordTag(
+                    "emergency-shared-secret",
+                    o["id"].ToString(),
+                    "{\"~is_shared\": \"1\"}");
+            }
+            await d_wallet.close();
+        }
+
+        public async Task<string> createSharedSecretSchema(string issuer,
+            string issuerDid)
+        {
+            await initialize(issuer, issuerDid);
+            Console.WriteLine("creating schema for sharing emergency shared secrets");
+
+            string schemaAttributes =
+            "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
+            string schemaJson = await d_ledger.createSchema(
+                "Emergency-Shared-Secret", "1.0.0", schemaAttributes);
+
+            Console.WriteLine("schemaJson:" + schemaJson);
+            await d_wallet.close();
+            return schemaJson;
+        }
+
+        private async Task issueCredential(string issuer, string walletId,
+            string masterSecret, string schemaAttributes, string schemaValues,
+            string schemaJson, string credOffer, string credDefDefinition)
+        {
+            await initialize(walletId);
+
+            string linkSecret =
+                await d_wallet.createMasterSecret(masterSecret);
+            string credReq = await d_wallet.createCredentialRequest(
+                credOffer, credDefDefinition, linkSecret);
+
+            JObject o = JObject.Parse(credReq);
+            string credReqJson = o["CredentialRequestJson"].ToString();
+            string credReqMetaJson =
+                o["CredentialRequestMetadataJson"].ToString();
+
+            CredDefFacilitator credDefFac = new CredDefFacilitator();
+
+            string credValue = credDefFac.generateCredValueJson(
+                schemaAttributes, schemaValues);
+
+            await initialize(issuer);
+
+            string cred = await d_wallet.createCredential(credOffer,
+                credReqJson, credValue);
+
+            await d_wallet.open(walletId);
+            await d_wallet.storeCredential(credReqMetaJson,
+                cred, credDefDefinition);
         }
 
         public async Task createERCredentials(string issuer, string issuerDid)
@@ -55,14 +154,12 @@ namespace indyClient
             string credDefDefinition = await d_ledger.createCredDef(
                 schemaJson, "TAG1");
 
-            Console.WriteLine(credDefDefinition);
-
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
 
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
-            Console.WriteLine("Creating Docotor-Certificate Credential for: ");
+            Console.WriteLine("Creating Docotor-Certificate Credentials for: ");
             string[] doctors = {"Doctor1", "Doctor2", "Doctor3"};
             CredDefFacilitator credDefFac = new CredDefFacilitator();
 
@@ -82,12 +179,7 @@ namespace indyClient
 
             foreach (string doctor in doctors) {
                 Console.WriteLine(doctor);
-                await d_wallet.open(doctor);
-
-                // takes the first did from the list and makes it teh active did
-                string didList = await d_wallet.listDids();
-                d_wallet.setActiveDid(
-                    JArray.Parse(didList)[0]["did"].ToString());
+                await initialize(doctor);
 
                 string linkSecret =
                     await d_wallet.createMasterSecret("doctor-certificate");
@@ -115,6 +207,25 @@ namespace indyClient
         }
 
 
+        public async Task createEHRWallets(string issuer, string issuerDid)
+        {
+            await createAndPublishWallet(issuer, issuerDid, "Patient1",
+                "000000000000000000000000Patient1");
+            await createAndPublishWallet(issuer, issuerDid, "Patient2",
+                "000000000000000000000000Patient2");
+
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty1",
+                "0000000000000000000TrustedParty1");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty2",
+                "0000000000000000000TrustedParty2");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty3",
+                "0000000000000000000TrustedParty3");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty4",
+                "0000000000000000000TrustedParty4");
+            await createAndPublishWallet(issuer, issuerDid, "TrustedParty5",
+                "0000000000000000000TrustedParty5");
+        }
+
         public async Task createDoctorWallets(string issuer, string issuerDid)
         {
             var exists = await d_wallet.exists("Doctor1");
@@ -123,34 +234,12 @@ namespace indyClient
                 Console.WriteLine("Doctor wallets already exists.");
                 return;
             }
-            Console.WriteLine("create wallet for doctor 1");
-            await d_wallet.create("Doctor1");
-            await d_wallet.open("Doctor1");
-            await d_wallet.createDid("0000000000000000000000000Doctor1",
-                "{purpose: Verinym}");
-
-            string didList = await d_wallet.listDids();
-            await sendNym(issuer, issuerDid, didList);
-
-            Console.WriteLine("create wallet for doctor 2");
-            await d_wallet.create("Doctor2");
-            await d_wallet.open("Doctor2");
-            await d_wallet.createDid("0000000000000000000000000Doctor2",
-                "{purpose: Verinym}");
-
-            didList = await d_wallet.listDids();
-            await sendNym(issuer, issuerDid, didList);
-
-            Console.WriteLine("create wallet for doctor 3");
-            await d_wallet.create("Doctor3");
-            await d_wallet.open("Doctor3");
-            await d_wallet.createDid("0000000000000000000000000Doctor3",
-                "{purpose: Verinym}");
-
-            didList = await d_wallet.listDids();
-            await sendNym(issuer, issuerDid, didList);
-
-            await d_wallet.close();
+            await createAndPublishWallet(issuer, issuerDid, "Doctor1",
+                "0000000000000000000000000Doctor1");
+            await createAndPublishWallet(issuer, issuerDid, "Doctor2",
+                "0000000000000000000000000Doctor2");
+            await createAndPublishWallet(issuer, issuerDid, "Doctor3",
+                "0000000000000000000000000Doctor3");
         }
 
         public async Task createGenesisWallets()
@@ -163,39 +252,65 @@ namespace indyClient
             }
 
             Console.WriteLine("Create genesis wallets:");
-            await d_wallet.create("Trustee1");
-            await d_wallet.open("Trustee1");
-            await d_wallet.createDid("000000000000000000000000Trustee1",
-                "{purpose: Verinym}");
+            await createWallet("Trustee1",
+                "000000000000000000000000Trustee1");
+            await createWallet("Steward1",
+                "000000000000000000000000Steward1");
+            await createWallet("Steward2",
+                "000000000000000000000000Steward2");
+            await d_wallet.close();
+        }
 
-            await d_wallet.create("Steward1");
-            await d_wallet.open("Steward1");
-            await d_wallet.createDid("000000000000000000000000Steward1",
-                "{purpose: Verinym}");
+        private async Task createAndPublishWallet(string issuer,
+            string issuerDid, string walletId, string seed = "")
+        {
+            await createWallet(walletId, seed);
+            await publishNYM(issuer, issuerDid, walletId);
+        }
 
-            await d_wallet.create("Steward2");
-            await d_wallet.open("Steward2");
-            await d_wallet.createDid("000000000000000000000000Steward2",
+        private async Task createWallet(string walletId, string seed = "")
+        {
+            Console.WriteLine("Create wallet for " + walletId);
+            await d_wallet.create(walletId);
+            await d_wallet.open(walletId);
+            await d_wallet.createDid(seed,
                 "{purpose: Verinym}");
             await d_wallet.close();
         }
 
-        private async Task sendNym(string issuer, string issuerDid,
-        string didList, string role = "")
+        private async Task publishNYM(string issuer, string issuerDid,
+            string walletId)
         {
-          string docDid = JArray.Parse(didList)[0]["did"].ToString();
-          string docVer = JArray.Parse(didList)[0]["verkey"].ToString();
+            await d_wallet.open(walletId);
 
-          await initialize(issuer, issuerDid);
-
-          await d_ledger.sendNymRequest(docDid, docVer, "Doctor", role);
-          await d_wallet.close();
+            string didList = await d_wallet.listDids();
+            await sendNym(issuer, issuerDid, didList);
         }
 
-        private async Task initialize(string issuer, string issuerDid)
+        private async Task sendNym(string issuer, string issuerDid,
+        string didList, string role = "ENDORSER")
+        {
+            string did = JArray.Parse(didList)[0]["did"].ToString();
+            string ver = JArray.Parse(didList)[0]["verkey"].ToString();
+
+            await initialize(issuer, issuerDid);
+
+            await d_ledger.sendNymRequest(did, ver, "", role);
+            await d_wallet.close();
+        }
+
+        private async Task<string> initialize(string issuer, string issuerDid = "")
         {
           await d_wallet.open(issuer);
-          d_wallet.setActiveDid(issuerDid);
+
+          string didList = await d_wallet.listDids();
+          string did = JArray.Parse(didList)[0]["did"].ToString();
+
+          if (issuerDid != "")
+              did = issuerDid;
+
+          d_wallet.setActiveDid(did);
+          return did;
         }
     }
 }

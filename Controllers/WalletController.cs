@@ -54,10 +54,12 @@ namespace indyClient
             return d_identifier;
         }
 
-        public async Task create(string identifier)
+        public async Task create(string identifier, string masterKey = "")
         {
             d_identifier = identifier;
-            d_masterKey = identifier;
+            if (masterKey == "")
+                masterKey = identifier;
+            d_masterKey = masterKey;
             setWalletInfo();
 
             try
@@ -252,14 +254,22 @@ namespace indyClient
         {
             try
             {
-              var creds = await AnonCreds.ProverSearchCredentialsAsync(
+                var creds = await AnonCreds.ProverSearchCredentialsAsync(
                     d_openWallet, walletQuery);
-                    Console.WriteLine(creds);
 
+                int count = creds.TotalCount;
+                // return "0" if there are no records for the type and query
+                if (count == 0)
+                    return "0";
 
-                var res = await AnonCreds.ProverFetchCredentialsAsync(
-                creds, 1);
-                return res;
+                // get count schema's
+                string res = await AnonCreds.ProverFetchCredentialsAsync(
+                creds, count);
+
+                // make response human readable
+                JArray a = JArray.Parse(res);
+
+                return a.ToString();
             }
             catch (Exception e)
             {
@@ -294,6 +304,20 @@ namespace indyClient
             }
         }
 
+        public async Task updateRecordTag(string type, string id,
+            string tagJson)
+        {
+            try
+            {
+                await NonSecrets.UpdateRecordTagsAsync(d_openWallet, type, id,
+                    tagJson);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+
 
         public async Task<string> getRecord(string type,
         string queryJson, string optionsJson)
@@ -310,7 +334,10 @@ namespace indyClient
               // parse result to see the count of schema's
               JObject o = JObject.Parse(res);
               string count = o["totalCount"].ToString();
-              Console.WriteLine(count);
+
+              // return "0" if there are no records for the type and query
+              if (count == "0")
+                  return "0";
 
               // get count schema's
               res = await NonSecrets.FetchNextRecordsAsync(
@@ -318,13 +345,6 @@ namespace indyClient
 
               // make response human readable
               o = JObject.Parse(res);
-
-              // parse member value, because it contains schemaJson
-              // for (int idx = 0; idx < Int32.Parse(count); ++idx)
-              // {
-              //     o["records"][idx]["value"] = JObject.Parse(o["records"][idx]["value"].ToString());
-              // }
-
 
               return o["records"].ToString();
           }
@@ -395,7 +415,7 @@ namespace indyClient
             try
             {
                 await Wallet.ImportAsync(config, credentials, importConf);
-                return "Wallet " + d_identifier + " has been imported";
+                return "Wallet " + identifier + " has been imported";
             }
             catch (Exception e)
             {
@@ -418,9 +438,9 @@ namespace indyClient
             try
             {
                 await ipfs.getFile(model.ipfs_path, identifier);
-                await walletImportLocal(identifier, localPath, model.wallet_key,
+                string res = await walletImportLocal(identifier, localPath, model.wallet_key,
                     model.export_key);
-                return "Wallet " + d_identifier + " has been imported";
+                return res;
             }
             catch (Exception e)
             {
@@ -439,7 +459,7 @@ namespace indyClient
             int min, int total)
         {
             string list = await listEmergencySharedSecrets();
-            if (list == "0")
+            if (list != "0")
                 throw new Exception("There allready exist emergency shared secrets.");
 
             IOFacilitator io = new IOFacilitator();
@@ -464,6 +484,28 @@ namespace indyClient
 
             list = await listEmergencySharedSecrets();
             return list;
+        }
+
+        public async Task<string> holderSharedSecretProvide(
+            string doctorProofJson, string identifier)
+        {
+            bool res = await DoctorProofFacilitator.verifyDoctorProof(
+                doctorProofJson);
+            if (!res)
+                return "The doctor proof json that was provided is not valid!";
+
+            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"}";
+
+            // return array with credentials json
+            json = await getCredentials(json);
+            JArray a = JArray.Parse(json);
+            for(int idx = 0; idx < a.Count; ++idx)
+            {
+                JObject cred = (JObject) a[idx];
+                if (cred["attrs"]["secret_issuer"].ToString() == identifier)
+                    return cred["attrs"]["secret"].ToString();
+            }
+            return "No secret found for specified identifier";
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)

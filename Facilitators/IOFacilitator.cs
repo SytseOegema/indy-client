@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
@@ -87,7 +88,6 @@ namespace indyClient
 
         public void createFile(string content, string file)
         {
-            Console.WriteLine(d_homePath + file);
             using (StreamWriter fileStream = new StreamWriter(d_homePath + file))
             {
                 fileStream.Write(content);
@@ -99,7 +99,9 @@ namespace indyClient
         {
             string fullPath = d_homePath + path;
             string [] files = Directory.GetDirectories(fullPath);
-            foreach(string file in files)
+            List<string> list = new List<string>(files);
+            list.Sort();
+            foreach(string file in list)
             {
                 Console.WriteLine(file.Replace(fullPath + "/", ""));
             }
