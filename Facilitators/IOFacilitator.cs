@@ -16,12 +16,12 @@ namespace indyClient
             return File.Exists(IOFacilitator.homePath() + relativePath);
         }
 
-        static public string convertByteToTextFile(string relPath, string file)
+        static public string convertByteToTextFile(string relPath)
         {
             string path = IOFacilitator.homePath() + relPath;
-            string command = "xxd " + path + file + " > " + path + file + ".txt";
+            string command = "xxd " + path + " > " + path + ".txt";
             ShellFacilitator.Bash(command);
-            return path + file + ".txt";
+            return path + ".txt";
         }
 
         static public void convertTextToByteFile(string relPath, string file)

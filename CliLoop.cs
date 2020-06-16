@@ -49,16 +49,6 @@ namespace indyClient
                 {
                     switch (input)
                     {
-                        case "test":
-                            WalletBackupModel model = new WalletBackupModel(
-                                "ipfs_path",
-                                "identifier",
-                                "key1",
-                                "key2");
-                            Console.WriteLine(model.toJson());
-                            model.exportToJsonFile();
-                            WalletBackupModel backup = WalletBackupModel.importFromJsonFile("identifier");
-                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;
