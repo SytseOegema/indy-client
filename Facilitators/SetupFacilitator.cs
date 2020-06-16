@@ -57,7 +57,7 @@ namespace indyClient
             await initialize(issuer);
             // create creddef in patient wallet
             string credDefDefinition = await d_ledger.createCredDef(
-                schemaJson, "TAG1");
+                schemaJson, "Emergency-Health-Record-Access");
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
@@ -88,14 +88,14 @@ namespace indyClient
                     o["id"] + "\"]";
 
                 // share secret via credential
-                await issueCredential(issuer, trustees[idx], "shared-secret-" + issuer,
+                await issueCredential(issuer, trustees[idx], "emergency-shared-secret-key-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
 
                 // mark secret as shared
                 await initialize(issuer);
                 await d_wallet.updateRecordTag(
-                    "emergency-shared-secret",
+                    "shared-secret",
                     o["id"].ToString(),
                     "{\"~is_shared\": \"1\"}");
             }

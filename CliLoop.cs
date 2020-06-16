@@ -174,13 +174,13 @@ namespace indyClient
                             res = await d_wallet.getCredentials(
                                 d_prompt.walletQuery());
                             break;
-                        case "issuer emergency shared secret list":
+                        case "issuer shared secret list":
                             requiredWalletCheck();
-                            res = await d_wallet.listEmergencySharedSecrets();
+                            res = await d_wallet.listSharedSecrets();
                             break;
-                        case "issuer emergency shared secret list unused":
+                        case "issuer shared secret list unused":
                             requiredWalletCheck();
-                            res = await d_wallet.listEmergencySharedSecrets(
+                            res = await d_wallet.listSharedSecrets(
                                 "{\"is_shared\": \"0\"}");
                             break;
                         case "issuer emergency shared secret create":
@@ -189,14 +189,14 @@ namespace indyClient
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
-                        case "emergency secret reconstruct":
+                        case "shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
                             break;
-                        case "issuer emergency shared secret mark shared":
+                        case "issuer shared secret mark shared":
                             requiredWalletCheck();
                             await d_wallet.updateRecordTag(
-                                "emergency-shared-secret",
+                                "shared-secret",
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;

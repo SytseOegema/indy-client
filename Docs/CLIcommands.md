@@ -62,7 +62,7 @@ This command can be used to create a record in the open wallet.
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 | record value | anything |
 | record tags(JSON) | {"json": "data", "more-json": "data"} |
@@ -76,7 +76,7 @@ This command can be used to get records from the open wallet. These records can 
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | wallet query(JSON) | {"param": "value"} |
 | query options(JSON) | {"retrieveTotalCount": true, "retrieveType": true, "retrieveTags": true} |
 
@@ -89,7 +89,7 @@ This command can be used to delete records from the opened wallet.
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 
 ---
@@ -101,7 +101,7 @@ This command can be used to update the tag JSON of an existing record in the ope
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 | record tags(JSON) | {"json": "different-data", "more-json": "different-data"} |
 
@@ -331,14 +331,14 @@ This command can be used by the prover of an credential to store the credential 
 | credential definition JSON | output of `credential definition create` |
 
 ---
-### `issuer emergency shared secret list`
+### `issuer shared secret list`
 **Requires**
 - an opened wallet
 
 This command can be used by an issuer(patient) to list all the Shamir secrets he has create.
 
 ---
-### `issuer emergency shared secret list unused`
+### `issuer shared secret list unused`
 **Requires**
 - an opened wallet
 
@@ -359,7 +359,7 @@ This command can be used by an issuer(patient) to create Shamir shared secrets t
 *The minimum number to reconstruct has to be at least 3*
 
 ---
-### `issuer emergency shared secret mark shared`
+### `issuer shared secret mark shared`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -396,7 +396,7 @@ This command can be used in case of emergency by a doctor to gain access informa
 | doctor proof JSON | JSON as returned by `doctor proof create` |
 | wallet identifier | Patient1 |
 
-### `emergency secret reconstruct`
+### `shared secret reconstruct`
 This command can be used to reconstruct the actual secret based on the shared secrets. Just paste in the secrets and enter a blank line to finish the input. If the correct number and correct secrets are provided the actual secret will be returned.
 
 | inputs | example |

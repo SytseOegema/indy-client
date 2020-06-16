@@ -463,9 +463,9 @@ namespace indyClient
             }
         }
 
-        public async Task<string> listEmergencySharedSecrets(string query = "{}")
+        public async Task<string> listSharedSecrets(string query = "{}")
         {
-          string res = await getRecord("emergency-shared-secret", query,
+          string res = await getRecord("shared-secret", query,
               "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
           return res;
         }
@@ -473,9 +473,9 @@ namespace indyClient
         public async Task<string> createEmergencySharedSecrets(
             int min, int total)
         {
-            string list = await listEmergencySharedSecrets();
+            string list = await listSharedSecrets();
             if (list != "0")
-                throw new Exception("There allready exist emergency shared secrets.");
+                throw new Exception("There allready exist shared secrets.");
 
             if (!IOFacilitator.fileExists(WalletBackupModel.filePath(d_identifier)))
                 throw new Exception("There must be an IPFS backup of the wallet. No IPFS export JSON file was found for this wallet.");
@@ -490,13 +490,13 @@ namespace indyClient
             foreach (string secret in secrets)
             {
                 await addRecord(
-                    "emergency-shared-secret",
+                    "shared-secret",
                     secret,
                     "1.0",
                     createSharedSecretTagJson(++idx, min, total));
             }
 
-            list = await listEmergencySharedSecrets();
+            list = await listSharedSecrets();
             return list;
         }
 
@@ -508,7 +508,8 @@ namespace indyClient
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"}";
+            string json = "{\"cred_def_id\": \"" + identifier +
+            ":3:CL:NcZ4tw9KDDGnCWpGShk9n5:2:Shared-Secret:1.0.0:Emergency-Health-Record-Access\"}";
 
             // return array with credentials json
             json = await getCredentials(json);
