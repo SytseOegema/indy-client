@@ -203,7 +203,7 @@ namespace indyClient
                         case "holder emergency shared secret provide":
                             res = await d_wallet.holderSharedSecretProvide(
                                 d_prompt.proofJson(),
-                                d_prompt.patientDid());
+                                d_prompt.issuerWalletName());
                             break;
                         case "offline emergency secret obtain":
                             res = await OfflineSecretController.obtain(

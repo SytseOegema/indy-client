@@ -181,11 +181,6 @@ namespace indyClient
             return consoleInteraction("The schema Json:");
         }
 
-        public string patientDid()
-        {
-            return consoleInteraction("The DID of the patient:");
-        }
-
         public string submitterDid()
         {
             return consoleInteraction("The did of the submitter:");

@@ -501,15 +501,14 @@ namespace indyClient
         }
 
         public async Task<string> holderSharedSecretProvide(
-            string doctorProofJson, string patientDid)
+            string doctorProofJson, string issuerWalletName)
         {
             bool res = await DoctorProofFacilitator.verifyDoctorProof(
                 doctorProofJson);
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "{\"cred_def_id\": \"" + patientDid +
-            ":3:CL:NcZ4tw9KDDGnCWpGShk9n5:2:Shared-Secret:1.0.0:Emergency-Health-Record-Access\"}";
+            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Shared-Secret:1.0.0\"}";
 
             // return array with credentials json
             json = await getCredentials(json);
@@ -517,7 +516,7 @@ namespace indyClient
             for(int idx = 0; idx < a.Count; ++idx)
             {
                 JObject cred = (JObject) a[idx];
-                if (cred["attrs"]["secret_issuer"].ToString() == identifier)
+                if (cred["attrs"]["secret_issuer"].ToString() == issuerWalletName)
                     return cred["attrs"]["secret"].ToString();
             }
             return "No secret found for specified identifier";
