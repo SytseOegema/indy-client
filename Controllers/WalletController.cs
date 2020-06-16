@@ -390,7 +390,7 @@ namespace indyClient
 
                 // convert export file from byte file to txt file
                 string textFilePath = IOFacilitator.convertByteToTextFile(
-                    WalletBackupModel.filePath(d_identifier), d_identifier);
+                    WalletBackupModel.filePath(d_identifier));
 
                 // upload text file to ipfs
                 IpfsFacilitator ipfs = new IpfsFacilitator();
