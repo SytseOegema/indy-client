@@ -381,20 +381,29 @@ namespace indyClient
         public async Task<string> walletExportIpfs(
             string exportKey, string walletKey = "")
         {
-            IOFacilitator io = new IOFacilitator();
-            string path = io.getWalletExportPathAbs() + d_identifier;
+            string path = IOFacilitator.homePath() +
+                WalletBackupModel.filePath(d_identifier);
             try
             {
+                // create export file
                 await walletExportLocal(path, exportKey);
-                IpfsFacilitator ipfs = new IpfsFacilitator();
-                string ipfsPath = await ipfs.addFile(d_identifier);
 
-                WalletExportModel model = new WalletExportModel();
-                model.ipfs_path = ipfsPath;
-                model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
-                model.export_key = exportKey;
-                io.createFile(JsonConvert.SerializeObject(model),
-                    io.getIpfsExportPathRel(d_identifier));
+                // convert export file from byte file to txt file
+                string textFilePath = IOFacilitator.convertByteToTextFile(
+                    WalletBackupModel.filePath(d_identifier), d_identifier);
+
+                // upload text file to ipfs
+                IpfsFacilitator ipfs = new IpfsFacilitator();
+                string ipfsPath = await ipfs.addFile(IOFacilitator.homePath()
+                    + WalletBackupModel.filePath(d_identifier));
+
+                WalletBackupModel model = new WalletBackupModel(
+                    ipfsPath,
+                    d_identifier,
+                    (walletKey == "" ? d_identifier : walletKey),
+                    exportKey);
+
+                model.exportToJsonFile();
 
                 return JsonConvert.SerializeObject(model);
             }
@@ -424,17 +433,15 @@ namespace indyClient
         }
 
         public async Task<string> walletImportIpfs(string identifier,
-            string exportConfig)
+            string jsonConfig)
         {
-            // check if export config is a path towards the export file.
-            if (exportConfig[0] != '{')
-                exportConfig = File.ReadAllText(exportConfig);
+            WalletBackupModel model =
+                WalletBackupModel.importFromJson(jsonConfig);
 
-            WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(exportConfig);
             IpfsFacilitator ipfs = new IpfsFacilitator();
-            IOFacilitator io = new IOFacilitator();
-            string localPath = io.getWalletExportPathAbs() + identifier;
+
+            string localPath = IOFacilitator.homePath() +
+                WalletBackupModel.filePath(identifier);
             try
             {
                 await ipfs.getFile(model.ipfs_path, identifier);
@@ -462,15 +469,14 @@ namespace indyClient
             if (list != "0")
                 throw new Exception("There allready exist emergency shared secrets.");
 
-            IOFacilitator io = new IOFacilitator();
-            if (!io.existsIpfsExportFile(d_identifier))
+            if (!IOFacilitator.fileExists(WalletBackupModel.filePath(d_identifier)))
                 throw new Exception("There must be an IPFS backup of the wallet. No IPFS export JSON file was found for this wallet.");
 
-            string ipfsExportJson =
-                File.ReadAllText(io.getIpfsExportPathAbs(d_identifier));
+            WalletBackupModel model =
+                WalletBackupModel.importFromJsonFile(d_identifier);
 
             List<string> secrets = SecretSharingFacilitator.createSharedSecret(
-                ipfsExportJson, min, total);
+                model.toJson(), min, total);
 
             int idx = 0;
             foreach (string secret in secrets)

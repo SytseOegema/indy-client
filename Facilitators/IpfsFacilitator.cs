@@ -12,13 +12,10 @@ namespace indyClient
         private string d_baseUrl = "http://127.0.0.1:5001";
         private static IpfsClient ipfs = new IpfsClient("http://127.0.0.1:5001");
         private static readonly HttpClient client = new HttpClient();
-        private IOFacilitator io = new IOFacilitator();
 
-        public async Task<string> addFile(string walletName)
+        public async Task<string> addFile(string absoluteFilePath)
         {
-            string textFilePath = io.convertByteToTextFile(
-                io.getWalletExportPathRel(), walletName);
-            var res = await ipfs.FileSystem.AddFileAsync(textFilePath);
+            var res = await ipfs.FileSystem.AddFileAsync(absoluteFilePath);
             return res.Id;
         }
 
@@ -29,20 +26,21 @@ namespace indyClient
 
             Stream contentStream = await response.Content.ReadAsStreamAsync();
             // create local file from ipfs donwload
-            io.createFile(contentStream,
-                io.getWalletExportPathRel() + walletName + ".txt");
+            IOFacilitator.createFile(contentStream,
+                WalletBackupModel.filePath(walletName) + walletName + ".txt");
             // convert txt to binary
-            io.convertTextToByteFile(
-                io.getWalletExportPathRel(), walletName);
+            IOFacilitator.convertTextToByteFile(
+                WalletBackupModel.filePath(walletName), walletName);
         }
 
-        private string[] splitFullPathLinux(string fullPath)
-        {
-            int idx = fullPath.LastIndexOf('/') + 1;
-            string[] output = new string[2];
-            output[0] = fullPath.Substring(0, idx);
-            output[1] = fullPath.Substring(idx);
-            return output;
-        }
+
+        // private string[] splitFullPathLinux(string fullPath)
+        // {
+        //     int idx = fullPath.LastIndexOf('/') + 1;
+        //     string[] output = new string[2];
+        //     output[0] = fullPath.Substring(0, idx);
+        //     output[1] = fullPath.Substring(idx);
+        //     return output;
+        // }
     }
 }

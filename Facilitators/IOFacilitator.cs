@@ -8,96 +8,71 @@ using System.Diagnostics;
 
 namespace indyClient
 {
-    class IOFacilitator
+    static class IOFacilitator
     {
-        private string d_walletExportPathRel;
-        private string d_doctorCredDefConfigPathRel;
-        private string d_homePath;
+        // private string d_homePath;
 
-        public IOFacilitator()
+        // public IOFacilitator()
+        // {
+        //     var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
+        //     d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
+        //     // /home/hyper/.indy_client
+        // }
+
+        static public bool fileExists(string relativePath)
         {
-            var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
-            d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
-            // /home/hyper/.indy_client
-            d_walletExportPathRel = "wallet_export/";
-            d_doctorCredDefConfigPathRel = "wallet_export/config_doctor_cred_def.json";
+            return File.Exists(IOFacilitator.homePath() + relativePath);
         }
 
-        public string getDoctorCredDefConfigPathAbs()
+        static public string convertByteToTextFile(string relPath, string file)
         {
-            return d_homePath + d_doctorCredDefConfigPathRel;
-        }
-
-        public string getDoctorCredDefConfigPathRel()
-        {
-            return d_doctorCredDefConfigPathRel;
-        }
-
-        public string getWalletExportPathAbs()
-        {
-            return d_homePath + d_walletExportPathRel;
-        }
-
-        public string getWalletExportPathRel()
-        {
-            return d_walletExportPathRel;
-        }
-
-        public string getHomePath()
-        {
-            return d_homePath;
-        }
-
-        public string getIpfsExportPathRel(string identifier)
-        {
-            return d_walletExportPathRel + identifier + "_ipfs_export.json";
-        }
-
-        public string getIpfsExportPathAbs(string identifier)
-        {
-            return getHomePath() + getIpfsExportPathRel(identifier);
-        }
-
-        public bool existsIpfsExportFile(string identifier)
-        {
-            return File.Exists(getIpfsExportPathAbs(identifier));
-        }
-
-        public string convertByteToTextFile(string relPath, string file)
-        {
-            string path = d_homePath + relPath;
+            string path = IOFacilitator.homePath() + relPath;
             string command = "xxd " + path + file + " > " + path + file + ".txt";
             ShellFacilitator.Bash(command);
             return path + file + ".txt";
         }
 
-        public void convertTextToByteFile(string relPath, string file)
+        static public void convertTextToByteFile(string relPath, string file)
         {
-            string path = d_homePath + relPath;
+            string path = IOFacilitator.homePath() + relPath;
             string command = "xxd -r " + path + file + ".txt > " + path + file;
             ShellFacilitator.Bash(command);
         }
 
-        public void createFile(Stream content, string file)
+        static public void createFile(Stream content, string relFilePath)
         {
-            using (var fileStream = File.Create(d_homePath + file))
+            using (var fileStream = File.Create(IOFacilitator.homePath()
+                + relFilePath))
             {
               content.CopyTo(fileStream);
             }
         }
 
-        public void createFile(string content, string file)
+        static public void createFile(string content, string relFilePath)
         {
-            using (StreamWriter fileStream = new StreamWriter(d_homePath + file))
+            using (StreamWriter fileStream = new StreamWriter(
+                IOFacilitator.homePath() + relFilePath))
             {
                 fileStream.Write(content);
                 fileStream.Flush();
             }
         }
 
-        public void listDirectories(string path)
+        static public string readFile(string relativeFilePath)
         {
-            string fullPath = d_homePath + path;
+            return (string) File.ReadAllText(homePath() + relativeFilePath);
+        }
+
+        static public string homePath()
+        {
+            // /home/hyper/.indy_client
+            var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
+            return Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
+        }
+
+        static public void listDirectories(string relativePath)
+        {
+            string fullPath = IOFacilitator.homePath() + relativePath;
             string [] files = Directory.GetDirectories(fullPath);
             List<string> list = new List<string>(files);
             list.Sort();
@@ -107,7 +82,7 @@ namespace indyClient
             }
         }
 
-        public bool directoryExists(string pathAbs, string directory)
+        static public bool directoryExists(string pathAbs, string directory)
         {
             string [] files = Directory.GetDirectories(pathAbs);
             foreach(string file in files)

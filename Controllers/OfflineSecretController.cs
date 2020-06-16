@@ -16,16 +16,16 @@ namespace indyClient
         {
             bool res = await DoctorProofFacilitator.verifyDoctorProof(
                 doctorProofJson);
-            if (!res)
-                return "The doctor proof json that was provided is not valid!";
+            // if (!res)
+            //     return "The doctor proof json that was provided is not valid!";
+            //
+            // IOFacilitator io = new IOFacilitator();
+            // string path = io.getIpfsExportPathAbs(walletIdentifier);
+            //
+            // WalletExportModel model = JsonConvert.DeserializeObject
+            //     <WalletExportModel>(File.ReadAllText(path));
 
-            IOFacilitator io = new IOFacilitator();
-            string path = io.getIpfsExportPathAbs(walletIdentifier);
-
-            WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(File.ReadAllText(path));
-
-            return JsonConvert.SerializeObject(model);
+            return "JsonConvert.SerializeObject(model)";
         }
     }
 }

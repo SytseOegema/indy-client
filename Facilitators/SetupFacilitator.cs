@@ -166,16 +166,14 @@ namespace indyClient
             o = JObject.Parse(schemaJson);
             string schemaId = o["id"].ToString();
 
-            DoctorCredDefInfoModel model = new DoctorCredDefInfoModel();
-            model.issuer_did = issuerDid;
-            model.schema_id = schemaId;
-            model.schema_json = schemaJson;
-            model.cred_def_json = credDefDefinition;
-            model.cred_def_id = credDefId;
-            IOFacilitator io = new IOFacilitator();
-
-            io.createFile(JsonConvert.SerializeObject(model),
-                io.getDoctorCredDefConfigPathRel());
+            EmergencyDoctorCredentialModel model = new EmergencyDoctorCredentialModel(
+                issuerDid,
+                schemaId,
+                schemaJson,
+                credDefId,
+                credDefDefinition);
+                
+            model.exportToJsonFile();
 
             foreach (string doctor in doctors) {
                 Console.WriteLine(doctor);

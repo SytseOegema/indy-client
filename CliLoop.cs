@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace indyClient
 {
@@ -18,16 +19,15 @@ namespace indyClient
 
         public static async Task start()
         {
-            IOFacilitator io = new IOFacilitator();
 
-            if (io.directoryExists(io.getHomePath(), "wallet_export"))
+            if (IOFacilitator.directoryExists(IOFacilitator.homePath(), "wallet_export"))
             {
                 Console.WriteLine("Welcome back to the indy doctor emergency client!");
             }
             else
             {
-                string command = "mkdir " + io.getWalletExportPathAbs();
-                ShellFacilitator.Bash(command);
+                // string command = "mkdir " + io.getHomePath();
+                // ShellFacilitator.Bash(command);
                 Console.WriteLine("Welcome to the indy doctor emergency client!");
                 Console.WriteLine("You can setup the environment using the command:");
                 Console.WriteLine("> EHR environment setup");
@@ -50,6 +50,16 @@ namespace indyClient
                 {
                     switch (input)
                     {
+                        case "test":
+                            WalletBackupModel model = new WalletBackupModel(
+                                "ipfs_path",
+                                "identifier",
+                                "key1",
+                                "key2");
+                            Console.WriteLine(model.toJson());
+                            model.exportToJsonFile();
+                            WalletBackupModel backup = WalletBackupModel.importFromJsonFile("identifier");
+                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;
@@ -69,8 +79,7 @@ namespace indyClient
                             res = await d_wallet.close();
                             break;
                         case "wallet list":
-                            IOFacilitator temp = new IOFacilitator();
-                            temp.listDirectories("/wallet");
+                            IOFacilitator.listDirectories("/wallet");
                             break;
                         case "did list":
                             requiredWalletCheck();
@@ -249,7 +258,7 @@ namespace indyClient
                         case "wallet import ipfs":
                             res = await d_wallet.walletImportIpfs(
                                 d_prompt.walletIdentifier(),
-                                d_prompt.walletExportJson());
+                                d_prompt.walletJsonConfig());
                             break;
                         case "wallet record add":
                             requiredWalletCheck();
