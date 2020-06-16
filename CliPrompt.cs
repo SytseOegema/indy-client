@@ -183,7 +183,7 @@ namespace indyClient
 
         public string patientDid()
         {
-            return consoleInteraction("The DID of the patient:")
+            return consoleInteraction("The DID of the patient:");
         }
 
         public string submitterDid()
