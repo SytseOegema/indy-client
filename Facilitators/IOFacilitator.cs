@@ -10,14 +10,6 @@ namespace indyClient
 {
     static class IOFacilitator
     {
-        // private string d_homePath;
-
-        // public IOFacilitator()
-        // {
-        //     var envHome = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "HOMEPATH" : "HOME";
-        //     d_homePath = Environment.GetEnvironmentVariable(envHome) + "/.indy_client/";
-        //     // /home/hyper/.indy_client
-        // }
 
         static public bool fileExists(string relativePath)
         {

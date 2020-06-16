@@ -19,28 +19,13 @@ namespace indyClient
             return res.Id;
         }
 
-        public async Task getFile(string ipfsPath, string walletName)
+        public async Task<string> getFile(string ipfsPath, string walletName)
         {
             string url = d_baseUrl + "/api/v0/cat?arg=" + ipfsPath;
             var response = await client.PostAsync(url, null);
 
-            Stream contentStream = await response.Content.ReadAsStreamAsync();
-            // create local file from ipfs donwload
-            IOFacilitator.createFile(contentStream,
-                WalletBackupModel.filePath(walletName) + walletName + ".txt");
-            // convert txt to binary
-            IOFacilitator.convertTextToByteFile(
-                WalletBackupModel.filePath(walletName), walletName);
+            string contentString = await response.Content.ReadAsStringAsync();
+            return contentString;
         }
-
-
-        // private string[] splitFullPathLinux(string fullPath)
-        // {
-        //     int idx = fullPath.LastIndexOf('/') + 1;
-        //     string[] output = new string[2];
-        //     output[0] = fullPath.Substring(0, idx);
-        //     output[1] = fullPath.Substring(idx);
-        //     return output;
-        // }
     }
 }

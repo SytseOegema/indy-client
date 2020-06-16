@@ -444,7 +444,15 @@ namespace indyClient
                 WalletBackupModel.filePath(identifier);
             try
             {
-                await ipfs.getFile(model.ipfs_path, identifier);
+                // get file content
+                string txt = await ipfs.getFile(model.ipfs_path, identifier);
+                // create local file from ipfs content
+                IOFacilitator.createFile(txt,
+                    WalletBackupModel.filePath(identifier) + identifier + ".txt");
+                // convert txt to binary
+                IOFacilitator.convertTextToByteFile(
+                    WalletBackupModel.filePath(identifier), identifier);
+                // import wallet into client
                 string res = await walletImportLocal(identifier, localPath, model.wallet_key,
                     model.export_key);
                 return res;
