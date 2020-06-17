@@ -39,6 +39,8 @@ namespace indyClient
             await createAndPublishWallet("Trustee1", trusteeDid, myName,
                 "00000000000Gov-Health-Department");
 
+            string govDid = await initialize(myName);
+
             GovernmentSchemasModel govModel = new GovernmentSchemasModel();
 
             govModel.doctor_certificate_schema =
@@ -52,9 +54,8 @@ namespace indyClient
 
             govModel.shared_secret_schema =
                 await createSharedSecretSchema(myName, govDid);
-            govModel.exportToJsonFile()
+            govModel.exportToJsonFile();
 
-            string govDid = await initialize(myName);
 
             await createDoctorWallets(myName, govDid);
             await createERCredentials(myName, govDid,
@@ -62,8 +63,10 @@ namespace indyClient
             await createEHRWallets(myName, govDid);
 
 
-            await setupSharedSecretCredentials("Patient1", schemaJson);
-            await setupSharedSecretCredentials("Patient2", schemaJson);
+            await setupSharedSecretCredentials("Patient1",
+                govModel.shared_secret_schema);
+            await setupSharedSecretCredentials("Patient2",
+                govModel.shared_secret_schema);
         }
 
         public async Task setupSharedSecretCredentials(string issuer,
@@ -256,7 +259,8 @@ namespace indyClient
                 string credReqMetaJson =
                     o["CredentialRequestMetadataJson"].ToString();
 
-
+                string schemaAttributes =
+                    GovernmentSchemasModel.getSchemaAttributes(schemaJson); 
                 string schemaValues = "[\"" + doctor + "\", 1, \"RUG\"]";
                 string credValue = credDefFac.generateCredValueJson(
                     schemaAttributes, schemaValues);

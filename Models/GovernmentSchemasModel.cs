@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace indyClient
 {
@@ -41,6 +42,12 @@ namespace indyClient
         public string toJson()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        static public string getSchemaAttributes(string schema)
+        {
+            JObject o = JObject.Parse(schema);
+            return o["attrNames"].ToString();
         }
     }
 }
