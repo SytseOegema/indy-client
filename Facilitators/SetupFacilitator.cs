@@ -39,17 +39,28 @@ namespace indyClient
             await createAndPublishWallet("Trustee1", trusteeDid, myName,
                 "00000000000Gov-Health-Department");
 
+            GovernmentSchemasModel govModel = new GovernmentSchemasModel();
+
+            govModel.doctor_certificate_schema =
+                await createDoctorCertificateSchema(myName, govDid);
+
+            govModel.emergency_trusted_parties_schema =
+                await createEmergencyTrustedPartiesSchema(myName, govDid);
+
+            govModel.electronic_health_record_schema =
+                await createElectronicHealthRecordSchema(myName, govDid);
+
+            govModel.shared_secret_schema =
+                await createSharedSecretSchema(myName, govDid);
+            govModel.exportToJsonFile()
 
             string govDid = await initialize(myName);
 
             await createDoctorWallets(myName, govDid);
-            await createERCredentials(myName, govDid);
+            await createERCredentials(myName, govDid,
+                govModel.doctor_certificate_schema);
             await createEHRWallets(myName, govDid);
 
-            // string schemaJson =
-            //     await createEmergencyTrustedPartiesSchema(myName, govDid);
-
-            string schemaJson = await createSharedSecretSchema(myName, govDid);
 
             await setupSharedSecretCredentials("Patient1", schemaJson);
             await setupSharedSecretCredentials("Patient2", schemaJson);
@@ -106,6 +117,52 @@ namespace indyClient
             await d_wallet.close();
         }
 
+        public async Task<string> createElectronicHealthRecordSchema(string issuer,
+            string issuerDid)
+        {
+            await initialize(issuer, issuerDid);
+            Console.WriteLine("creating schema for Electronic Health Records");
+
+            string schemaAttributes =
+            "[\"importance_level\", \"json\"]";
+            string schemaJson = await d_ledger.createSchema(
+                "Electronic-Health-Record", "1.0.0", schemaAttributes);
+
+            Console.WriteLine("schemaJson:" + schemaJson);
+            await d_wallet.close();
+            return schemaJson;
+        }
+
+        public async Task<string> createEmergencyTrustedPartiesSchema(string issuer,
+            string issuerDid)
+        {
+            await initialize(issuer, issuerDid);
+            Console.WriteLine("creating schema for for the sharing of emeregency trusted parties between the shared secret issuer and the Gov-Health-Department");
+
+            string schemaAttributes =
+            "[\"secret_owner\", \"secret_issuer\", \"min\", \"total\"]";
+            string schemaJson = await d_ledger.createSchema(
+                "Emergency-Trusted-Parties", "1.0.0", schemaAttributes);
+
+            Console.WriteLine("schemaJson:" + schemaJson);
+            await d_wallet.close();
+            return schemaJson;
+        }
+
+        public async Task<string> createDoctorCertificateSchema(string issuer, string issuerDid)
+        {
+            await initialize(issuer, issuerDid);
+            Console.WriteLine("creating schema Doctor-Certificate");
+            string schemaAttributes =
+                "[\"name\", \"is_emergency_doctor\", \"school\"]";
+            string schemaJson = await d_ledger.createSchema(
+                "Doctor-Certificate", "1.0.0", schemaAttributes);
+
+            Console.WriteLine("schemaJson:" + schemaJson);
+            await d_wallet.close();
+            return schemaJson;
+        }
+
         public async Task<string> createSharedSecretSchema(string issuer,
             string issuerDid)
         {
@@ -153,15 +210,12 @@ namespace indyClient
                 cred, credDefDefinition);
         }
 
-        public async Task createERCredentials(string issuer, string issuerDid)
+        public async Task createERCredentials(string issuer, string issuerDid,
+            string schemaJson)
         {
             await initialize(issuer, issuerDid);
 
-            Console.WriteLine("creating schema Doctor-Certificate");
-            string schemaAttributes =
-                "[\"name\", \"is_emergency_doctor\", \"school\"]";
-            string schemaJson = await d_ledger.createSchema(
-                "Doctor-Certificate", "1.0.0", schemaAttributes);
+
 
             Console.WriteLine("creating CredDef for schema Doctor-Certificate");
             string credDefDefinition = await d_ledger.createCredDef(
