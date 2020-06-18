@@ -519,7 +519,7 @@ namespace indyClient
             string schema_id = GovernmentSchemasModel.getSchemaId(json);
 
             // return array with credentials json
-            json = await getCredentials(schema_id);
+            json = await getCredentials("{\"schema_id\": \"" + schema_id + "\"}");
             JArray a = JArray.Parse(json);
             for(int idx = 0; idx < a.Count; ++idx)
             {
