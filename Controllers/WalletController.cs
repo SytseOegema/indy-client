@@ -574,8 +574,8 @@ namespace indyClient
         {
             bool res = await DoctorProofFacilitator.verifyDoctorProof(
                 doctorProofJson);
-            // if (!res)
-            //     return "The doctor proof json that was provided is not valid!";
+            if (!res)
+                return "The doctor proof json that was provided is not valid!";
 
             GovernmentSchemasModel model =
                 GovernmentSchemasModel.importFromJsonFile();
