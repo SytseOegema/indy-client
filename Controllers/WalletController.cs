@@ -518,14 +518,9 @@ namespace indyClient
             string json = model.shared_secret_schema;
             string schema_id = GovernmentSchemasModel.getSchemaId(json);
 
-            Console.WriteLine(json);
-            Console.WriteLine(schema_id);
-
             // return array with credentials json
             json = await getCredentials("{\"schema_id\": \"" + schema_id + "\"}");
-            Console.WriteLine(json);
             JArray a = JArray.Parse(json);
-            Console.WriteLine("json");
             for(int idx = 0; idx < a.Count; ++idx)
             {
                 JObject cred = (JObject) a[idx];
