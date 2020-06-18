@@ -198,9 +198,8 @@ namespace indyClient
             string credReqMetaJson =
                 o["CredentialRequestMetadataJson"].ToString();
 
-            CredDefFacilitator credDefFac = new CredDefFacilitator();
 
-            string credValue = credDefFac.generateCredValueJson(
+            string credValue = CredentialFacilitator.generateCredValueJson(
                 schemaAttributes, schemaValues);
 
             await initialize(issuer);
@@ -231,7 +230,6 @@ namespace indyClient
 
             Console.WriteLine("Creating Docotor-Certificate Credentials for: ");
             string[] doctors = {"Doctor1", "Doctor2", "Doctor3"};
-            CredDefFacilitator credDefFac = new CredDefFacilitator();
 
             o = JObject.Parse(schemaJson);
             string schemaId = o["id"].ToString();
@@ -260,9 +258,9 @@ namespace indyClient
                     o["CredentialRequestMetadataJson"].ToString();
 
                 string schemaAttributes =
-                    GovernmentSchemasModel.getSchemaAttributes(schemaJson); 
+                    GovernmentSchemasModel.getSchemaAttributes(schemaJson);
                 string schemaValues = "[\"" + doctor + "\", 1, \"RUG\"]";
-                string credValue = credDefFac.generateCredValueJson(
+                string credValue = CredentialFacilitator.generateCredValueJson(
                     schemaAttributes, schemaValues);
                 await d_wallet.open(issuer);
                 string cred = await d_wallet.createCredential(credOffer,
@@ -305,10 +303,16 @@ namespace indyClient
             }
             await createAndPublishWallet(issuer, issuerDid, "Doctor1",
                 "0000000000000000000000000Doctor1");
+            await initialize("Doctor1");
+            await CredDefFacilitator.createPatientCredentialDefinitions(d_ledger);
             await createAndPublishWallet(issuer, issuerDid, "Doctor2",
                 "0000000000000000000000000Doctor2");
+            await initialize("Doctor2");
+            await CredDefFacilitator.createPatientCredentialDefinitions(d_ledger);
             await createAndPublishWallet(issuer, issuerDid, "Doctor3",
                 "0000000000000000000000000Doctor3");
+            await initialize("Doctor3");
+            await CredDefFacilitator.createPatientCredentialDefinitions(d_ledger);
         }
 
         public async Task createGenesisWallets()

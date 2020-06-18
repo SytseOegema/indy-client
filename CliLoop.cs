@@ -132,6 +132,15 @@ namespace indyClient
                                 d_prompt.schemaJson(),
                                 d_prompt.credDefTag());
                             break;
+                        case "credential definitions patient create":
+                            requiredWalletCheck();
+                            requiredDidCheck();
+                            requiredPoolCheck();
+                            await CredDefFacilitator.
+                                createPatientCredentialDefinitions(
+                                    d_ledger);
+                            res = await d_wallet.listCredDefs();
+                            break;
                         case "credential offer create":
                             requiredWalletCheck();
                             res = await d_wallet.createCredentialOffer(
@@ -147,13 +156,10 @@ namespace indyClient
                             break;
                         case "credential create":
                             requiredWalletCheck();
-                            CredDefFacilitator credFac =
-                                new CredDefFacilitator();
-
                             res = await d_wallet.createCredential(
                                 d_prompt.credOfferJson(),
                                 d_prompt.credReqJson(),
-                                credFac.generateCredValueJson(
+                                CredentialFacilitator.generateCredValueJson(
                                 d_prompt.schemaAttributes(),
                                 d_prompt.credValues())
                                 );
