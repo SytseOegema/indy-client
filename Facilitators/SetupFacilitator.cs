@@ -306,7 +306,7 @@ namespace indyClient
                     o["CredentialRequestMetadataJson"].ToString();
 
                 string schemaAttributes =
-                    GovernmentSchemasModel.getSchemaAttributes(schemaJson);
+                    "[\"is_emergency_doctor\", \"name\", \"school\"]";
                 string schemaValues = "[1, \"" + doctor + "\", \"RUG\"]";
                 string credValue = CredentialFacilitator.generateCredValueJson(
                     schemaAttributes, schemaValues);

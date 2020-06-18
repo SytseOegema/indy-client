@@ -58,7 +58,9 @@ namespace indyClient
         {
             string encryptionKey = "test";
             string relPath = walletId + "ESjson.temp";
-            IOFacilitator.createFile(ehrJson, relPath);
+            // encrypt -- not implented yet
+            string encryptedEHR = ehrJson;
+            IOFacilitator.createFile(encryptedEHR, relPath);
             IpfsFacilitator ipfs = new IpfsFacilitator();
             string ipfsPath = await ipfs.addFile(IOFacilitator.homePath() + relPath);
 
@@ -66,6 +68,15 @@ namespace indyClient
             EHRBackupModel model = new EHRBackupModel(ipfsPath, encryptionKey);
             model.exportToJsonFile(walletId);
             return model.toJson();
+        }
+
+        public async Task<string> downloadEmergencyEHR()
+        {
+            IpfsFacilitator ipfs = new IpfsFacilitator();
+            string encryptedEHR = await ipfs.getFile(ipfs_path, "");
+            // decrypt -- not implented yet
+            string EHR = encryptedEHR;
+            return EHR;
         }
     }
 
