@@ -124,6 +124,11 @@ namespace indyClient
                             requiredDidCheck();
                             res = await d_wallet.listCredDefs();
                             break;
+                        case "credential definition get":
+                            requiredWalletCheck();
+                            res = await CredDefFacilitator.getCredDef(
+                                d_prompt.credDefTag(), d_wallet);
+                            break;
                         case "credential definition create":
                             requiredWalletCheck();
                             requiredDidCheck();
