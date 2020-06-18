@@ -51,7 +51,9 @@ namespace indyClient
                     {
                         case "emergency trusted party request":
                             requiredWalletCheck();
-                            res = await d_wallet.getTrustedParties();
+                            res = await d_wallet.getTrustedParties(
+                                d_prompt.proofJson(),
+                                d_prompt.issuerWalletName());
                             break;
                         case "exit":
                             d_prompt.exitMessage();

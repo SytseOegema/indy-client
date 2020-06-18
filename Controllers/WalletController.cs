@@ -250,7 +250,7 @@ namespace indyClient
             }
         }
 
-        public async Task<string> getCredentials(string walletQuery)
+        private async Task<JArray> getCredentialsArray(string walletQuery)
         {
             try
             {
@@ -259,8 +259,8 @@ namespace indyClient
 
                 int count = creds.TotalCount;
                 // return "0" if there are no records for the type and query
-                if (count == 0)
-                    return "0";
+                // if (count == 0)
+                //     return "0";
 
                 // get count schema's
                 string res = await AnonCreds.ProverFetchCredentialsAsync(
@@ -269,12 +269,22 @@ namespace indyClient
                 // make response human readable
                 JArray a = JArray.Parse(res);
 
-                return a.ToString();
+                return a;
             }
             catch (Exception e)
             {
-                return $"Error: {e.Message}";
+                Console.WriteLine($"Error: {e.Message}");
+                return new JArray();;
             }
+        }
+
+        public async Task<string> getCredentials(string walletQuery)
+        {
+            JArray a = await getCredentialsArray(walletQuery);
+            if(a.Count == 0)
+                return "0";
+
+            return a.ToString();
         }
 
         public async Task<string> addRecord(string type,
@@ -557,18 +567,34 @@ namespace indyClient
             + schemaId + "\"}");
         }
 
-        public async Task<string> getTrustedParties()
+        public async Task<string> getTrustedParties(
+            string doctorProofJson, string issuer)
         {
+            bool res = await DoctorProofFacilitator.verifyDoctorProof(
+                doctorProofJson);
+            // if (!res)
+            //     return "The doctor proof json that was provided is not valid!";
+
             GovernmentSchemasModel model =
                 GovernmentSchemasModel.importFromJsonFile();
             string schemaId =
                 GovernmentSchemasModel.getSchemaId(
                     model.emergency_trusted_parties_schema);
 
-            string credentials = await getCredentials("{\"schema_id\": \""
-            + schemaId + "\"}");
+            JArray credentials = await getCredentialsArray("{\"schema_id\": \""
+                + schemaId + "\"}");
 
-            return credentials;
+            string secretOwners = "[\n";
+            foreach(var cred in credentials)
+            {
+                if (cred["attrs"]["secret_issuer"].ToString() == issuer)
+                {
+                    secretOwners += cred["attrs"]["secret_owner"].ToString();
+                    secretOwners += ",\n";
+                }
+            }
+
+            return secretOwners + ']';
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)
