@@ -67,9 +67,11 @@ namespace indyClient
                 govModel.electronic_health_record_schema);
 
             await setupSharedSecretCredentials("Patient1",
-                govModel.shared_secret_schema);
+                govModel.shared_secret_schema,
+                govModel.emergency_trusted_parties_schema);
             await setupSharedSecretCredentials("Patient2",
-                govModel.shared_secret_schema);
+                govModel.shared_secret_schema,
+                govModel.emergency_trusted_parties_schema);
             Console.WriteLine("\n\nAll Done!\n Have fun with the setup!");
         }
 
@@ -106,18 +108,23 @@ namespace indyClient
         }
 
         public async Task setupSharedSecretCredentials(string issuer,
-            string schemaJson)
+            string schemaJson, string schemaJson2)
         {
             await initialize(issuer);
             // create creddef in patient wallet
             string credDefDefinition =
                 await CredDefFacilitator.getCredDef("ESS", d_wallet);
+            string credDefDefinition2 =
+                await CredDefFacilitator.getCredDef("ETP", d_wallet);
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
+            o = JObject.Parse(credDefDefinition2);
+            string credDefId2 = o["id"].ToString();
 
             // create cred def offer to share with trusted parties
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
+            string credOffer2 = await d_wallet.createCredentialOffer(credDefId2);
 
             // create shared secrets
             string secretsJson =
@@ -126,6 +133,8 @@ namespace indyClient
             // schemaAttributes
             string schemaAttributes =
                 "[\"secret_owner\", \"secret_issuer\", \"secret\"]";
+            string schemaAttributes2 =
+                "[\"secret_owner\", \"secret_issuer\", \"min\", \"total\"]";
 
             string[] trustees = {"TrustedParty1", "TrustedParty2", "TrustedParty3"
                 , "TrustedParty4", "TrustedParty5"};
@@ -137,11 +146,21 @@ namespace indyClient
                 string schemaValues =
                     "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
                     o["id"] + "\"]";
+                string schemaValues2 =
+                    "[\"" + trustees[idx] + "\", \"" + issuer + "\", \"" +
+                    3 + "\", \"" + 5 + "\"]";
 
                 // share secret via credential
                 await issueCredential(issuer, trustees[idx], "ESS-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
+
+                // share with Gov-Health-Department who has a secret of mine
+                await issueCredential(issuer, trustees[idx],
+                    "ETP-" + issuer + ":" + trustees[idx],
+                    schemaAttributes2, schemaValues2, schemaJson2,
+                    credOffer2, credDefDefinition2);
+
 
                 // mark secret as shared
                 await initialize(issuer);
@@ -222,6 +241,11 @@ namespace indyClient
             Console.WriteLine("issue credential, issuer: " + issuer + ", credential owner: " + walletId);
             await initialize(walletId);
 
+            Console.WriteLine(credDefDefinition);
+            Console.WriteLine(credOffer);
+            Console.WriteLine(masterSecret);
+
+
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
             string credReq = await d_wallet.createCredentialRequest(
@@ -283,6 +307,11 @@ namespace indyClient
 
                 string linkSecret =
                     await d_wallet.createMasterSecret("doctor-certificate");
+
+                Console.WriteLine(credDefDefinition);
+                Console.WriteLine(credOffer);
+                Console.WriteLine(linkSecret);
+
                 string credReq = await d_wallet.createCredentialRequest(
                     credOffer, credDefDefinition, linkSecret);
 
