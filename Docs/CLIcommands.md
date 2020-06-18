@@ -257,6 +257,15 @@ This command can be used to create a master secret that is then stored in the wa
 | identifier | masterkey-identifier |
 
 ---
+### `credential definitions patient create`
+**Requires**
+- an active pool connection
+- an opened wallet
+- an active DID
+
+This command can be used to create the basic credential definition for a patient. No input is required as this command will automatically use the schema definitions of the Gov-Health-Department that have been create by running `EHR environment setup`. The following credential definitions are created **EHR**(Electronic Health Record), **WBSS**(Wallet Backup Shared Secret), **ESS**(Emergency Shared Secret) and **ETP**(Emergency Trusted Parties).
+
+---
 ### `credential definition create`
 **Requires**
 - an active pool connection
@@ -274,8 +283,20 @@ This command can be used to create a credential definition. The required input s
 ### `credential definition list`
 **Requires**
 - an opened wallet
+- an active DID
 
 This command can be used to list all credential definitions in the open wallet.
+
+---
+### `credential definition get`
+**Requires**
+- an opened wallet
+
+This command can be used to get an existing credential definition from the open wallet. The input requires a credential definition tag. This tag is matched against the existing credential definitions.
+
+| inputs | example |
+| ------ | ------- |
+| credential definition tag | TAG1 |
 
 ---
 ### `credential offer create`

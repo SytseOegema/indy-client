@@ -44,7 +44,9 @@ namespace indyClient
             options += "master secret create:: creates a master secret.\n";
 
             options += "credential definition create:: create a credential definition.\n";
+            options += "credential definitions patients create:: create basic credential definitions for a patient.\n";
             options += "credential definition list:: list all credential definitions in this wallet.\n";
+            options += "credential definition get:: get a credential definition based on the specified TAG.\n";
 
             options += "credential offer create:: issuer creates credential offer.\n";
             options += "credential request create:: prover create credential request.\n";

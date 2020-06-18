@@ -17,11 +17,11 @@ namespace indyClient
             // create cred def that defines trusted party with emergency secret
             await ledger.createCredDef(
                 model.emergency_trusted_parties_schema,
-                "EHRTP");
+                "ETP");
             // create cred def for wallet backup data
             await ledger.createCredDef(
                 model.shared_secret_schema,
-                "EHRSS");
+                "ESS");
             // create cred def for emergency EHR access data
             await ledger.createCredDef(
                 model.shared_secret_schema,
@@ -36,11 +36,9 @@ namespace indyClient
         static public async Task<string> getCredDef(string tag, WalletController wallet)
         {
             string list = await wallet.listCredDefs();
-            Console.WriteLine(list);
             JArray a = JArray.Parse(list);
             foreach(var o in a.Children())
             {
-                Console.WriteLine(o.ToString());
                 string id = o["id"].ToString();
                 if (id.Contains(tag))
                     return o.ToString();
