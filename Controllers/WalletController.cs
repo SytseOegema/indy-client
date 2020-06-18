@@ -584,17 +584,30 @@ namespace indyClient
             JArray credentials = await getCredentialsArray("{\"schema_id\": \""
                 + schemaId + "\"}");
 
-            string secretOwners = "[\n";
+            List<string> secretOwners = new List<string>();
+            string min = "";
             foreach(var cred in credentials)
             {
                 if (cred["attrs"]["secret_issuer"].ToString() == issuer)
                 {
-                    secretOwners += cred["attrs"]["secret_owner"].ToString();
-                    secretOwners += ",\n";
+                    secretOwners.Add(cred["attrs"]["secret_owner"].ToString());
+                    min = cred["attrs"]["min"].ToString();
                 }
             }
 
-            return secretOwners + ']';
+            if (secretOwners.Count == 0)
+                return "No trusted parties are know for " + issuer;
+
+            string output = "Trusted Parties of " + issuer + ":\n[\n";
+
+            foreach(string owner in secretOwners)
+            {
+                output += owner + ",\n";
+            }
+
+            output += "A minimum of " + min + " shared secrets is required to reconstruct the original secret.";
+
+            return output;
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)
