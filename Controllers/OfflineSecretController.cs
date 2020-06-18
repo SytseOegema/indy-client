@@ -19,7 +19,8 @@ namespace indyClient
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            EHRBackupModel model = EHRBackupModel.importFromJsonFile();
+            EHRBackupModel model =
+                EHRBackupModel.importFromJsonFile(walletIdentifier);
 
             return model.toJson();
         }
