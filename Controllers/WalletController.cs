@@ -513,7 +513,9 @@ namespace indyClient
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Shared-Secret:1.0.0\"}";
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string json = model.emergency_trusted_parties_schema;
 
             // return array with credentials json
             json = await getCredentials(json);

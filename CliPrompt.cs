@@ -59,7 +59,8 @@ namespace indyClient
             options += "issuer shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
             options += "wallet backup shared secret create:: devides the emergency access secrets over multiple keys.\n";
             options += "issuer shared secret mark shared:: marks a secret is shared with a trusted party.\n";
-            options += "holder emergency shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
+            options += "trusted party shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
+            options += "trusted party list:: list the trusted parties in the open wallet(use Gov-Health-Department).\n";
             options += "offline emergency secret obtain:: obtain emergency secret by providing a doctor proof.\n";
             options += "shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
 

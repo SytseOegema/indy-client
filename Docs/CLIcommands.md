@@ -392,7 +392,7 @@ This command can be used to mark one of the shared secrets in your wallet as sha
 | record ID | 01-Q2I4UWOEJFSDKGHOQ34TYEUGPFVHNGQ3P94WTUGIHSFBJQ94WRUOGSFVNKBQP3ERUTGOUIFSD |
 
 ---
-### `holder emergency shared secret provide`
+### `trusted party shared secret provide`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -403,6 +403,20 @@ This command can be used to share an emergency secret with a doctor in case of e
 | ------ | ------- |
 | doctor proof JSON | JSON as returned by `doctor proof create` |
 | wallet identifier | The identifier of the issuer of the shared secret |
+
+---
+### `trusted party list`
+**Requires**
+- an opened wallet
+- an exported wallet to IPFS
+
+This command can be used to obtain a list of trusted parties of a patient. An emergency doctor can use this command in case of emergency to obtain a list of trusted parties of the patient in need.
+
+| inputs | example |
+| ------ | ------- |
+| doctor proof JSON | JSON as returned by `doctor proof create` |
+| wallet identifier | The identifier of the issuer of the shared secret also know as the patient |
+
 
 ---
 ### `offline emergency secret obtain`

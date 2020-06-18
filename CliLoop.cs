@@ -49,12 +49,6 @@ namespace indyClient
                 {
                     switch (input)
                     {
-                        case "emergency trusted party request":
-                            requiredWalletCheck();
-                            res = await d_wallet.getTrustedParties(
-                                d_prompt.proofJson(),
-                                d_prompt.issuerWalletName());
-                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;
@@ -217,11 +211,17 @@ namespace indyClient
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;
-                        case "holder emergency shared secret provide":
+                        case "trusted party shared secret provide":
                             res = await d_wallet.holderSharedSecretProvide(
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
                             break;
+                      case "trusted party list":
+                          requiredWalletCheck();
+                          res = await d_wallet.getTrustedParties(
+                              d_prompt.proofJson(),
+                              d_prompt.issuerWalletName());
+                          break;
                         case "offline emergency secret obtain":
                             res = await OfflineSecretController.obtain(
                                 d_prompt.proofJson(),
