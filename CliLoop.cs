@@ -49,6 +49,10 @@ namespace indyClient
                 {
                     switch (input)
                     {
+                        case "emergency trusted party request":
+                            requiredWalletCheck();
+                            res = await d_wallet.getTrustedParties();
+                            break;
                         case "exit":
                             d_prompt.exitMessage();
                             return;

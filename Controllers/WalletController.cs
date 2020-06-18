@@ -557,6 +557,20 @@ namespace indyClient
             + schemaId + "\"}");
         }
 
+        public async Task<string> getTrustedParties()
+        {
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string schemaId =
+                GovernmentSchemasModel.getSchemaId(
+                    model.emergency_trusted_parties_schema);
+
+            string credentials = await getCredentials("{\"schema_id\": \""
+            + schemaId + "\"}");
+
+            return credentials;
+        }
+
         private string createSharedSecretTagJson(int num, int min, int total)
         {
             string json = "{";
