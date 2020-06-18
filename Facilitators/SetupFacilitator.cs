@@ -248,22 +248,27 @@ namespace indyClient
 
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
+            Console.WriteLine("1a");
             string credReq = await d_wallet.createCredentialRequest(
                 credOffer, credDefDefinition, linkSecret);
+            Console.WriteLine("1b");
 
             JObject o = JObject.Parse(credReq);
             string credReqJson = o["CredentialRequestJson"].ToString();
             string credReqMetaJson =
                 o["CredentialRequestMetadataJson"].ToString();
+            Console.WriteLine("1c");
 
 
             string credValue = CredentialFacilitator.generateCredValueJson(
                 schemaAttributes, schemaValues);
+            Console.WriteLine("1d");
 
             await initialize(issuer);
 
             string cred = await d_wallet.createCredential(credOffer,
                 credReqJson, credValue);
+            Console.WriteLine("1e");
 
             await d_wallet.open(walletId);
             await d_wallet.storeCredential(credReqMetaJson,
