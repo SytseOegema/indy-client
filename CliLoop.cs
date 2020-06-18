@@ -227,6 +227,12 @@ namespace indyClient
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
                             break;
+                        case "emergency EHRS download":
+                            EHRBackupModel model =
+                                EHRBackupModel.importFromJson(
+                                    d_prompt.emergencyEHRJSON());
+                            res = await model.downloadEmergencyEHR();
+                            break;
                         case "doctor proof request":
                             res = DoctorProofFacilitator.getProofRequest();
                             break;

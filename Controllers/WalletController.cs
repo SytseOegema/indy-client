@@ -516,9 +516,10 @@ namespace indyClient
             GovernmentSchemasModel model =
                 GovernmentSchemasModel.importFromJsonFile();
             string json = model.emergency_trusted_parties_schema;
+            string schema_id = GovernmentSchemasModel.getSchemaId(json);
 
             // return array with credentials json
-            json = await getCredentials(json);
+            json = await getCredentials(schema_id);
             JArray a = JArray.Parse(json);
             for(int idx = 0; idx < a.Count; ++idx)
             {

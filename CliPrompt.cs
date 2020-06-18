@@ -63,6 +63,7 @@ namespace indyClient
             options += "trusted party list:: list the trusted parties in the open wallet(use Gov-Health-Department).\n";
             options += "offline emergency secret obtain:: obtain emergency secret by providing a doctor proof.\n";
             options += "shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
+            options += "emergency EHRS download:: download the EHRS via the required json.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
@@ -101,6 +102,11 @@ namespace indyClient
                 input = Console.ReadLine();
             }
             return secrets;
+        }
+
+        public string emergencyEHRJSON()
+        {
+            return consoleInteraction("The json representation of the imergency access information:");
         }
 
         public int sharedSecretMinimum()
