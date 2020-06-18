@@ -257,6 +257,8 @@ namespace indyClient
             await d_wallet.open(walletId);
             await d_wallet.storeCredential(credReqMetaJson,
                 cred, credDefDefinition);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(cred);
         }
 
         public async Task createERCredentials(string issuer, string issuerDid,
