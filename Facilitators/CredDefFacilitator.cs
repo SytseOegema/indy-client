@@ -41,7 +41,7 @@ namespace indyClient
             {
                 string id = o["id"].ToString();
                 if (id.Contains(tag))
-                    return o.ToString();
+                    return o["value"].ToString();
             }
             return "No credential matches the tag: " + tag;
         }
