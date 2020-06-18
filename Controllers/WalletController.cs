@@ -515,7 +515,7 @@ namespace indyClient
 
             GovernmentSchemasModel model =
                 GovernmentSchemasModel.importFromJsonFile();
-            string json = model.emergency_trusted_parties_schema;
+            string json = model.shared_secret_schema;
             string schema_id = GovernmentSchemasModel.getSchemaId(json);
 
             Console.WriteLine(json);
