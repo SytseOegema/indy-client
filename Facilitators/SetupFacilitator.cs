@@ -63,10 +63,39 @@ namespace indyClient
             await createEHRWallets(myName, govDid);
 
 
+
             await setupSharedSecretCredentials("Patient1",
                 govModel.shared_secret_schema);
             await setupSharedSecretCredentials("Patient2",
                 govModel.shared_secret_schema);
+            Console.WriteLine("\n\nAll Done!\n Have fun with the setup!");
+        }
+
+        public async Task createEHRCredentials(string schemaJson)
+        {
+            string[] doctors = {"Doctor1", "Doctor2", "Doctor3"};
+            string[] patients = {"Patient1", "Patient2"};
+            foreach (string doctor in doctors)
+            {
+                await initialize(doctor);
+                string credDefDefinition =
+                    await CredDefFacilitator.getCredDef("EHR", d_wallet);
+                JObject o = JObject.Parse(credDefDefinition);
+                string credDefId = o["id"].ToString();
+
+                // create cred def offer to share with trusted parties
+                string credOffer = await d_wallet.createCredentialOffer(credDefId);
+
+                string schemaAttributes =
+                    GovernmentSchemasModel.getSchemaAttributes(schemaJson);
+                string schemaValues = "[\"1\", {\"issuer\":" + doctor + ", \"data\": \"data sample\"}]";
+                foreach (string patient in patients)
+                {
+                    await issueCredential(doctor, patient, "EHR" + doctor + ":" + patient,
+                        schemaAttributes, schemaValues, schemaJson,
+                        credOffer, credDefDefinition);
+                }
+            }
         }
 
         public async Task setupSharedSecretCredentials(string issuer,
@@ -186,6 +215,7 @@ namespace indyClient
             string masterSecret, string schemaAttributes, string schemaValues,
             string schemaJson, string credOffer, string credDefDefinition)
         {
+            Console.WriteLine("issue credential, issuer: " + issuer + ", credential owner: " + walletId);
             await initialize(walletId);
 
             string linkSecret =
@@ -278,8 +308,13 @@ namespace indyClient
         {
             await createAndPublishWallet(issuer, issuerDid, "Patient1",
                 "000000000000000000000000Patient1");
+            await initialize("Patient1");
+            await CredDefFacilitator.createPatientCredentialDefinitions(d_ledger);
+
             await createAndPublishWallet(issuer, issuerDid, "Patient2",
                 "000000000000000000000000Patient2");
+            await initialize("Patient2");
+            await CredDefFacilitator.createPatientCredentialDefinitions(d_ledger);
 
             await createAndPublishWallet(issuer, issuerDid, "TrustedParty1",
                 "0000000000000000000TrustedParty1");
