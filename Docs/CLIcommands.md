@@ -366,7 +366,7 @@ This command can be used by an issuer(patient) to list all the Shamir secrets he
 This command can be used by an issuer(patient) to list all the Shamir secrets he has not shared with trusted parties yet.
 
 ---
-### `issuer emergency shared secret create`
+### `wallet backup shared secret create`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS

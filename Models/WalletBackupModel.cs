@@ -27,7 +27,7 @@ namespace indyClient
 
         static public string filePath(string walletIdentifier)
         {
-            return $"wallet_export/{walletIdentifier}_ipfs_export.json";
+            return $"wallet_export/{walletIdentifier}_WBS.json";
         }
 
         static public WalletBackupModel importFromJson(string configJson)

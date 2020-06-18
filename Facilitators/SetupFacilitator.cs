@@ -62,7 +62,9 @@ namespace indyClient
                 govModel.doctor_certificate_schema);
             await createEHRWallets(myName, govDid);
 
-
+            // create EHRs for Patient1 and Patient2
+            await createEHRCredentials(
+                govModel.electronic_health_record_schema);
 
             await setupSharedSecretCredentials("Patient1",
                 govModel.shared_secret_schema);
@@ -117,7 +119,7 @@ namespace indyClient
 
             // create shared secrets
             string secretsJson =
-                await d_wallet.createEmergencySharedSecrets(3, 5);
+                await d_wallet.createWalletBackupSharedSecrets(3, 5);
 
             // schemaAttributes
             string schemaAttributes =
@@ -135,7 +137,7 @@ namespace indyClient
                     o["id"] + "\"]";
 
                 // share secret via credential
-                await issueCredential(issuer, trustees[idx], "emergency-shared-secret-key-" + issuer,
+                await issueCredential(issuer, trustees[idx], "WBSS-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
 

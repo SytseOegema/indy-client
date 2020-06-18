@@ -44,6 +44,12 @@ namespace indyClient
             return JsonConvert.SerializeObject(this);
         }
 
+        static public string getSchemaId(string schema)
+        {
+            JObject o = JObject.Parse(schema);
+            return o["id"].ToString();
+        }
+
         static public string getSchemaAttributes(string schema)
         {
             JObject o = JObject.Parse(schema);

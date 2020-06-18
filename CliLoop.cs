@@ -194,9 +194,9 @@ namespace indyClient
                             res = await d_wallet.listSharedSecrets(
                                 "{\"is_shared\": \"0\"}");
                             break;
-                        case "issuer emergency shared secret create":
+                        case "wallet backup shared secret create":
                             requiredWalletCheck();
-                            res = await d_wallet.createEmergencySharedSecrets(
+                            res = await d_wallet.createWalletBackupSharedSecrets(
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;

@@ -24,10 +24,10 @@ namespace indyClient
             return path + ".txt";
         }
 
-        static public void convertTextToByteFile(string relPath, string file)
+        static public void convertTextToByteFile(string relPathTxt, string relPath)
         {
-            string path = IOFacilitator.homePath() + relPath;
-            string command = "xxd -r " + path + file + ".txt > " + path + file;
+            string path = IOFacilitator.homePath();
+            string command = "xxd -r " + path + relPathTxt + " > " + path + relPath;
             ShellFacilitator.Bash(command);
         }
 

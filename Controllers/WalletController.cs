@@ -381,8 +381,7 @@ namespace indyClient
         public async Task<string> walletExportIpfs(
             string exportKey, string walletKey = "")
         {
-            string path = IOFacilitator.homePath() +
-                WalletBackupModel.filePath(d_identifier);
+            string path = IOFacilitator.homePath() + d_identifier + "WBtemp";
             try
             {
                 // create export file
@@ -390,12 +389,11 @@ namespace indyClient
 
                 // convert export file from byte file to txt file
                 string textFilePath = IOFacilitator.convertByteToTextFile(
-                    WalletBackupModel.filePath(d_identifier));
+                    d_identifier + "WBtemp");
 
                 // upload text file to ipfs
                 IpfsFacilitator ipfs = new IpfsFacilitator();
-                string ipfsPath = await ipfs.addFile(IOFacilitator.homePath()
-                    + WalletBackupModel.filePath(d_identifier));
+                string ipfsPath = await ipfs.addFile(textFilePath);
 
                 WalletBackupModel model = new WalletBackupModel(
                     ipfsPath,
@@ -440,18 +438,15 @@ namespace indyClient
 
             IpfsFacilitator ipfs = new IpfsFacilitator();
 
-            string localPath = IOFacilitator.homePath() +
-                WalletBackupModel.filePath(identifier);
+            string localPath = IOFacilitator.homePath() + "temp";
             try
             {
                 // get file content
                 string txt = await ipfs.getFile(model.ipfs_path, identifier);
                 // create local file from ipfs content
-                IOFacilitator.createFile(txt,
-                    WalletBackupModel.filePath(identifier) + identifier + ".txt");
+                IOFacilitator.createFile(txt, "temp.txt");
                 // convert txt to binary
-                IOFacilitator.convertTextToByteFile(
-                    WalletBackupModel.filePath(identifier), identifier);
+                IOFacilitator.convertTextToByteFile("temp.txt", "temp");
                 // import wallet into client
                 string res = await walletImportLocal(identifier, localPath, model.wallet_key,
                     model.export_key);
@@ -470,7 +465,7 @@ namespace indyClient
           return res;
         }
 
-        public async Task<string> createEmergencySharedSecrets(
+        public async Task<string> createWalletBackupSharedSecrets(
             int min, int total)
         {
             string list = await listSharedSecrets();
@@ -492,7 +487,7 @@ namespace indyClient
                 await addRecord(
                     "shared-secret",
                     secret,
-                    "Emergency-Health-Record-Access secret",
+                    "WBSS",
                     createSharedSecretTagJson(++idx, min, total));
             }
 
@@ -520,6 +515,26 @@ namespace indyClient
                     return cred["attrs"]["secret"].ToString();
             }
             return "No secret found for specified identifier";
+        }
+
+        private async Task<string> backupEHR()
+        {
+            string ehrJson = await getEHRCredentials();
+            string emergencySecret = await EHRBackupModel.backupEHR(
+                d_identifier, ehrJson);
+            return emergencySecret;
+        }
+
+        public async Task<string> getEHRCredentials()
+        {
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string schemaId =
+                GovernmentSchemasModel.getSchemaId(
+                    model.electronic_health_record_schema);
+
+            return await getCredentials("{\"schema_id\": \""
+            + schemaId + "\"}");
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)
