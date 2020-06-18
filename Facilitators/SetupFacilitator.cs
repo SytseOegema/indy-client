@@ -91,8 +91,8 @@ namespace indyClient
                 string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
                 string schemaAttributes =
-                    GovernmentSchemasModel.getSchemaAttributes(schemaJson);
-                string schemaValues = "[\"1\", {\"issuer\": \"" + doctor + "\", \"data\": \"data sample\"}]";
+                    "[\"importance_level\", \"issuer\", \"data_value\", \"data_type\"]";
+                string schemaValues = "[\"1\", \"" + doctor + "\", \"data sample\", \"type sample\"]";
                 foreach (string patient in patients)
                 {
                     await issueCredential(doctor, patient, "EHR" + doctor + ":" + patient,
@@ -174,7 +174,7 @@ namespace indyClient
             Console.WriteLine("creating schema for Electronic Health Records");
 
             string schemaAttributes =
-            "[\"importance_level\", \"json\"]";
+                "[\"importance_level\", \"issuer\", \"data_value\", \"data_type\"]";
             string schemaJson = await d_ledger.createSchema(
                 "Electronic-Health-Record", "1.0.0", schemaAttributes);
 
