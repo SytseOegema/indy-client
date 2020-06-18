@@ -236,10 +236,29 @@ namespace indyClient
             Console.WriteLine("issue credential, issuer: " + issuer + ", credential owner: " + walletId);
             await initialize(walletId);
 
+
+            if (walletId.Contains("Patient"))
+            Console.WriteLine(schemaAttributes);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(schemaValues);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(schemaJson);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(credOffer);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(credDefDefinition);
+
+
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
             string credReq = await d_wallet.createCredentialRequest(
                 credOffer, credDefDefinition, linkSecret);
+
+
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(linkSecret);
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(credReq);
 
             JObject o = JObject.Parse(credReq);
             string credReqJson = o["CredentialRequestJson"].ToString();
@@ -248,6 +267,10 @@ namespace indyClient
 
             string credValue = CredentialFacilitator.generateCredValueJson(
                 schemaAttributes, schemaValues);
+
+
+            if (walletId.Contains("Patient"))
+                Console.WriteLine(credValue);
 
             await initialize(issuer);
 
