@@ -13,27 +13,28 @@ namespace indyClient
         {
             Console.WriteLine(schemaAttributes);
             Console.WriteLine(credValues);
-            JArray array = JArray.Parse(schemaAttributes);
-            List<string> attributes = array.ToObject<List<string>>();
+            JArray attributes = JArray.Parse(schemaAttributes);
+            // List<string> attributes = array.ToObject<List<string>>();
 
-            array = JArray.Parse(credValues);
-            List<string> values = array.ToObject<List<string>>();
+            JArray values = JArray.Parse(credValues);
+            // List<string> values = array.ToObject<List<string>>();
 
             if (attributes.Count != values.Count)
                 Console.WriteLine("Number of arguments is not the same!");
 
+            Console.WriteLine("1");
 
             string output = "{";
             for (int idx = 0; idx < values.Count; ++idx)
             {
-                string encoding = values[idx];
-                if (!StringFacilitator.IsDigitsOnly(values[idx]))
+                string encoding = values[idx].ToString();
+                if (!StringFacilitator.IsDigitsOnly(values[idx].ToString()))
                 {
-                    encoding = sha256_hash(values[idx]);
+                    encoding = sha256_hash(values[idx].ToString());
                     encoding = hexToDec(encoding);
                 }
-                output += "\"" + attributes[idx] + "\": {\"raw\": \"";
-                output += values[idx] + "\", \"encoded\": \"" + encoding + "\"}";
+                output += "\"" + attributes[idx].ToString() + "\": {\"raw\": \"";
+                output += values[idx].ToString() + "\", \"encoded\": \"" + encoding + "\"}";
 
                 if (idx != values.Count - 1)
                     output += ",";
