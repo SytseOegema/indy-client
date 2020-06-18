@@ -12,7 +12,7 @@ namespace indyClient
       static public string generateCredValueJson(string schemaAttributes, string credValues)
         {
             Console.WriteLine(schemaAttributes);
-            Console.WriteLine(schemaValues);
+            Console.WriteLine(credValues);
             JArray array = JArray.Parse(schemaAttributes);
             List<string> attributes = array.ToObject<List<string>>();
 
