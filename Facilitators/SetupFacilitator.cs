@@ -79,18 +79,23 @@ namespace indyClient
             string[] patients = {"Patient1", "Patient2"};
             foreach (string doctor in doctors)
             {
+                Console.WriteLine("1");
                 await initialize(doctor);
                 string credDefDefinition =
                     await CredDefFacilitator.getCredDef("EHR", d_wallet);
+                Console.WriteLine("2");
                 JObject o = JObject.Parse(credDefDefinition);
                 string credDefId = o["id"].ToString();
 
+                Console.WriteLine("3");
                 // create cred def offer to share with trusted parties
                 string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
+                Console.WriteLine("4");
                 string schemaAttributes =
                     GovernmentSchemasModel.getSchemaAttributes(schemaJson);
                 string schemaValues = "[\"1\", {\"issuer\":" + doctor + ", \"data\": \"data sample\"}]";
+                Console.WriteLine("5");
                 foreach (string patient in patients)
                 {
                     await issueCredential(doctor, patient, "EHR" + doctor + ":" + patient,
@@ -105,8 +110,8 @@ namespace indyClient
         {
             await initialize(issuer);
             // create creddef in patient wallet
-            string credDefDefinition = await d_ledger.createCredDef(
-                schemaJson, "Emergency-Health-Record-Access");
+            string credDefDefinition =
+                await CredDefFacilitator.getCredDef("ESS", d_wallet);
 
             JObject o = JObject.Parse(credDefDefinition);
             string credDefId = o["id"].ToString();
@@ -114,12 +119,9 @@ namespace indyClient
             // create cred def offer to share with trusted parties
             string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
-            // export wallet to ipfs
-            await d_wallet.walletExportIpfs("export_key", issuer);
-
             // create shared secrets
             string secretsJson =
-                await d_wallet.createWalletBackupSharedSecrets(3, 5);
+                await d_wallet.createEmergencySharedSecrets(3, 5);
 
             // schemaAttributes
             string schemaAttributes =
@@ -137,7 +139,7 @@ namespace indyClient
                     o["id"] + "\"]";
 
                 // share secret via credential
-                await issueCredential(issuer, trustees[idx], "WBSS-" + issuer,
+                await issueCredential(issuer, trustees[idx], "ESS-" + issuer,
                     schemaAttributes, schemaValues, schemaJson,
                     credOffer, credDefDefinition);
 

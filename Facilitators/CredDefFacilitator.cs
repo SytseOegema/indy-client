@@ -18,11 +18,11 @@ namespace indyClient
             await ledger.createCredDef(
                 model.emergency_trusted_parties_schema,
                 "ETP");
-            // create cred def for wallet backup data
+            // create cred def for emergency EHR access data
             await ledger.createCredDef(
                 model.shared_secret_schema,
                 "ESS");
-            // create cred def for emergency EHR access data
+            // create cred def for wallet backup data
             await ledger.createCredDef(
                 model.shared_secret_schema,
                 "WBSS");

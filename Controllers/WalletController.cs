@@ -517,6 +517,26 @@ namespace indyClient
             return "No secret found for specified identifier";
         }
 
+        public async Task<string> createEmergencySharedSecrets(int min, int total)
+        {
+            string bigSecret = await backupEHR();
+
+            List<string> secrets = SecretSharingFacilitator.createSharedSecret(
+                bigSecret, min, total);
+
+            int idx = 0;
+            foreach (string secret in secrets)
+            {
+                await addRecord(
+                    "shared-secret",
+                    secret,
+                    "ESS",
+                    createSharedSecretTagJson(++idx, min, total));
+            }
+
+            return (string) await listSharedSecrets();
+        }
+
         private async Task<string> backupEHR()
         {
             string ehrJson = await getEHRCredentials();
