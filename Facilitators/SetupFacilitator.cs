@@ -58,9 +58,9 @@ namespace indyClient
 
 
             await createDoctorWallets(myName, govDid);
+            await createEHRWallets(myName, govDid);
             await createERCredentials(myName, govDid,
                 govModel.doctor_certificate_schema);
-            await createEHRWallets(myName, govDid);
 
             // create EHRs for Patient1 and Patient2
             await createEHRCredentials(
@@ -81,23 +81,18 @@ namespace indyClient
             string[] patients = {"Patient1", "Patient2"};
             foreach (string doctor in doctors)
             {
-                Console.WriteLine("1");
                 await initialize(doctor);
                 string credDefDefinition =
                     await CredDefFacilitator.getCredDef("EHR", d_wallet);
-                Console.WriteLine("2");
                 JObject o = JObject.Parse(credDefDefinition);
                 string credDefId = o["id"].ToString();
 
-                Console.WriteLine("3");
                 // create cred def offer to share with trusted parties
                 string credOffer = await d_wallet.createCredentialOffer(credDefId);
 
-                Console.WriteLine("4");
                 string schemaAttributes =
                     GovernmentSchemasModel.getSchemaAttributes(schemaJson);
                 string schemaValues = "[\"1\", {\"issuer\": \"" + doctor + "\", \"data\": \"data sample\"}]";
-                Console.WriteLine("5");
                 foreach (string patient in patients)
                 {
                     await issueCredential(doctor, patient, "EHR" + doctor + ":" + patient,
@@ -156,7 +151,7 @@ namespace indyClient
                     credOffer, credDefDefinition);
 
                 // share with Gov-Health-Department who has a secret of mine
-                await issueCredential(issuer, trustees[idx],
+                await issueCredential(issuer, "Gov-Health-Department",
                     "ETP-" + issuer + ":" + trustees[idx],
                     schemaAttributes2, schemaValues2, schemaJson2,
                     credOffer2, credDefDefinition2);
@@ -241,34 +236,23 @@ namespace indyClient
             Console.WriteLine("issue credential, issuer: " + issuer + ", credential owner: " + walletId);
             await initialize(walletId);
 
-            Console.WriteLine(credDefDefinition);
-            Console.WriteLine(credOffer);
-            Console.WriteLine(masterSecret);
-
-
             string linkSecret =
                 await d_wallet.createMasterSecret(masterSecret);
-            Console.WriteLine("1a");
             string credReq = await d_wallet.createCredentialRequest(
                 credOffer, credDefDefinition, linkSecret);
-            Console.WriteLine("1b");
 
             JObject o = JObject.Parse(credReq);
             string credReqJson = o["CredentialRequestJson"].ToString();
             string credReqMetaJson =
                 o["CredentialRequestMetadataJson"].ToString();
-            Console.WriteLine("1c");
-
 
             string credValue = CredentialFacilitator.generateCredValueJson(
                 schemaAttributes, schemaValues);
-            Console.WriteLine("1d");
 
             await initialize(issuer);
 
             string cred = await d_wallet.createCredential(credOffer,
                 credReqJson, credValue);
-            Console.WriteLine("1e");
 
             await d_wallet.open(walletId);
             await d_wallet.storeCredential(credReqMetaJson,
@@ -312,10 +296,6 @@ namespace indyClient
 
                 string linkSecret =
                     await d_wallet.createMasterSecret("doctor-certificate");
-
-                Console.WriteLine(credDefDefinition);
-                Console.WriteLine(credOffer);
-                Console.WriteLine(linkSecret);
 
                 string credReq = await d_wallet.createCredentialRequest(
                     credOffer, credDefDefinition, linkSecret);

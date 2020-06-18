@@ -11,18 +11,12 @@ namespace indyClient
     {
       static public string generateCredValueJson(string schemaAttributes, string credValues)
         {
-            Console.WriteLine(schemaAttributes);
-            Console.WriteLine(credValues);
             JArray attributes = JArray.Parse(schemaAttributes);
-            // List<string> attributes = array.ToObject<List<string>>();
 
             JArray values = JArray.Parse(credValues);
-            // List<string> values = array.ToObject<List<string>>();
 
             if (attributes.Count != values.Count)
                 Console.WriteLine("Number of arguments is not the same!");
-
-            Console.WriteLine("1");
 
             string output = "{";
             for (int idx = 0; idx < values.Count; ++idx)
