@@ -96,7 +96,7 @@ namespace indyClient
                 Console.WriteLine("4");
                 string schemaAttributes =
                     GovernmentSchemasModel.getSchemaAttributes(schemaJson);
-                string schemaValues = "[\"1\", \"{\"issuer\":" + doctor + ", \"data\": \"data sample\"}\"]";
+                string schemaValues = "[\"1\", \"{\"issuer\": \"" + doctor + "\", \"data\": \"data sample\"}\"]";
                 Console.WriteLine("5");
                 foreach (string patient in patients)
                 {
