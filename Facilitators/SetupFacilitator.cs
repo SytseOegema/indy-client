@@ -307,7 +307,7 @@ namespace indyClient
 
                 string schemaAttributes =
                     GovernmentSchemasModel.getSchemaAttributes(schemaJson);
-                string schemaValues = "[1, \"" + doctor + "\" \"RUG\"]";
+                string schemaValues = "[1, \"" + doctor + "\", \"RUG\"]";
                 string credValue = CredentialFacilitator.generateCredValueJson(
                     schemaAttributes, schemaValues);
                 await d_wallet.open(issuer);
