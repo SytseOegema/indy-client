@@ -62,7 +62,7 @@ This command can be used to create a record in the open wallet.
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 | record value | anything |
 | record tags(JSON) | {"json": "data", "more-json": "data"} |
@@ -76,7 +76,7 @@ This command can be used to get records from the open wallet. These records can 
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | wallet query(JSON) | {"param": "value"} |
 | query options(JSON) | {"retrieveTotalCount": true, "retrieveType": true, "retrieveTags": true} |
 
@@ -89,7 +89,7 @@ This command can be used to delete records from the opened wallet.
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 
 ---
@@ -101,7 +101,7 @@ This command can be used to update the tag JSON of an existing record in the ope
 
 | inputs | example |
 | ------ | ------- |
-| record type | emergency-shared-secret |
+| record type | shared-secret |
 | record id | 01-13561084561275182 |
 | record tags(JSON) | {"json": "different-data", "more-json": "different-data"} |
 
@@ -257,6 +257,15 @@ This command can be used to create a master secret that is then stored in the wa
 | identifier | masterkey-identifier |
 
 ---
+### `credential definitions patient create`
+**Requires**
+- an active pool connection
+- an opened wallet
+- an active DID
+
+This command can be used to create the basic credential definition for a patient. No input is required as this command will automatically use the schema definitions of the Gov-Health-Department that have been create by running `EHR environment setup`. The following credential definitions are created **EHR**(Electronic Health Record), **WBSS**(Wallet Backup Shared Secret), **ESS**(Emergency Shared Secret) and **ETP**(Emergency Trusted Parties).
+
+---
 ### `credential definition create`
 **Requires**
 - an active pool connection
@@ -274,8 +283,20 @@ This command can be used to create a credential definition. The required input s
 ### `credential definition list`
 **Requires**
 - an opened wallet
+- an active DID
 
 This command can be used to list all credential definitions in the open wallet.
+
+---
+### `credential definition get`
+**Requires**
+- an opened wallet
+
+This command can be used to get an existing credential definition from the open wallet. The input requires a credential definition tag. This tag is matched against the existing credential definitions.
+
+| inputs | example |
+| ------ | ------- |
+| credential definition tag | TAG1 |
 
 ---
 ### `credential offer create`
@@ -331,21 +352,21 @@ This command can be used by the prover of an credential to store the credential 
 | credential definition JSON | output of `credential definition create` |
 
 ---
-### `issuer emergency shared secret list`
+### `issuer shared secret list`
 **Requires**
 - an opened wallet
 
 This command can be used by an issuer(patient) to list all the Shamir secrets he has create.
 
 ---
-### `issuer emergency shared secret list unused`
+### `issuer shared secret list unused`
 **Requires**
 - an opened wallet
 
 This command can be used by an issuer(patient) to list all the Shamir secrets he has not shared with trusted parties yet.
 
 ---
-### `issuer emergency shared secret create`
+### `wallet backup shared secret create`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -359,7 +380,7 @@ This command can be used by an issuer(patient) to create Shamir shared secrets t
 *The minimum number to reconstruct has to be at least 3*
 
 ---
-### `issuer emergency shared secret mark shared`
+### `issuer shared secret mark shared`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -371,7 +392,7 @@ This command can be used to mark one of the shared secrets in your wallet as sha
 | record ID | 01-Q2I4UWOEJFSDKGHOQ34TYEUGPFVHNGQ3P94WTUGIHSFBJQ94WRUOGSFVNKBQP3ERUTGOUIFSD |
 
 ---
-### `holder emergency shared secret provide`
+### `trusted party shared secret provide`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -382,6 +403,20 @@ This command can be used to share an emergency secret with a doctor in case of e
 | ------ | ------- |
 | doctor proof JSON | JSON as returned by `doctor proof create` |
 | wallet identifier | The identifier of the issuer of the shared secret |
+
+---
+### `trusted party list`
+**Requires**
+- an opened wallet
+- an exported wallet to IPFS
+
+This command can be used to obtain a list of trusted parties of a patient. An emergency doctor can use this command in case of emergency to obtain a list of trusted parties of the patient in need.
+
+| inputs | example |
+| ------ | ------- |
+| doctor proof JSON | JSON as returned by `doctor proof create` |
+| wallet identifier | The identifier of the issuer of the shared secret also know as the patient |
+
 
 ---
 ### `offline emergency secret obtain`
@@ -396,7 +431,7 @@ This command can be used in case of emergency by a doctor to gain access informa
 | doctor proof JSON | JSON as returned by `doctor proof create` |
 | wallet identifier | Patient1 |
 
-### `emergency secret reconstruct`
+### `shared secret reconstruct`
 This command can be used to reconstruct the actual secret based on the shared secrets. Just paste in the secrets and enter a blank line to finish the input. If the correct number and correct secrets are provided the actual secret will be returned.
 
 | inputs | example |

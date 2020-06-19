@@ -48,10 +48,13 @@ namespace indyClient
                     getReferentFromCredential(attr2Cred),
                     getReferentFromCredential(predicate1Cred));
 
-                IOFacilitator io = new IOFacilitator();
-                DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
-                    <DoctorCredDefInfoModel>(File.ReadAllText(
-                        io.getDoctorCredDefConfigPathAbs()));
+                EmergencyDoctorCredentialModel model =
+                    EmergencyDoctorCredentialModel.importFromJsonFile();
+
+                // IOFacilitator io = new IOFacilitator();
+                // DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
+                //     <DoctorCredDefInfoModel>(File.ReadAllText(
+                //         io.getDoctorCredDefConfigPathAbs()));
                 string schemas = "{";
                 schemas += "\"" + model.schema_id + "\":" + model.schema_json;
                 schemas += "}";
@@ -88,10 +91,12 @@ namespace indyClient
             proofReqJson = proofReqJson.Replace(Environment.NewLine, string.Empty);
             try
             {
-                IOFacilitator io = new IOFacilitator();
-                DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
-                    <DoctorCredDefInfoModel>(File.ReadAllText(
-                        io.getDoctorCredDefConfigPathAbs()));
+              EmergencyDoctorCredentialModel model =
+                  EmergencyDoctorCredentialModel.importFromJsonFile();
+                // IOFacilitator io = new IOFacilitator();
+                // DoctorCredDefInfoModel model = JsonConvert.DeserializeObject
+                //     <DoctorCredDefInfoModel>(File.ReadAllText(
+                //         io.getDoctorCredDefConfigPathAbs()));
                 string schemas = "{";
                 schemas += "\"" + model.schema_id + "\":" + model.schema_json;
                 schemas += "}";

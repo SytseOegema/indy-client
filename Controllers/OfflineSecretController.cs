@@ -19,13 +19,10 @@ namespace indyClient
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            IOFacilitator io = new IOFacilitator();
-            string path = io.getIpfsExportPathAbs(walletIdentifier);
+            EHRBackupModel model =
+                EHRBackupModel.importFromJsonFile(walletIdentifier);
 
-            WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(File.ReadAllText(path));
-
-            return JsonConvert.SerializeObject(model);
+            return model.toJson();
         }
     }
 }

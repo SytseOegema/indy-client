@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace indyClient
 {
@@ -18,16 +19,14 @@ namespace indyClient
 
         public static async Task start()
         {
-            IOFacilitator io = new IOFacilitator();
 
-            if (io.directoryExists(io.getHomePath(), "wallet_export"))
+            if (IOFacilitator.directoryExists(IOFacilitator.homePath(), "wallet_export"))
             {
-                Console.WriteLine("Welcome back to the indy doctor emergency client!");
+                Console.WriteLine("Welcome back to the indy medical client!");
             }
             else
             {
-                string command = "mkdir " + io.getWalletExportPathAbs();
-                ShellFacilitator.Bash(command);
+                SetupFacilitator.setupFolderStructure();
                 Console.WriteLine("Welcome to the indy doctor emergency client!");
                 Console.WriteLine("You can setup the environment using the command:");
                 Console.WriteLine("> EHR environment setup");
@@ -69,8 +68,7 @@ namespace indyClient
                             res = await d_wallet.close();
                             break;
                         case "wallet list":
-                            IOFacilitator temp = new IOFacilitator();
-                            temp.listDirectories("/wallet");
+                            IOFacilitator.listDirectories("/wallet");
                             break;
                         case "did list":
                             requiredWalletCheck();
@@ -126,6 +124,11 @@ namespace indyClient
                             requiredDidCheck();
                             res = await d_wallet.listCredDefs();
                             break;
+                        case "credential definition get":
+                            requiredWalletCheck();
+                            res = await CredDefFacilitator.getCredDef(
+                                d_prompt.credDefTag(), d_wallet);
+                            break;
                         case "credential definition create":
                             requiredWalletCheck();
                             requiredDidCheck();
@@ -133,6 +136,15 @@ namespace indyClient
                             res = await d_ledger.createCredDef(
                                 d_prompt.schemaJson(),
                                 d_prompt.credDefTag());
+                            break;
+                        case "credential definitions patient create":
+                            requiredWalletCheck();
+                            requiredDidCheck();
+                            requiredPoolCheck();
+                            await CredDefFacilitator.
+                                createPatientCredentialDefinitions(
+                                    d_ledger);
+                            res = await d_wallet.listCredDefs();
                             break;
                         case "credential offer create":
                             requiredWalletCheck();
@@ -149,13 +161,10 @@ namespace indyClient
                             break;
                         case "credential create":
                             requiredWalletCheck();
-                            CredDefFacilitator credFac =
-                                new CredDefFacilitator();
-
                             res = await d_wallet.createCredential(
                                 d_prompt.credOfferJson(),
                                 d_prompt.credReqJson(),
-                                credFac.generateCredValueJson(
+                                CredentialFacilitator.generateCredValueJson(
                                 d_prompt.schemaAttributes(),
                                 d_prompt.credValues())
                                 );
@@ -176,41 +185,53 @@ namespace indyClient
                             res = await d_wallet.getCredentials(
                                 d_prompt.walletQuery());
                             break;
-                        case "issuer emergency shared secret list":
+                        case "issuer shared secret list":
                             requiredWalletCheck();
-                            res = await d_wallet.listEmergencySharedSecrets();
+                            res = await d_wallet.listSharedSecrets();
                             break;
-                        case "issuer emergency shared secret list unused":
+                        case "issuer shared secret list unused":
                             requiredWalletCheck();
-                            res = await d_wallet.listEmergencySharedSecrets(
+                            res = await d_wallet.listSharedSecrets(
                                 "{\"is_shared\": \"0\"}");
                             break;
-                        case "issuer emergency shared secret create":
+                        case "wallet backup shared secret create":
                             requiredWalletCheck();
-                            res = await d_wallet.createEmergencySharedSecrets(
+                            res = await d_wallet.createWalletBackupSharedSecrets(
                             d_prompt.sharedSecretMinimum(),
                             d_prompt.sharedSecretTotal());
                             break;
-                        case "emergency secret reconstruct":
+                        case "shared secret reconstruct":
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
                             break;
-                        case "issuer emergency shared secret mark shared":
+                        case "issuer shared secret mark shared":
                             requiredWalletCheck();
                             await d_wallet.updateRecordTag(
-                                "emergency-shared-secret",
+                                "shared-secret",
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;
-                        case "holder emergency shared secret provide":
+                        case "trusted party shared secret provide":
                             res = await d_wallet.holderSharedSecretProvide(
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
                             break;
+                      case "trusted party list":
+                          requiredWalletCheck();
+                          res = await d_wallet.getTrustedParties(
+                              d_prompt.proofJson(),
+                              d_prompt.issuerWalletName());
+                          break;
                         case "offline emergency secret obtain":
                             res = await OfflineSecretController.obtain(
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
+                            break;
+                        case "emergency EHRS download":
+                            EHRBackupModel model =
+                                EHRBackupModel.importFromJson(
+                                    d_prompt.emergencyEHRJSON());
+                            res = await model.downloadEmergencyEHR();
                             break;
                         case "doctor proof request":
                             res = DoctorProofFacilitator.getProofRequest();
@@ -249,7 +270,7 @@ namespace indyClient
                         case "wallet import ipfs":
                             res = await d_wallet.walletImportIpfs(
                                 d_prompt.walletIdentifier(),
-                                d_prompt.walletExportJson());
+                                d_prompt.walletJsonConfig());
                             break;
                         case "wallet record add":
                             requiredWalletCheck();

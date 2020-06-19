@@ -250,7 +250,7 @@ namespace indyClient
             }
         }
 
-        public async Task<string> getCredentials(string walletQuery)
+        private async Task<JArray> getCredentialsArray(string walletQuery)
         {
             try
             {
@@ -259,8 +259,8 @@ namespace indyClient
 
                 int count = creds.TotalCount;
                 // return "0" if there are no records for the type and query
-                if (count == 0)
-                    return "0";
+                // if (count == 0)
+                //     return "0";
 
                 // get count schema's
                 string res = await AnonCreds.ProverFetchCredentialsAsync(
@@ -269,12 +269,22 @@ namespace indyClient
                 // make response human readable
                 JArray a = JArray.Parse(res);
 
-                return a.ToString();
+                return a;
             }
             catch (Exception e)
             {
-                return $"Error: {e.Message}";
+                Console.WriteLine($"Error: {e.Message}");
+                return new JArray();;
             }
+        }
+
+        public async Task<string> getCredentials(string walletQuery)
+        {
+            JArray a = await getCredentialsArray(walletQuery);
+            if(a.Count == 0)
+                return "0";
+
+            return a.ToString();
         }
 
         public async Task<string> addRecord(string type,
@@ -381,20 +391,27 @@ namespace indyClient
         public async Task<string> walletExportIpfs(
             string exportKey, string walletKey = "")
         {
-            IOFacilitator io = new IOFacilitator();
-            string path = io.getWalletExportPathAbs() + d_identifier;
+            string path = IOFacilitator.homePath() + d_identifier + "WBtemp";
             try
             {
+                // create export file
                 await walletExportLocal(path, exportKey);
-                IpfsFacilitator ipfs = new IpfsFacilitator();
-                string ipfsPath = await ipfs.addFile(d_identifier);
 
-                WalletExportModel model = new WalletExportModel();
-                model.ipfs_path = ipfsPath;
-                model.wallet_key = (walletKey == "" ? d_identifier : walletKey);
-                model.export_key = exportKey;
-                io.createFile(JsonConvert.SerializeObject(model),
-                    io.getIpfsExportPathRel(d_identifier));
+                // convert export file from byte file to txt file
+                string textFilePath = IOFacilitator.convertByteToTextFile(
+                    d_identifier + "WBtemp");
+
+                // upload text file to ipfs
+                IpfsFacilitator ipfs = new IpfsFacilitator();
+                string ipfsPath = await ipfs.addFile(textFilePath);
+
+                WalletBackupModel model = new WalletBackupModel(
+                    ipfsPath,
+                    d_identifier,
+                    (walletKey == "" ? d_identifier : walletKey),
+                    exportKey);
+
+                model.exportToJsonFile();
 
                 return JsonConvert.SerializeObject(model);
             }
@@ -424,20 +441,23 @@ namespace indyClient
         }
 
         public async Task<string> walletImportIpfs(string identifier,
-            string exportConfig)
+            string jsonConfig)
         {
-            // check if export config is a path towards the export file.
-            if (exportConfig[0] != '{')
-                exportConfig = File.ReadAllText(exportConfig);
+            WalletBackupModel model =
+                WalletBackupModel.importFromJson(jsonConfig);
 
-            WalletExportModel model = JsonConvert.DeserializeObject
-                <WalletExportModel>(exportConfig);
             IpfsFacilitator ipfs = new IpfsFacilitator();
-            IOFacilitator io = new IOFacilitator();
-            string localPath = io.getWalletExportPathAbs() + identifier;
+
+            string localPath = IOFacilitator.homePath() + "temp";
             try
             {
-                await ipfs.getFile(model.ipfs_path, identifier);
+                // get file content
+                string txt = await ipfs.getFile(model.ipfs_path, identifier);
+                // create local file from ipfs content
+                IOFacilitator.createFile(txt, "temp.txt");
+                // convert txt to binary
+                IOFacilitator.convertTextToByteFile("temp.txt", "temp");
+                // import wallet into client
                 string res = await walletImportLocal(identifier, localPath, model.wallet_key,
                     model.export_key);
                 return res;
@@ -448,64 +468,149 @@ namespace indyClient
             }
         }
 
-        public async Task<string> listEmergencySharedSecrets(string query = "{}")
+        public async Task<string> listSharedSecrets(string query = "{}")
         {
-          string res = await getRecord("emergency-shared-secret", query,
+          string res = await getRecord("shared-secret", query,
               "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
           return res;
         }
 
-        public async Task<string> createEmergencySharedSecrets(
+        public async Task<string> createWalletBackupSharedSecrets(
             int min, int total)
         {
-            string list = await listEmergencySharedSecrets();
+            string list = await listSharedSecrets();
             if (list != "0")
-                throw new Exception("There allready exist emergency shared secrets.");
+                throw new Exception("There allready exist shared secrets.");
 
-            IOFacilitator io = new IOFacilitator();
-            if (!io.existsIpfsExportFile(d_identifier))
+            if (!IOFacilitator.fileExists(WalletBackupModel.filePath(d_identifier)))
                 throw new Exception("There must be an IPFS backup of the wallet. No IPFS export JSON file was found for this wallet.");
 
-            string ipfsExportJson =
-                File.ReadAllText(io.getIpfsExportPathAbs(d_identifier));
+            WalletBackupModel model =
+                WalletBackupModel.importFromJsonFile(d_identifier);
 
             List<string> secrets = SecretSharingFacilitator.createSharedSecret(
-                ipfsExportJson, min, total);
+                model.toJson(), min, total);
 
             int idx = 0;
             foreach (string secret in secrets)
             {
                 await addRecord(
-                    "emergency-shared-secret",
+                    "shared-secret",
                     secret,
-                    "1.0",
+                    "WBSS",
                     createSharedSecretTagJson(++idx, min, total));
             }
 
-            list = await listEmergencySharedSecrets();
+            list = await listSharedSecrets();
             return list;
         }
 
         public async Task<string> holderSharedSecretProvide(
-            string doctorProofJson, string identifier)
+            string doctorProofJson, string issuerWalletName)
         {
             bool res = await DoctorProofFacilitator.verifyDoctorProof(
                 doctorProofJson);
             if (!res)
                 return "The doctor proof json that was provided is not valid!";
 
-            string json = "{\"schema_id\": \"NcZ4tw9KDDGnCWpGShk9n5:2:Emergency-Shared-Secret:1.0.0\"}";
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string json = model.shared_secret_schema;
+            string schema_id = GovernmentSchemasModel.getSchemaId(json);
 
             // return array with credentials json
-            json = await getCredentials(json);
+            json = await getCredentials("{\"schema_id\": \"" + schema_id + "\"}");
             JArray a = JArray.Parse(json);
             for(int idx = 0; idx < a.Count; ++idx)
             {
                 JObject cred = (JObject) a[idx];
-                if (cred["attrs"]["secret_issuer"].ToString() == identifier)
+                if (cred["attrs"]["secret_issuer"].ToString() == issuerWalletName)
                     return cred["attrs"]["secret"].ToString();
             }
             return "No secret found for specified identifier";
+        }
+
+        public async Task<string> createEmergencySharedSecrets(int min, int total)
+        {
+            string bigSecret = await backupEHR();
+
+            List<string> secrets = SecretSharingFacilitator.createSharedSecret(
+                bigSecret, min, total);
+
+            int idx = 0;
+            foreach (string secret in secrets)
+            {
+                await addRecord(
+                    "shared-secret",
+                    secret,
+                    "ESS",
+                    createSharedSecretTagJson(++idx, min, total));
+            }
+
+            return (string) await listSharedSecrets();
+        }
+
+        private async Task<string> backupEHR()
+        {
+            string ehrJson = await getEHRCredentials();
+            string emergencySecret = await EHRBackupModel.backupEHR(
+                d_identifier, ehrJson);
+            return emergencySecret;
+        }
+
+        public async Task<string> getEHRCredentials()
+        {
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string schemaId =
+                GovernmentSchemasModel.getSchemaId(
+                    model.electronic_health_record_schema);
+
+            return await getCredentials("{\"schema_id\": \""
+            + schemaId + "\"}");
+        }
+
+        public async Task<string> getTrustedParties(
+            string doctorProofJson, string issuer)
+        {
+            bool res = await DoctorProofFacilitator.verifyDoctorProof(
+                doctorProofJson);
+            if (!res)
+                return "The doctor proof json that was provided is not valid!";
+
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string schemaId =
+                GovernmentSchemasModel.getSchemaId(
+                    model.emergency_trusted_parties_schema);
+
+            JArray credentials = await getCredentialsArray("{\"schema_id\": \""
+                + schemaId + "\"}");
+
+            List<string> secretOwners = new List<string>();
+            string min = "";
+            foreach(var cred in credentials)
+            {
+                if (cred["attrs"]["secret_issuer"].ToString() == issuer)
+                {
+                    secretOwners.Add(cred["attrs"]["secret_owner"].ToString());
+                    min = cred["attrs"]["min"].ToString();
+                }
+            }
+
+            if (secretOwners.Count == 0)
+                return "No trusted parties are know for " + issuer;
+
+            string output = "Trusted Parties of " + issuer + ":\n[\n";
+
+            foreach(string owner in secretOwners)
+            {
+                output += owner + ",\n";
+            }
+
+            output += "A minimum of " + min + " shared secrets is required to reconstruct the original secret.";
+
+            return output;
         }
 
         private string createSharedSecretTagJson(int num, int min, int total)

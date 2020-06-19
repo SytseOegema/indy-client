@@ -44,7 +44,9 @@ namespace indyClient
             options += "master secret create:: creates a master secret.\n";
 
             options += "credential definition create:: create a credential definition.\n";
+            options += "credential definitions patients create:: create basic credential definitions for a patient.\n";
             options += "credential definition list:: list all credential definitions in this wallet.\n";
+            options += "credential definition get:: get a credential definition based on the specified TAG.\n";
 
             options += "credential offer create:: issuer creates credential offer.\n";
             options += "credential request create:: prover create credential request.\n";
@@ -53,13 +55,15 @@ namespace indyClient
             options += "credential list:: list all crednetials in open wallet.\n";
             options += "credential get:: get all crednetials in open wallet according to wallet query.\n";
 
-            options += "issuer emergency shared secret list:: lists all emergency keys.\n";
-            options += "issuer emergency shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
-            options += "issuer emergency shared secret create:: devides the emergency access secrets over multiple keys.\n";
-            options += "issuer emergency shared secret mark shared:: marks a secret is shared with a trusted party.\n";
-            options += "holder emergency shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
+            options += "issuer shared secret list:: lists all emergency keys.\n";
+            options += "issuer shared secret list unused:: lists unshared emergency keys that have not yet been shared with trusted parties.\n";
+            options += "wallet backup shared secret create:: devides the emergency access secrets over multiple keys.\n";
+            options += "issuer shared secret mark shared:: marks a secret is shared with a trusted party.\n";
+            options += "trusted party shared secret provide:: share a emergency shamir secret with an emergency doctor.\n";
+            options += "trusted party list:: list the trusted parties in the open wallet(use Gov-Health-Department).\n";
             options += "offline emergency secret obtain:: obtain emergency secret by providing a doctor proof.\n";
-            options += "emergency secret reconstruct:: reconstructs the secret based on the shared keys.\n";
+            options += "shared secret reconstruct:: reconstructs the secret based on the shared keys.\n";
+            options += "emergency EHRS download:: download the EHRS via the required json.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";
             options += "doctor proof create:: creates proof based on the first credential that meets the requiremets.\n";
@@ -98,6 +102,11 @@ namespace indyClient
                 input = Console.ReadLine();
             }
             return secrets;
+        }
+
+        public string emergencyEHRJSON()
+        {
+            return consoleInteraction("The json representation of the imergency access information:");
         }
 
         public int sharedSecretMinimum()
@@ -276,10 +285,9 @@ namespace indyClient
             return consoleInteraction("Path of the wallet file:");
         }
 
-        public string walletExportJson()
+        public string walletJsonConfig()
         {
-            string question = "Either the absolute path of the wallet ipfs_export.json file.\n";
-            question += "Or the ipfs export json:";
+            string question = "The wallet backup model in JSON";
             return consoleInteraction(question);
         }
 

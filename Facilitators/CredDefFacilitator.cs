@@ -1,90 +1,49 @@
 using System;
-using System.Text;
-using System.Security.Cryptography;
-using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace indyClient
 {
-    class CredDefFacilitator
+    static class CredDefFacilitator
     {
-      public string generateCredValueJson(string schemaAttributes, string credValues)
+        static public async Task createPatientCredentialDefinitions(
+            LedgerController ledger)
         {
-            JArray array = JArray.Parse(schemaAttributes);
-            List<string> attributes = array.ToObject<List<string>>();
-
-            array = JArray.Parse(credValues);
-            List<string> values = array.ToObject<List<string>>();
-
-            if (attributes.Count != values.Count)
-                Console.WriteLine("Number of arguments is not the same!");
-
-
-            string output = "{";
-            for (int idx = 0; idx < values.Count; ++idx)
-            {
-                string encoding = values[idx];
-                if (!StringFacilitator.IsDigitsOnly(values[idx]))
-                {
-                    encoding = sha256_hash(values[idx]);
-                    encoding = hexToDec(encoding);
-                }
-                output += "\"" + attributes[idx] + "\": {\"raw\": \"";
-                output += values[idx] + "\", \"encoded\": \"" + encoding + "\"}";
-
-                if (idx != values.Count - 1)
-                    output += ",";
-            }
-
-            output += "}";
-
-            return output;
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            // create cred def that defines trusted party with emergency secret
+            await ledger.createCredDef(
+                model.emergency_trusted_parties_schema,
+                "ETP");
+            // create cred def for emergency EHR access data
+            await ledger.createCredDef(
+                model.shared_secret_schema,
+                "ESS");
+            // create cred def for wallet backup data
+            await ledger.createCredDef(
+                model.shared_secret_schema,
+                "WBSS");
+            // create cred def for EHR data
+            await ledger.createCredDef(
+                model.electronic_health_record_schema,
+                "EHR");
+            return;
         }
 
-        private string hexToDec(string hex)
+        static public async Task<string> getCredDef(string tag, WalletController wallet)
         {
-            BigNumberFacilitator factor = new BigNumberFacilitator("1");
-            BigNumberFacilitator result = new BigNumberFacilitator("0");
-            while(hex.Length != 0)
+            string list = await wallet.listCredDefs();
+            JArray a = JArray.Parse(list);
+            foreach(var o in a.Children())
             {
-                int num = hexToInt(hex[hex.Length - 1]);
-                hex = hex.Remove(hex.Length - 1);
-                BigNumberFacilitator temp =
-                    new BigNumberFacilitator(num.ToString());
-
-                temp.multiply(factor.getNumber());
-                result.add(temp.getNumber());
-
-                factor.multiply("16");
+                string id = o["id"].ToString();
+                if (id.Contains(tag))
+                    return o["value"].ToString();
             }
-            return result.getNumber();
-        }
-
-        private int hexToInt(char hex)
-        {
-            if (hex >= '0' && hex <= '9')
-                return hex - '0';
-            else if (hex >= 'a' && hex <= 'f')
-                return hex - 'a' + 10;
-
-            return -1;
-        }
-
-        private String sha256_hash(string value)
-        {
-            StringBuilder Sb = new StringBuilder();
-
-            using (var hash = SHA256.Create())
-            {
-                Encoding enc = Encoding.UTF8;
-                Byte[] result = hash.ComputeHash(enc.GetBytes(value));
-
-                foreach (Byte b in result)
-                    Sb.Append(b.ToString("x2"));
-            }
-
-            return Sb.ToString();
+            return "No credential matches the tag: " + tag;
         }
 
     }
