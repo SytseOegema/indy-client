@@ -239,9 +239,16 @@ namespace indyClient
         {
             try
             {
+                int originalSize = await getEHRCredentialsSize();
+
                 string res = await AnonCreds.ProverStoreCredentialAsync(
                     d_openWallet, null,credReqMetaJson, credJson, credDefJson,
                     revRegDefJson);
+
+                int newSize = await getEHRCredentialsSize();
+                if (newSize > originalSize)
+                    await backupEHR();
+
                 return res;
             }
             catch (Exception e)
@@ -556,6 +563,19 @@ namespace indyClient
             string emergencySecret = await EHRBackupModel.backupEHR(
                 d_identifier, ehrJson);
             return emergencySecret;
+        }
+
+        public async Task<int> getEHRCredentialsSize()
+        {
+            GovernmentSchemasModel model =
+                GovernmentSchemasModel.importFromJsonFile();
+            string schemaId =
+                GovernmentSchemasModel.getSchemaId(
+                    model.electronic_health_record_schema);
+
+            JArray a =  await getCredentialsArray("{\"schema_id\": \""
+            + schemaId + "\"}");
+            return a.Count;
         }
 
         public async Task<string> getEHRCredentials()
