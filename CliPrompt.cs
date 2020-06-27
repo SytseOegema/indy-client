@@ -66,7 +66,7 @@ namespace indyClient
 
 
             options += "medical dossier list:: list credentials belonging to the medical dossier.\n";
-            options += "emergency medical dossier upload:: upload the medical dossier for emergency access purposes.\n";
+            // options += "emergency medical dossier upload:: upload the medical dossier for emergency access purposes.\n";
             options += "emergency medical dossier download:: download the EHRS via the required json.\n";
 
             options += "doctor proof request:: shows predefined request for doctor certificate.\n";

@@ -228,11 +228,11 @@ namespace indyClient
                                 d_prompt.issuerWalletName());
                             break;
                         case "medical dossier list":
-                            res = await.d_wallet.getEHRCredentials();
+                            res = await d_wallet.getEHRCredentials();
                             break;
-                        case "emergency medical dossier upload":
-                            res = await.d_wallet.backupEHR();
-                            break;
+                        // case "emergency medical dossier upload":
+                        //     res = await d_wallet.backupEHR();
+                        //     break;
                         case "emergency medical dossier download":
                             EHRBackupModel model =
                                 EHRBackupModel.importFromJson(
