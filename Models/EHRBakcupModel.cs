@@ -64,13 +64,13 @@ namespace indyClient
             CipherFacilitator cipher = new CipherFacilitator();
             string encryptedEHR = cipher.encrypt(ehrJson);
 
-            Console.WriteLine("EHR encrypted: " + encryptedEHR);
-
             string relPath = walletId + "ESjson.temp";
             IOFacilitator.createFile(encryptedEHR, relPath);
             IpfsFacilitator ipfs = new IpfsFacilitator();
-            string ipfsPath =
-                await ipfs.addFile(IOFacilitator.homePath() + relPath);
+            string localPath = IOFacilitator.homePath() + relPath;
+            string ipfsPath = await ipfs.addFile(localPath);
+
+            ShellFacilitator.Bash("rm -f " + localPath);
 
             EHRBackupModel model = new EHRBackupModel(ipfsPath,
                 cipher.getKey(), cipher.getIV());

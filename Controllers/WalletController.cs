@@ -563,7 +563,6 @@ namespace indyClient
                     "ESS",
                     createSharedSecretTagJson(++idx, min, total));
             }
-
             return (string) await listSharedSecrets();
         }
 
