@@ -227,6 +227,15 @@ namespace indyClient
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
                             break;
+                        case "medical dossier backup":
+                            requiredWalletCheck();
+                            if(ensurer("The existing emergency medical dossier will be deleted as will the emergency keys. Are you sure you want to continu?(y/n)"))
+                            {
+                                res = await d_wallet.createEmergencySharedSecrets(
+                                    d_prompt.sharedSecretMinimum(),
+                                    d_prompt.sharedSecretTotal());
+                            }
+                            break;
                         case "medical dossier list":
                             res = await d_wallet.getEHRCredentials();
                             break;
