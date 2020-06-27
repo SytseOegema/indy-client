@@ -557,7 +557,7 @@ namespace indyClient
             return (string) await listSharedSecrets();
         }
 
-        private async Task<string> backupEHR()
+        public async Task<string> backupEHR()
         {
             string ehrJson = await getEHRCredentials();
             string emergencySecret = await EHRBackupModel.backupEHR(
