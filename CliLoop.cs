@@ -185,11 +185,11 @@ namespace indyClient
                             res = await d_wallet.getCredentials(
                                 d_prompt.walletQuery());
                             break;
-                        case "issuer shared secret list":
+                        case "emergency key list":
                             requiredWalletCheck();
                             res = await d_wallet.listSharedSecrets();
                             break;
-                        case "issuer shared secret list unused":
+                        case "emergency key list unused":
                             requiredWalletCheck();
                             res = await d_wallet.listSharedSecrets(
                                 "{\"is_shared\": \"0\"}");
@@ -204,14 +204,14 @@ namespace indyClient
                             res = SecretSharingFacilitator.combineSharedSecrets(
                                 d_prompt.readSharedSecrets());
                             break;
-                        case "issuer shared secret mark shared":
+                        case "emergency key mark shared":
                             requiredWalletCheck();
                             await d_wallet.updateRecordTag(
                                 "shared-secret",
                                 d_prompt.recordId(),
                                 "{\"~is_shared\": \"1\"}");
                             break;
-                        case "trusted party shared secret provide":
+                        case "emergency key provide":
                             res = await d_wallet.holderSharedSecretProvide(
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
@@ -227,7 +227,13 @@ namespace indyClient
                                 d_prompt.proofJson(),
                                 d_prompt.issuerWalletName());
                             break;
-                        case "emergency EHRS download":
+                        case "medical dossier list":
+                            res = await.d_wallet.getEHRCredentials();
+                            break;
+                        case "emergency medical dossier upload":
+                            res = await.d_wallet.backupEHR();
+                            break;
+                        case "emergency medical dossier download":
                             EHRBackupModel model =
                                 EHRBackupModel.importFromJson(
                                     d_prompt.emergencyEHRJSON());

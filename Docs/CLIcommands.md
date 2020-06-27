@@ -352,14 +352,14 @@ This command can be used by the prover of an credential to store the credential 
 | credential definition JSON | output of `credential definition create` |
 
 ---
-### `issuer shared secret list`
+### `emergency key list`
 **Requires**
 - an opened wallet
 
 This command can be used by an issuer(patient) to list all the Shamir secrets he has create.
 
 ---
-### `issuer shared secret list unused`
+### `emergency key list unused`
 **Requires**
 - an opened wallet
 
@@ -380,7 +380,7 @@ This command can be used by an issuer(patient) to create Shamir shared secrets t
 *The minimum number to reconstruct has to be at least 3*
 
 ---
-### `issuer shared secret mark shared`
+### `emergency key mark shared`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
@@ -392,7 +392,7 @@ This command can be used to mark one of the shared secrets in your wallet as sha
 | record ID | 01-Q2I4UWOEJFSDKGHOQ34TYEUGPFVHNGQ3P94WTUGIHSFBJQ94WRUOGSFVNKBQP3ERUTGOUIFSD |
 
 ---
-### `trusted party shared secret provide`
+### `emergency key provide`
 **Requires**
 - an opened wallet
 - an exported wallet to IPFS
