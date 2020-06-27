@@ -22,7 +22,6 @@ namespace indyClient
         public async Task<string> getFile(string ipfsPath, string walletName)
         {
             string url = d_baseUrl + "/api/v0/cat?arg=" + ipfsPath;
-            Console.WriteLine(url);
             var response = await client.PostAsync(url, null);
 
             string contentString = await response.Content.ReadAsStringAsync();
