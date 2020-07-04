@@ -66,6 +66,9 @@ ExecStart=/usr/local/bin/ipfs daemon
 [Install]
 WantedBy=multiuser.target
 
+# after creating run
+ipfs init
+
 sudo systemctl start ipfs
 sudo systemctl enable ipfs
 ```
