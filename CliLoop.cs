@@ -36,7 +36,7 @@ namespace indyClient
 
                 if (ensurer("Would you like to create the default pool(sandbox)? Beaware the pool config must be created using |generate_indy_pool_transactions|"))
                 {
-                    d_pool.create("sandbox");
+                    await d_pool.create("sandbox");
                 }
             }
             await run();
