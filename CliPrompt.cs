@@ -124,7 +124,8 @@ namespace indyClient
 
         public string poolTransactionsGenesis()
         {
-            return consoleInteraction("The path to the pool transactions genesis file.\n Leave empty to use default(sandbox).");
+            string input = consoleInteraction("The path to the pool transactions genesis file.\n Leave empty to use default(sandbox).");
+            return (input == "" ? "/var/lib/indy/sandbox/pool_transactions_genesis" : input);
         }
 
         public int sharedSecretTotal()
