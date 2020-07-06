@@ -2,7 +2,7 @@
 This repository holds the source code for a .NET client that interacts with the Hyperledger Indy identity blockchain utilizing Indy SDK. The client provides a CLI that enables users to connect to a pool and create an identity on that pool.
 
 ## run a indy pool
-To start a local indy pool look [here](https://github.com/hyperledger/indy-sdk/blob/master/README.md#how-to-start-local-nodes-pool-with-docker).
+To start a local indy pool look [here](https://github.com/hyperledger/indy-node/blob/master/docs/source/start-nodes.md) or via [docker](https://github.com/hyperledger/indy-sdk/blob/master/README.md#how-to-start-local-nodes-pool-with-docker).
 
 ## setup client
 The client is test on Ubuntu 16.04 with .NET 2.1 core SDK.
