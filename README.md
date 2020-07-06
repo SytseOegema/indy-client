@@ -7,11 +7,11 @@ To start a local indy pool look [here](https://github.com/hyperledger/indy-sdk/b
 ## setup client
 The client is test on Ubuntu 16.04 with .NET 2.1 core SDK.
 ```
-add repository
+# add repository
 wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 
-instal dotnet
+# install dotnet
 sudo add-apt-repository universe
 sudo apt-get update
 sudo apt-get install apt-transport-https
