@@ -27,6 +27,33 @@ namespace indyClient
             return d_openPool;
         }
 
+        public async Task<string> create(string poolName,
+            string genesisFilePath = "/var/lib/indy/sandbox/pool_transactions_genesis")
+        {
+            string config = "{\"genesis_txn\": \"" + genesisFilePath + "\"}";
+            try
+            {
+                await CreatePoolLedgerConfigAsync(poolName, config);
+                return "Created pool " + poolName + ".\n";
+            }
+            catch(Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
+        public async Task<string> list()
+        {
+            try
+            {
+                return await ListPoolsAsync();
+            }
+            catch(Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
         public async Task connect(string poolname)
         {
             try

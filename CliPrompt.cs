@@ -16,7 +16,10 @@ namespace indyClient
         public void helpOptions()
         {
             string options;
+            options = "pool create:: create an identity pool to use.\n";
+            options = "pool list:: list pools.\n";
             options = "pool connect:: connect to an identity pool.\n";
+
             options += "wallet create:: create new wallet.\n";
             options += "wallet open:: open existing wallet.\n";
             options += "wallet close:: close opened wallet.\n";
@@ -117,6 +120,11 @@ namespace indyClient
                 throw new InvalidDataException("The number should be bigger than 3.");
 
             return res;
+        }
+
+        public string poolTransactionsGenesis()
+        {
+            return consoleInteraction("The path to the pool transactions genesis file.\n Leave empty to use default(sandbox).")
         }
 
         public int sharedSecretTotal()

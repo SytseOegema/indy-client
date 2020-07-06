@@ -52,6 +52,13 @@ namespace indyClient
                         case "exit":
                             d_prompt.exitMessage();
                             return;
+                        case "pool create":
+                            res = await d_pool.create(d_prompt.poolName(),
+                                d_prompt.poolTransactionsGenesis());
+                            break;
+                        case "pool list":
+                            res = await d_pool.list();
+                            break;
                         case "pool connect":
                             await d_pool.connect(d_prompt.poolName());
                             break;

@@ -4,6 +4,43 @@ This repository holds the source code for a .NET client that interacts with the 
 ## run a indy pool
 To start a local indy pool look [here](https://github.com/hyperledger/indy-node/blob/master/docs/source/start-nodes.md) or via [docker](https://github.com/hyperledger/indy-sdk/blob/master/README.md#how-to-start-local-nodes-pool-with-docker).
 
+### start a local indy pool
+```
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
+sudo bash -c 'echo "deb https://repo.sovrin.org/deb xenial stable" >> /etc/apt/sources.list'
+sudo apt-get update
+sudo apt-get install indy-node
+```
+
+Now adjust the file /etc/indy/indy_config.py and replace the line
+```
+NETWORK_NAME = None
+```
+
+with the line
+```
+NETWORK_NAME = sandbox
+```
+
+Run the following command to generate keys and transactions for a network containing 4 nodes.
+```
+generate_indy_pool_transactions --nodes 4 --clients 0 --nodeNum 1 2 3 4
+```
+
+Now you can run the 4 nodes(in 4 different terminals) as
+```
+start_indy_node Node1 0.0.0.0 9701 0.0.0.0 9702
+```
+```
+start_indy_node Node2 0.0.0.0 9703 0.0.0.0 9704
+```
+```
+start_indy_node Node3 0.0.0.0 9705 0.0.0.0 9706
+```
+```
+start_indy_node Node4 0.0.0.0 9707 0.0.0.0 9708
+```
+
 ## setup client
 The client is test on Ubuntu 16.04 with .NET 2.1 core SDK.
 ```
