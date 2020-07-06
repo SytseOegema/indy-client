@@ -33,7 +33,7 @@ namespace indyClient
             string config = "{\"genesis_txn\": \"" + genesisFilePath + "\"}";
             try
             {
-                await CreatePoolLedgerConfigAsync(poolName, config);
+                await Pool.CreatePoolLedgerConfigAsync(poolName, config);
                 return "Created pool " + poolName + ".\n";
             }
             catch(Exception e)
@@ -46,7 +46,7 @@ namespace indyClient
         {
             try
             {
-                return await ListPoolsAsync();
+                return await Pool.ListPoolsAsync();
             }
             catch(Exception e)
             {
