@@ -34,7 +34,7 @@ namespace indyClient
                 Console.WriteLine("pool connect");
                 Console.WriteLine("> Use the command `help` to list all available commands");
 
-                if (ensurer("Would you like to create the default pool(sandbox)? Beaware the pool config must be created using |generate_indy_pool_transactions|"))
+                if (ensurer("Would you like to create the default pool(sandbox)?\nBeaware the pool config must be created using |generate_indy_pool_transactions|"))
                 {
                     await d_pool.create("sandbox");
                 }
