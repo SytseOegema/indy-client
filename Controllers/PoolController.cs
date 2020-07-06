@@ -31,6 +31,7 @@ namespace indyClient
             string genesisFilePath = "/var/lib/indy/sandbox/pool_transactions_genesis")
         {
             string config = "{\"genesis_txn\": \"" + genesisFilePath + "\"}";
+            Console.WriteLine(config);
             try
             {
                 await Pool.CreatePoolLedgerConfigAsync(poolName, config);
