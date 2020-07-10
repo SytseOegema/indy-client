@@ -17,8 +17,8 @@ namespace indyClient
         {
             string options;
             options = "pool create:: create an identity pool to use.\n";
-            options = "pool list:: list pools.\n";
-            options = "pool connect:: connect to an identity pool.\n";
+            options += "pool list:: list pools.\n";
+            options += "pool connect:: connect to an identity pool.\n";
 
             options += "wallet create:: create new wallet.\n";
             options += "wallet open:: open existing wallet.\n";
