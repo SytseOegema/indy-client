@@ -242,6 +242,7 @@ namespace indyClient
                 string res = await AnonCreds.ProverStoreCredentialAsync(
                     d_openWallet, null,credReqMetaJson, credJson, credDefJson,
                     revRegDefJson);
+
                 return res;
             }
             catch (Exception e)
@@ -328,35 +329,51 @@ namespace indyClient
             }
         }
 
+        public async Task<JArray> getRecordArray(string type,
+            string queryJson, string optionsJson)
+        {
+            try
+            {
+                var list = await NonSecrets.OpenSearchAsync(
+                d_openWallet, type, queryJson, optionsJson);
+
+                // get 0 schema's
+                var res = await NonSecrets.FetchNextRecordsAsync(
+                d_openWallet, list, 0);
+
+                // parse result to see the count of schema's
+                JObject o = JObject.Parse(res);
+                string count = o["totalCount"].ToString();
+
+                // return "0" if there are no records for the type and query
+                if (count == "0")
+                    return null;
+
+                // get count schema's
+                res = await NonSecrets.FetchNextRecordsAsync(
+                d_openWallet, list, Int32.Parse(count));
+
+                // make response human readable
+                o = JObject.Parse(res);
+
+                return (JArray) o["records"];
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
 
         public async Task<string> getRecord(string type,
         string queryJson, string optionsJson)
         {
           try
           {
-              var list = await NonSecrets.OpenSearchAsync(
-              d_openWallet, type, queryJson, optionsJson);
-
-              // get 0 schema's
-              var res = await NonSecrets.FetchNextRecordsAsync(
-              d_openWallet, list, 0);
-
-              // parse result to see the count of schema's
-              JObject o = JObject.Parse(res);
-              string count = o["totalCount"].ToString();
-
-              // return "0" if there are no records for the type and query
-              if (count == "0")
+              JArray a = await getRecordArray(type, queryJson, optionsJson);
+              if (a == null)
                   return "0";
 
-              // get count schema's
-              res = await NonSecrets.FetchNextRecordsAsync(
-              d_openWallet, list, Int32.Parse(count));
-
-              // make response human readable
-              o = JObject.Parse(res);
-
-              return o["records"].ToString();
+              return a.ToString();
           }
           catch (Exception e)
           {
@@ -546,12 +563,32 @@ namespace indyClient
                     "ESS",
                     createSharedSecretTagJson(++idx, min, total));
             }
-
             return (string) await listSharedSecrets();
         }
 
-        private async Task<string> backupEHR()
+        private async Task clearBackupEHR()
         {
+            try
+            {
+                JArray keys = await getRecordArray("shared-secret", "{}",
+                  "{\"retrieveTotalCount\": true, \"retrieveType\": true, \"retrieveTags\": true}");
+                if (keys == null)
+                    return;
+                // remove the existing keys in the wallet
+                foreach (var key in keys)
+                {
+                    await deleteRecord("shared-secret", key["id"].ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+
+        public async Task<string> backupEHR()
+        {
+            await clearBackupEHR();
             string ehrJson = await getEHRCredentials();
             string emergencySecret = await EHRBackupModel.backupEHR(
                 d_identifier, ehrJson);

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -14,11 +15,14 @@ namespace indyClient
     {
         public string ipfs_path;
         public string encryption_key;
+        public string encryption_iv;
 
-        public EHRBackupModel(string ipfsPath, string encryptionKey)
+        public EHRBackupModel(string ipfsPath, string encryptionKey,
+            string encryptionIV)
         {
             ipfs_path = ipfsPath;
             encryption_key = encryptionKey;
+            encryption_iv = encryptionIV;
         }
 
         static public string filePath(string walletIdentifier)
@@ -56,16 +60,21 @@ namespace indyClient
 
         static public async Task<string> backupEHR(string walletId, string ehrJson)
         {
-            string encryptionKey = "test";
+            // encrypt ehr data
+            CipherFacilitator cipher = new CipherFacilitator();
+            string encryptedEHR = cipher.encrypt(ehrJson);
+
             string relPath = walletId + "ESjson.temp";
-            // encrypt -- not implented yet
-            string encryptedEHR = ehrJson;
             IOFacilitator.createFile(encryptedEHR, relPath);
             IpfsFacilitator ipfs = new IpfsFacilitator();
-            string ipfsPath = await ipfs.addFile(IOFacilitator.homePath() + relPath);
+            string localPath = IOFacilitator.homePath() + relPath;
+            string ipfsPath = await ipfs.addFile(localPath);
 
+            ShellFacilitator.Bash("rm -f " + localPath);
 
-            EHRBackupModel model = new EHRBackupModel(ipfsPath, encryptionKey);
+            EHRBackupModel model = new EHRBackupModel(ipfsPath,
+                cipher.getKey(), cipher.getIV());
+
             model.exportToJsonFile(walletId);
             return model.toJson();
         }
@@ -74,9 +83,12 @@ namespace indyClient
         {
             IpfsFacilitator ipfs = new IpfsFacilitator();
             string encryptedEHR = await ipfs.getFile(ipfs_path, "");
-            // decrypt -- not implented yet
-            string EHR = encryptedEHR;
-            return EHR;
+
+            // decrypt ehr data
+            CipherFacilitator cipher = new CipherFacilitator();
+            cipher.setKey(encryption_key);
+            cipher.setIV(encryption_iv);
+            return cipher.decrypt(encryptedEHR);
         }
     }
 

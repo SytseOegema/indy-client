@@ -162,7 +162,7 @@ namespace indyClient
                 await d_wallet.updateRecordTag(
                     "shared-secret",
                     o["id"].ToString(),
-                    "{\"~is_shared\": \"1\"}");
+                    "{\"is_shared\": \"1\"}");
             }
             await d_wallet.close();
         }
