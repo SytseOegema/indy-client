@@ -122,6 +122,11 @@ namespace indyClient
                                 d_prompt.submitterDid(),
                                 d_prompt.schemaId());
                             break;
+                        case "government schema list":
+                            GovernmentSchemasModel model =
+                                GovernmentSchemasModel.importFromJsonFile()
+                            res = model.toJson();
+                            break;
                         case "schema list":
                             requiredWalletCheck();
                             res = await d_wallet.listSchemas();

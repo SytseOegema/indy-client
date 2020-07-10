@@ -41,6 +41,7 @@ namespace indyClient
             options += "                       :: new identities can only be created by Trustees ,Stewards and Endorsers.\n";
 
             options += "schema create:: create a new schema.\n";
+            options += "government schema list:: list al schemas of the government.\n";
             options += "schema list:: list al schema in this wallet.\n";
             options += "schema get:: get a schema.\n";
 
