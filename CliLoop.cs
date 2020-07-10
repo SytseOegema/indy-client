@@ -123,9 +123,9 @@ namespace indyClient
                                 d_prompt.schemaId());
                             break;
                         case "government schema list":
-                            GovernmentSchemasModel model =
+                            GovernmentSchemasModel govModel =
                                 GovernmentSchemasModel.importFromJsonFile();
-                            res = model.toJson();
+                            res = govModel.toJson();
                             break;
                         case "schema list":
                             requiredWalletCheck();
