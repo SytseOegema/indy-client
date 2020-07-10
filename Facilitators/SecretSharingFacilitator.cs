@@ -16,7 +16,7 @@ namespace indyClient
         public static List<string> createSharedSecret(string secretInput, int minimum, int total)
         {
             // Create Shamir's Secret Sharing instance with BigInteger
-            var split = new ShamirsSecretSharing<BigInteger>(gcd);
+            var split = new ShamirsSecretSharing<BigInteger>(gcd, 5);
 
             string password = secretInput;
             // Minimum number of shared secrets for reconstruction: minimum
@@ -41,7 +41,7 @@ namespace indyClient
                 points.Add(FinitePoint<BigInteger>.Parse(secret));
             }
 
-            var combine = new ShamirsSecretSharing<BigInteger>(gcd);
+            var combine = new ShamirsSecretSharing<BigInteger>(gcd, 5);
 
             return combine.Reconstruction(points.ToArray()).ToString();
         }
