@@ -124,7 +124,7 @@ namespace indyClient
                             break;
                         case "government schema list":
                             GovernmentSchemasModel model =
-                                GovernmentSchemasModel.importFromJsonFile()
+                                GovernmentSchemasModel.importFromJsonFile();
                             res = model.toJson();
                             break;
                         case "schema list":
