@@ -1,4 +1,4 @@
-# CLI commands
+]# CLI commands
 This document contains a list with all commands provided via the command line interface of the application. For each command the necessary input fields are explained as well. Some methods require a connection to a hyperledger indy pool, an open wallet or an active DID in order to perform the command. For each command requirements are specified as well.
 
 ### `exit`
@@ -14,6 +14,22 @@ This command can be used to view a list of available commands.
 - an active pool connection
 
 This command can be used to initialize the client with wallets, schemas, credentials and emergency access secrets.
+
+---
+### `pool create`
+This command can be used to create a pool configuration for the application.
+
+| inputs | example |
+| ------ | ------- |
+| pool name | sandbox |
+
+---
+### `pool list`
+This command lists all the available pool configurations for the application.
+
+| inputs | example |
+| ------ | ------- |
+| pool name | sandbox |
 
 ---
 ### `pool connect`
@@ -246,6 +262,14 @@ This command can be used to obtain an existing schema from the ledger.
 | schema name/identifier | new_schema |
 
 ---
+
+### `government schema list`
+**Requires**
+- an opened wallet
+
+This command can be used to list all schema's that are created by the `setupEHREnvironment` command inside the Gov-Health-Department wallet.
+---
+
 ### `master secret create`
 **Requires**
 - an opened wallet
@@ -431,6 +455,7 @@ This command can be used in case of emergency by a doctor to gain access informa
 | doctor proof JSON | JSON as returned by `doctor proof create` |
 | wallet identifier | Patient1 |
 
+---
 ### `shared secret reconstruct`
 This command can be used to reconstruct the actual secret based on the shared secrets. Just paste in the secrets and enter a blank line to finish the input. If the correct number and correct secrets are provided the actual secret will be returned.
 
@@ -438,6 +463,28 @@ This command can be used to reconstruct the actual secret based on the shared se
 | ------ | ------- |
 | Shamir shared secrets | 01-Q2I4UWOEJFSDKGHOQ34TYEUGPFVHNGQ3P94WTUGIHSFBJQ94WRUOGSFVNKBQP3ERUTGOUIFSD |
 
+
+---
+### `medical dossier backup`
+**Requires**
+- an opened wallet
+- an available IPFS client
+
+This command can be used to create a backup of the medical dossier in the wallet. This backup is uploaded to IPFS.
+
+---
+### `medical dossier list`
+**Requires**
+- an opened wallet
+
+This command can be used to list all credentials in the medical dossier of the open wallet.
+
+---
+### `emergency medical dossier download`
+**Requires**
+- an available IPFS client
+
+This command can be used to download an emergency medical dossier from IPFS.
 
 ---
 ### `doctor proof request`

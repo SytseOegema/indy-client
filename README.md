@@ -1,5 +1,10 @@
-# Indy Client
-This repository holds the source code for a .NET client that interacts with the Hyperledger Indy identity blockchain utilizing Indy SDK. The client provides a CLI that enables users to connect to a pool and create an identity on that pool.
+# BB SSI EHR CLI Client
+This repository holds the source code for a blockchain-based self-sovereign identity application for electronic health records. The .NET client interacts with the Hyperledger Indy identity blockchain utilizing Indy SDK. The client provides a CLI that enables users to connect to a pool and create an identity on that pool.
+
+Documentation on the project can be found in the Docs folder.
+
+# Quickstart
+Follow the instructions to setup the environment
 
 ## run a indy pool
 To start a local indy pool look [here](https://github.com/hyperledger/indy-node/blob/master/docs/source/start-nodes.md) or via [docker](https://github.com/hyperledger/indy-sdk/blob/master/README.md#how-to-start-local-nodes-pool-with-docker).
@@ -111,4 +116,11 @@ ipfs init
 # finally run
 sudo systemctl start ipfs
 sudo systemctl enable ipfs
+```
+
+
+### Start the application
+Fork this repository and clone it. Make sure that you are in the Code repository and run the command
+```
+dotnet run
 ```
