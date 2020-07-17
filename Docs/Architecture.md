@@ -13,6 +13,14 @@ The application is structured into four folders; Interface, Controllers, Facilit
 The interface folder only contains functionality to handle command line IO. The `CliLoop` class matches all input commands to the right functionality of the classes in the other folders and uses the `CliPrompt` class to aquire the right input paramaters for the corresponding function.
 
 ### Controllers
+- `PoolController`
+Handles the creation of pool configuration files and the connection to pools via such configuration files.
+- `DidController`
+- `WalletController`
+- `LedgerController`
+- `AnoncredsController`
+- `OfflineSecretController`
+
 
 ### Facilitators
 
