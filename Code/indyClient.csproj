@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Hyperledger.Indy.Sdk" Version="1.11.1" />
     <PackageReference Include="Ipfs.Http.Client" Version="0.33.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="SecretSharingDotNet" Version="0.3.0" />
   </ItemGroup>
 
